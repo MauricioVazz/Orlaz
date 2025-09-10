@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
+import ContactUs from "@/components/ContactUs";
 import Cards from "@/components/Cards";
 import Footer from "@/components/Footer";
 
