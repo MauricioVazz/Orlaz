@@ -32,6 +32,9 @@ export default function Home() {
             <section>
                 <Attractions />
             </section>
+
+            <ContactUs />
+            
             <Footer />
         </>
     );
