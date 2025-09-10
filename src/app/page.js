@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
+import ContactUs from "@/components/ContactUs";
 
 export default function Home() {
     return (
@@ -22,6 +23,8 @@ export default function Home() {
             <section>
                 <Attractions />
             </section>
+
+            <ContactUs />
         </>
     );
 }
