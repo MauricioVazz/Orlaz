@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
 import Cards from "@/components/Cards";
+import Footer from "@/components/Footer";
+
 
 export default function Home() {
     return (
@@ -20,14 +22,16 @@ export default function Home() {
             <Header />
 
             <Banner />
-            
+
             <section>
             < Cards/>
             </section>
 
+
             <section>
                 <Attractions />
             </section>
+            <Footer />
         </>
     );
 }
