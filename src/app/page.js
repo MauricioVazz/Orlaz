@@ -3,11 +3,8 @@ import styles from "./page.module.css";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
-<<<<<<< HEAD
 import ContactUs from "@/components/ContactUs";
-=======
 import Cards from "@/components/Cards";
->>>>>>> 7735defdfc543527594a3dba6cb2f067f36743fc
 
 export default function Home() {
     return (
