@@ -29,9 +29,8 @@ export default function Home() {
         <Attractions />
       </section>
 
-
       <section>
-        <Location />
+        <LocationClient />
       </section>
 
       <section>
