@@ -15,11 +15,29 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Banner />
-      <section><Cards /></section>
-      <section><Attractions /></section>
-      <section><LocationClient /></section>
-      <section><ContactUs /></section>
+      <Banner
+        image="/images/banner-home.png"
+        title="Explore as Belezas do Litoral Norte"
+        subtitle="Descubra praias paradisíacas, gastronomia incrível e muito mais nas cidades mais encantadoras do litoral paulista"
+      />
+
+      <section>
+        <Cards />
+      </section>
+
+      <section>
+        <Attractions />
+      </section>
+
+
+      <section>
+        <Location />
+      </section>
+
+      <section>
+        <ContactUs />
+      </section>
+
       <Footer />
     </>
   );
