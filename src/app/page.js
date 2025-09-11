@@ -1,35 +1,17 @@
-import Head from "next/head";
-import styles from "./page.module.css";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
-import Location from "@/components/Location";  // Adicionar esta linha
+import Cards from "@/components/Cards";
+import LocationClient from "@/components/ClientComponents/LocationClient";
 
 export default function Home() {
-    return (
-        <>
-            <Head>
-                <title>Orlaz</title>
-                <meta
-                    name="description"
-                    content="Site de turismo para explorar cidades e atrações"
-                />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-            </Head>
-
-            <Header />
-
-            <Banner />
-            <section>
-                <Attractions />
-            </section>
-
-            <section>
-                <Location />
-            </section>
-           
-               
-            
-        </>
-    );
+  return (
+    <main>
+      <Header />
+      <Banner />
+      <section><Cards /></section>
+      <section><Attractions /></section>
+      <section><LocationClient /></section>
+    </main>
+  );
 }

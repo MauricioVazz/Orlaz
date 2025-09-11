@@ -16,7 +16,7 @@ const markerIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-// Cidades principais com nome e localização
+// Cidades principais com nome, localização e descrição
 const cidades = [
   {
     nome: "Ubatuba",
@@ -40,11 +40,13 @@ const cidades = [
   },
 ];
 
-const Location = () => {
+export default function Location() {
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>Como Chegar</h2>
-      <p className={styles.subtitle}>Descubra o que fazer no Litoral Norte além de tomar sol</p>
+      <p className={styles.subtitle}>
+        Descubra o que fazer no Litoral Norte além de tomar sol
+      </p>
 
       <div className={styles.mapContainer}>
         <MapContainer
@@ -64,7 +66,8 @@ const Location = () => {
           {cidades.map(({ nome, position, descricao }) => (
             <Marker key={nome} position={position} icon={markerIcon}>
               <Popup>
-                <strong>{nome}</strong><br />
+                <strong>{nome}</strong>
+                <br />
                 {descricao}
               </Popup>
             </Marker>
@@ -73,6 +76,4 @@ const Location = () => {
       </div>
     </section>
   );
-};
-
-export default Location;
+}
