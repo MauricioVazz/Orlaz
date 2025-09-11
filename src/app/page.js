@@ -3,7 +3,7 @@ import Banner from "@/components/Banner";
 import Attractions from "@/components/Attractions";
 import ContactUs from "@/components/ContactUs";
 import Cards from "@/components/Cards";
-import Location from "@/components/Location";
+import LocationClient from "@/components/ClientComponents/LocationClient";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -16,24 +16,10 @@ export default function Home() {
     <>
       <Header />
       <Banner />
-
-      <section>
-        <Cards />
-      </section>
-
-      <section>
-        <Attractions />
-      </section>
-
-
-      <section>
-        <Location />
-      </section>
-
-      <section>
-        <ContactUs />
-      </section>
-
+      <section><Cards /></section>
+      <section><Attractions /></section>
+      <section><LocationClient /></section>
+      <section><ContactUs /></section>
       <Footer />
     </>
   );
