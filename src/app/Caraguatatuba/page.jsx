@@ -10,7 +10,7 @@ export default function Caraguatatuba() {
         <div>
             <Header />
             <Banner
-                image="/images/banner-home.png"
+                image="/images/banner-caragua.png"
                 title="Caraguatatuba"
             />
             <SobreCidade
