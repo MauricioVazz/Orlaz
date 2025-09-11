@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import SobreCidade from "@/components/SobreCidadeLista.js/caraguatatuba.jsx";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
@@ -17,3 +18,18 @@ export default function Caraguatatuba() {
     </div>
   );
 }
+=======
+import styles from './Caraguatatuba.module.css'
+import Link from 'next/link'
+import Header from '@/components/Header'
+import Banner from '@/components/Banner'
+
+export default function Caraguatatuba() {
+    return (
+        <div>
+            <Header />
+            <Banner />
+        </div>
+    )
+}
+>>>>>>> f918af7d3df252da4feaddf672bf10e0254ade1c

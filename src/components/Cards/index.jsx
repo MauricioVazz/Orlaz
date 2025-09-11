@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styles from "./Cards.Module.css";
 
 const pontosTuristicos = [
@@ -43,7 +44,9 @@ export default function App() {
                 <span className="nota">{ponto.nota}</span>
               </div>
               <p>{ponto.descricao}</p>
-              <button className="btn-vermais">Ver Mais</button>
+              <Link href={`/${ponto.nome.replace(/\s+/g, '')}`} className="btn-vermais">
+                Ver Mais
+              </Link>
             </div>
           </div>
         ))}
