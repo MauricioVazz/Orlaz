@@ -1,4 +1,4 @@
-import SobreCidade from "@/components/SobreCidadeLista.js/caraguatatuba.jsx";
+import SobreCidade from "@/components/SobreCidade/index.jsx";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
