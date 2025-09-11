@@ -1,10 +1,13 @@
-import styles from './Sobre.module.css'
+import styles from './Caraguatatuba.module.css'
 import Link from 'next/link'
+import Header from '@/components/Header'
+import Banner from '@/components/Banner'
 
-export default function Sobre() {
+export default function Caraguatatuba() {
     return (
-        <main className={styles.main_container}>
-            
-        </main>
+        <div>
+            <Header />
+            <Banner />
+        </div>
     )
 }
