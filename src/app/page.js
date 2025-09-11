@@ -4,6 +4,7 @@ import Attractions from "@/components/Attractions";
 import ContactUs from "@/components/ContactUs";
 import Cards from "@/components/Cards";
 import Location from "@/components/Location";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Orlaz",
@@ -32,6 +33,8 @@ export default function Home() {
       <section>
         <ContactUs />
       </section>
+
+      <Footer />
     </>
   );
 }
