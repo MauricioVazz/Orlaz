@@ -1,5 +1,5 @@
 import SobreCidade from "@/components/SobreCidade";
-import styles from "./Caraguatatuba.module.css";
+import styles from "./Ilhabela.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
