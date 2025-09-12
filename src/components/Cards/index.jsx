@@ -22,7 +22,7 @@ const pontosTuristicos = [
     imagem: "/images/ubatuba.png",
   },
   {
-    nome: "São Sebastião",
+    nome: "SaoSebastiao",
     descricao: "Rica em história, cultura e praias deslumbrantes como Maresias.",
     nota: 4.0,
     imagem: "/images/SaoSeba.png", 
