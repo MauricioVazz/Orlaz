@@ -15,7 +15,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Banner />
+      <Banner
+        image="/images/banner-home.png"
+        title="Explore as Belezas do Litoral Norte"
+        subtitle="Descubra praias paradisíacas, gastronomia incrível e muito mais nas cidades mais encantadoras do litoral paulista"
+      />
 
       <section>
         <Cards />

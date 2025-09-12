@@ -1,5 +1,5 @@
 import SobreCidade from "@/components/SobreCidade";
-import styles from "./Caraguatatuba.module.css";
+import styles from "./Ubatuba.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
@@ -11,7 +11,8 @@ export default function Caraguatatuba() {
             <Header />
             <Banner
                 image="/images/banner-home.png"
-                title="Caraguatatuba"
+                title="Explore as Belezas do Litoral Norte"
+                subtitle="Descubra praias paradisíacas, gastronomia incrível e muito mais nas cidades mais encantadoras do litoral paulista"
             />
             <SobreCidade
                 nome="Caraguatatuba"
