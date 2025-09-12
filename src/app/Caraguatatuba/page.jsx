@@ -1,7 +1,5 @@
-
-
 "use client";
-import SobreCidade from "@/components/SobreCidade";
+import SobreCidade from "@/components/SobreCidade/Caraguatatuba";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
