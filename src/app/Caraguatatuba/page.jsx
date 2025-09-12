@@ -1,9 +1,9 @@
-import SobreCidade from "@/components/SobreCidade";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
+import SobreCidade from "@/components/SobreCidade";
 
 export default function Caraguatatuba() {
     return (
