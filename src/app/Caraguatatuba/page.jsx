@@ -1,16 +1,18 @@
+"use client";
+import SobreCidade from "@/components/SobreCidade";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
+import Gastronomy from "@/components/Gastronomy";
 import Footer from "@/components/Footer";
-import SobreCidade from "@/components/SobreCidade";
 
 export default function Caraguatatuba() {
     return (
         <div>
             <Header />
             <Banner
-                image="/images/banner-home.png"
+                image="/images/banner-caragua.png"
                 title="Caraguatatuba"
             />
             <SobreCidade
