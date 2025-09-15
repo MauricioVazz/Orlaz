@@ -10,7 +10,7 @@ export default function SaoSebastiao() {
     <div>
       <Header />
       <Banner
-        image="/images/banner-saosebastiao.png"
+        image="/images/banner-sao-sebastiao.png"
         title="São Sebastião"
         subtitle="Belezas naturais e um centro histórico charmoso."
       />
