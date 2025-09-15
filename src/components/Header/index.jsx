@@ -9,18 +9,20 @@ export default function Header() {
             <div className={styles.container}>
                 <div className={styles.logo}><Link href='/'>Orlaz</Link></div>
                 <nav className={styles.menu}>
-                    <a href="#">Home</a>
+                    <Link href="/" className={styles.menuLink}>Home</Link>
                     <a href="#">Cidades</a>
                     <a href="#">Atrações</a>
                     <a href="#">Contato</a>
                 </nav>
                 <div className={styles.icons}>
-                    <span className={styles.icon}>
-                        <IoSearchOutline size={24} />
-                    </span>
-                    <span className={styles.icon}>
-                        <IoPersonSharp size={24} />
-                    </span>
+  <span className={styles.icon}>
+    <IoSearchOutline size={24} />
+  </span>
+  
+  {/* Link para login */}
+  <Link href="/login" className={styles.icon}>
+    <IoPersonSharp size={24} />
+  </Link>
                 </div>
             </div>
         </header>

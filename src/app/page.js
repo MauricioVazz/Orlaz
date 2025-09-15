@@ -5,6 +5,8 @@ import ContactUs from "@/components/ContactUs";
 import Cards from "@/components/Cards";
 import LocationClient from "@/components/ClientComponents/LocationClient";
 import Footer from "@/components/Footer";
+import LoginForm from "@/components/LoginForm";
+import CadastroForm from "@/components/CadastroForm";
 
 export const metadata = {
   title: "Orlaz",
