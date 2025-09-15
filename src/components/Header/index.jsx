@@ -15,12 +15,14 @@ export default function Header() {
                     <a href="#">Contato</a>
                 </nav>
                 <div className={styles.icons}>
-                    <span className={styles.icon}>
-                        <IoSearchOutline size={24} />
-                    </span>
-                    <span className={styles.icon}>
-                        <IoPersonSharp size={24} />
-                    </span>
+  <span className={styles.icon}>
+    <IoSearchOutline size={24} />
+  </span>
+  
+  {/* Link para login */}
+  <Link href="/login" className={styles.icon}>
+    <IoPersonSharp size={24} />
+  </Link>
                 </div>
             </div>
         </header>
