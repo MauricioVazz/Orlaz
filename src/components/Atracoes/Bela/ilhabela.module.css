@@ -1,0 +1,116 @@
+/* Container principal */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  /* Título */
+  .titulo {  /* Changed from h1 to .titulo */
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: black;
+    font-size: 2rem;
+  }
+  
+  /* Subtítulo */
+  .subtitulo {
+    color: #555;
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+  
+  /* Container dos cards */
+  .cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Card individual */
+  .card {
+    width: 250px;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Imagem do card */
+  .card-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  
+  /* Informações dentro do card */
+  .card-info {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Cabeçalho do card: título + ícone */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Ícone/nota */
+  .nota {
+    font-weight: 700;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  /* Botão Ver Mais */
+  .btn-vermais {
+    background-color: #3b59ff;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 12px;
+  }
+  
+  .btn-vermais:hover {
+    background-color: #2a3fcc;
+  }
+  
+  /* Botão "Mais Atrações" centralizado */
+  .moreWrapper {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .moreButton {
+    background-color: #3b59ff;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 25px; /* arredondado */
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(59, 89, 255, 0.18);
+    transition: background-color 0.25s, transform 0.08s;
+  }
+  
+  .moreButton:hover {
+    background-color: #2a3fcc;
+    transform: translateY(-2px);
+  }
+  

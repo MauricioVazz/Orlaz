@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./ubatuba.module.css";
+import styles from "./saosebastiao.module.css";
+
 const todasAtracoes = [
   {
     titulo: "Praia Martim de Sá",
@@ -8,23 +9,23 @@ const todasAtracoes = [
     imagem: "/images/martim.jpg",
   },
   {
-    titulo: "Ruínas da Lagoinha",
-    descricao: "História preservada, cenário único à beira-mar e uma experiência que mistura cultura, natureza e tranquilidade.",
+    titulo: "Praia da Cocanha",
+    descricao: "Familiar, águas calmas e acesso à Ilha da Cocanha.",
     imagem: "/images/cocanha.jpg",
   },
   {
-    titulo: "Praia do Português",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
+    titulo: "Morro Santo Antônio",
+    descricao: "Mirante com vista panorâmica e voo livre.",
     imagem: "/images/santo.jpg",
   },
   {
-    titulo: "Ilha das Couves",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
+    titulo: "Parque Estadual da Serra do Mar",
+    descricao: "Trilhas, cachoeiras e natureza preservada.",
     imagem: "/images/parque.jpg",
   },
   {
-    titulo: "Cachoeira do Prumirim",
-    descricao: "Águas cristalinas, contato direto com a natureza e um refúgio perfeito para relaxar e renovar as energias.",
+    titulo: "Praia Brava",
+    descricao: "Perfeita para surfistas e aventureiros.",
     imagem: "/images/brava.jpg",
   },
   {
@@ -34,7 +35,7 @@ const todasAtracoes = [
   },
 ];
 
-export default function atracoesUbatuba() {
+export default function AtracoesSaosebastiao() {
   const [visiveis, setVisiveis] = useState(4);
 
   const handleMore = () => {

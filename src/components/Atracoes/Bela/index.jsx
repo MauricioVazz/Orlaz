@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./ubatuba.module.css";
+import styles from "./ilhabela.module.css";
+
 const todasAtracoes = [
   {
     titulo: "Praia Martim de Sá",
@@ -34,7 +35,7 @@ const todasAtracoes = [
   },
 ];
 
-export default function atracoesUbatuba() {
+export default function AtracoesBela() {
   const [visiveis, setVisiveis] = useState(4);
 
   const handleMore = () => {

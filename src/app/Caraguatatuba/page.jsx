@@ -1,14 +1,13 @@
 "use client";
-import SobreCidade from "@/components/SobreCidade"; // Corrigindo caminho do import
-import styles from "./Caraguatatuba.module.css";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
-import Gastronomy from "@/components/Gastronomy";
 import Footer from "@/components/Footer";
+import SobreCidade from "@/components/SobreCidade"; 
 import AtracoesCaraguatatuba from "@/components/Atracoes/Caraguatatuba";
+import styles from "./Caraguatatuba.module.css";
+import Link from "next/link";
 
-export default function Caraguatatuba() {
+export default function CaraguatatubaPage() {
     return (
         <div>
             <Header />
