@@ -9,7 +9,7 @@ export default function Header() {
             <div className={styles.container}>
                 <div className={styles.logo}><Link href='/'>Orlaz</Link></div>
                 <nav className={styles.menu}>
-                    <a href="#">Home</a>
+                    <Link href="/" className={styles.menuLink}>Home</Link>
                     <a href="#">Cidades</a>
                     <a href="#">Atrações</a>
                     <a href="#">Contato</a>
