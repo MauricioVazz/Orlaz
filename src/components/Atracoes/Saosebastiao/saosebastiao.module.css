@@ -75,7 +75,7 @@
   
   /* Botão Ver Mais */
   .btn-vermais {
-    background-color: #3b59ff;
+    background-color: #0b8c91ff;
     color: white;
     font-weight: 600;
     border: none;
@@ -87,7 +87,7 @@
   }
   
   .btn-vermais:hover {
-    background-color: #2a3fcc;
+    background-color: rgb(1, 82, 85);
   }
   
   /* Botão "Mais Atrações" centralizado */
@@ -98,7 +98,7 @@
   }
   
   .moreButton {
-    background-color: #3b59ff;
+    background-color: #0b8c91ff;
     color: white;
     font-weight: 700;
     border: none;
