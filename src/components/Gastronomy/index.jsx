@@ -1,4 +1,5 @@
-import { useState } from 'react';
+"use client";
+import React, { useState } from 'react';
 import styles from './Gastronomy.module.css';
 
 export default function Gastronomy({ title, subtitle, items, buttonLabel, onButtonClick }) {

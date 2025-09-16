@@ -48,7 +48,7 @@ export default function CaraguatatubaPage() {
                     {
                         name: "Mexilhões",
                         desc: "Consumidos ao vinagrete, no bafo; também usados em versões de bolinho caipira.",
-                        image: "/images/mexilhao.jpg"
+                        image: "/images/mexilhoes.jpg"
                     },
                     {
                         name: "Frutos do mar no geral",
@@ -82,7 +82,6 @@ export default function CaraguatatubaPage() {
                     }
                 ]}
                 buttonLabel="Ver Mais"
-                onButtonClick={() => { /* ação do botão, se desejar */ }}
             />
             <Footer />
         </div>
