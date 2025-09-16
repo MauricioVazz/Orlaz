@@ -1,0 +1,62 @@
+.timelineSection {
+  padding: 41px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.timeline {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.evento {
+  position: relative;
+  text-align: center;
+  min-width: 120px;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 12px;
+  font-size: 24px;
+  z-index: 1;
+}
+
+.data {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.nome {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.linha {
+  position: absolute;
+  top: 24px; /* alinhado ao centro do círculo */
+  left: 100%;
+  width: 60px;
+  height: 2px;
+  background: #fff;
+  z-index: 0;
+}

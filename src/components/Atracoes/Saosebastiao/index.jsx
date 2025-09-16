@@ -4,34 +4,34 @@ import styles from "./saosebastiao.module.css";
 
 const todasAtracoes = [
   {
-    titulo: "Praia Martim de Sá",
-    descricao: "Mais famosa da cidade, com quiosques e mar agitado.",
-    imagem: "/images/martim.jpg",
+    titulo: "Centro Histórico",
+    descricao: "Ruas coloniais, igrejas antigas e cultura local.",
+    imagem: "/images/histoseba.png",
   },
   {
-    titulo: "Praia da Cocanha",
-    descricao: "Familiar, águas calmas e acesso à Ilha da Cocanha.",
-    imagem: "/images/cocanha.jpg",
+    titulo: "Praia de Juquehy",
+    descricao: "Areia clara, boas ondas e opções de lazer.",
+    imagem: "/images/juquehyseba.png",
   },
   {
-    titulo: "Morro Santo Antônio",
-    descricao: "Mirante com vista panorâmica e voo livre.",
-    imagem: "/images/santo.jpg",
+    titulo: "Praia de Maresias",
+    descricao: "Famosa pelo surf e vida noturna agitada.",
+    imagem: "/images/mareseba.png",
   },
   {
-    titulo: "Parque Estadual da Serra do Mar",
-    descricao: "Trilhas, cachoeiras e natureza preservada.",
-    imagem: "/images/parque.jpg",
+    titulo: "Praia de Toque-Toque Grande",
+    descricao: "Tranquilidade, mar calmo e boa para famílias.",
+    imagem: "/images/toqueseba.png",
   },
   {
-    titulo: "Praia Brava",
-    descricao: "Perfeita para surfistas e aventureiros.",
-    imagem: "/images/brava.jpg",
+    titulo: "Praia de Camburi",
+    descricao: "Mar agitado para o surfe, além de ótimos bares e restaurantes à beira-mar.",
+    imagem: "/images/cambuseba.jpg",
   },
   {
-    titulo: "Praia do Indaiá",
-    descricao: "Ótima para famílias com crianças.",
-    imagem: "/images/indaia.jpg",
+    titulo: "Praia da Baleia",
+    descricao: "Areia dura e extensa, ideal para caminhadas e esportes na praia.",
+    imagem: "/images/baleiaseba.jpg",
   },
 ];
 

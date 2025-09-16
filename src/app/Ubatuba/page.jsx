@@ -1,3 +1,5 @@
+"use client";
+
 import SobreCidade from "@/components/SobreCidade";
 import styles from "./Ubatuba.module.css";
 import Link from "next/link";
@@ -5,9 +7,19 @@ import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import AtracoesUbatuba from "@/components/Atracoes/Ubatuba";
+import EventosTimeline from "@/components/EventosTimeline";
+import { FaSwimmer, FaTree, FaDrum, FaFire } from "react-icons/fa";
+
 import Gastronomy from "@/components/Gastronomy";
 
 export default function Ubatuba() {
+  const eventos = [
+    { data: "12/1", nome: "Festival de Verão", icone: <FaSwimmer /> },
+    { data: "10/3", nome: "Festa da Mata Atlântica", icone: <FaTree /> },
+    { data: "21/6", nome: "Festival de Dança", icone: <FaDrum /> },
+    { data: "31/12", nome: "Réveillon Ubatuba", icone: <FaFire /> },
+  ];
+
   return (
     <div>
       <Header />
@@ -58,6 +70,11 @@ export default function Ubatuba() {
         ]}
         buttonLabel="Ver Mais"
       />
+      <AtracoesUbatuba/>
+
+      {/* Aqui entram os eventos */}
+      <EventosTimeline eventos={eventos} cor="#107a1eff" />
+
       <Footer />
     </div>
   );
