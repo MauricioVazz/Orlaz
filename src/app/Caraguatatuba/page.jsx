@@ -4,6 +4,7 @@ import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import SobreCidade from "@/components/SobreCidade"; 
 import AtracoesCaraguatatuba from "@/components/Atracoes/Caraguatatuba";
+import Gastronomy from "@/components/Gastronomy";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 
@@ -25,6 +26,64 @@ export default function CaraguatatubaPage() {
                 mapaUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58731.16956774998!2d-45.447!3d-23.622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cd52df83f7c4a9%3A0x7c6e77cbfc5f9c9d!2sCaraguatatuba%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1694460892957!5m2!1spt-BR!2sbr"
             />
             <AtracoesCaraguatatuba />
+            <Gastronomy
+                title="Gastronomia"
+                subtitle="Comidas típicas da região"
+                items={[
+                    {
+                        name: "Azul marinho",
+                        desc: "Um peixe refogado com banana nanica, cujo tanino na banana deixa o caldo com coloração azulada.",
+                        image: "/images/azulmarinho.jpg"
+                    },
+                    {
+                        name: "Lambe-lambe",
+                        desc: "Arroz preparado com mexilhões, tradição local ligada à maricultura.",
+                        image: "/images/lambelambe.jpg"
+                    },
+                    {
+                        name: "Bolinho de taioba",
+                        desc: "Salgado feito com a folha da taioba, refletindo a tradição de colheita na mata local.",
+                        image: "/images/taioba.jpg"
+                    },
+                    {
+                        name: "Mexilhões",
+                        desc: "Consumidos ao vinagrete, no bafo; também usados em versões de bolinho caipira.",
+                        image: "/images/mexilhao.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral5",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral4",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral3",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral2",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    },
+                    {
+                        name: "Frutos do mar no geral1",
+                        desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
+                        image: "/images/frutosdomar.jpg"
+                    }
+                ]}
+                buttonLabel="Ver Mais"
+                onButtonClick={() => { /* ação do botão, se desejar */ }}
+            />
             <Footer />
         </div>
     );
