@@ -2,36 +2,37 @@
 import React, { useState } from "react";
 import styles from "./ubatuba.module.css";
 const todasAtracoes = [
-  {
-    titulo: "Praia Martim de Sá",
-    descricao: "Mais famosa da cidade, com quiosques e mar agitado.",
-    imagem: "/images/martim.jpg",
-  },
+ 
   {
     titulo: "Ruínas da Lagoinha",
     descricao: "História preservada, cenário único à beira-mar e uma experiência que mistura cultura, natureza e tranquilidade.",
-    imagem: "/images/cocanha.jpg",
+    imagem: "/images/ruinauba.png",
   },
   {
     titulo: "Praia do Português",
     descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imagem: "/images/santo.jpg",
+    imagem: "/images/portuuba.png",
   },
   {
     titulo: "Ilha das Couves",
     descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imagem: "/images/parque.jpg",
+    imagem: "/images/couveuba.png",
   },
   {
     titulo: "Cachoeira do Prumirim",
     descricao: "Águas cristalinas, contato direto com a natureza e um refúgio perfeito para relaxar e renovar as energias.",
-    imagem: "/images/brava.jpg",
+    imagem: "/images/cachouba.png",
   },
   {
-    titulo: "Praia do Indaiá",
-    descricao: "Ótima para famílias com crianças.",
-    imagem: "/images/indaia.jpg",
+    titulo: "Projeto TAMAR - Ubatuba",
+    descricao: "Centro de preservação das tartarugas marinhas, com exposições e atividades educativas.",
+    imagem: "/images/projetouba.jpg",
   },
+  {
+    titulo: "Praia de Itamambuca",
+    descricao: "Famosa pelas ondas perfeitas para o surfe e pela natureza preservada.",
+    imagem: "/images/itamamuba.jpg",
+  },  
 ];
 
 export default function atracoesUbatuba() {
