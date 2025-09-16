@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
-import AtracoesBela from "@/components/Atracoes/Bela"; // Import corrigido para o nome correto
+import AtracoesBela from "@/components/Atracoes/Bela";
 
 export default function Bela() {
   return (
