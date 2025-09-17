@@ -1,0 +1,56 @@
+.btnVerMaisCity {
+  background: #3b59ff;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+.btnVerMaisCity:hover {
+  background: #3b59ffcc;
+}
+.sectionCidades {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 16px 60px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionCidades h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #444;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.filters select {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.cardsGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./saosebastiao.module.css";
 
-const todasAtracoes = [
+export const todasAtracoes = [
   {
     titulo: "Centro Histórico",
     descricao: "Ruas coloniais, igrejas antigas e cultura local.",
