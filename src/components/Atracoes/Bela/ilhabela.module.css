@@ -110,7 +110,7 @@
   }
   
   .moreButton:hover {
-    background-color: #2a3fcc;
+    background-color: rgb(165, 82, 0);
     transform: translateY(-2px);
   }
   
