@@ -10,7 +10,7 @@ export default function Header() {
                 <div className={styles.logo}><Link href='/'>Orlaz</Link></div>
                 <nav className={styles.menu}>
                     <Link href="/" className={styles.menuLink}>Home</Link>
-                    <a href="#">Cidades</a>
+                    <Link href="/Cidades" className={styles.menuLink}>Cidades</Link>
                     <a href="#">Atrações</a>
                     <a href="#">Contato</a>
                 </nav>

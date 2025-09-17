@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./ilhabela.module.css";
 
-const todasAtracoes = [
+export const todasAtracoes = [
   {
     titulo: "Praia  do Bonete",
     descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
