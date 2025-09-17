@@ -7,6 +7,7 @@ import LocationClient from "@/components/ClientComponents/LocationClient";
 import Footer from "@/components/Footer";
 import LoginForm from "@/components/LoginForm";
 import CadastroForm from "@/components/CadastroForm";
+import RestaurantesLista from "@/components/Restaurantes/Lista"; // lista de restaurantes
 
 export const metadata = {
   title: "Orlaz",
@@ -33,6 +34,10 @@ export default function Home() {
 
       <section>
         <LocationClient />
+      </section>
+
+      <section>
+        <RestaurantesLista />
       </section>
 
       <section>

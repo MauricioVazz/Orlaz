@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./caraguatatuba.module.css";
 
-const todasAtracoes = [
+export const todasAtracoes = [
   {
     titulo: "Praia Martim de Sá",
     descricao: "Mais famosa da cidade, com quiosques e mar agitado.",
