@@ -2,73 +2,85 @@
 
 import React from "react";
 import styles from "./favoritos.module.css";
-import Header from "@/components/Header";
+import Headerblue from "@/components/HeaderBlue";
 import Footer from "@/components/Footer";
 
 const favoritos = [
+  // Caraguatatuba
   {
     id: 1,
     cidade: "Caraguatatuba",
-    titulo: "Molhes do Porto Novo",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Molhes do Porto Novo",
+    titulo: "Praia Martim de Sá",
+    descricao: "Mais famosa da cidade, com quiosques e mar agitado, ideal para surfistas.",
+    imgAlt: "Praia Martim de Sá",
+    imagem: "/images/martim.jpg",
     favorito: true,
   },
   {
     id: 2,
-    cidade: "Ilhabela",
-    titulo: "Praia do Jabaquara",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia do Jabaquara",
+    cidade: "Caraguatatuba",
+    titulo: "Morro Santo Antônio",
+    descricao: "Mirante com vista panorâmica da cidade e ponto de voo livre.",
+    imgAlt: "Morro Santo Antônio",
+    imagem: "/images/santo.jpg",
     favorito: true,
   },
+  // Ilhabela
   {
     id: 3,
-    cidade: "Ubatuba",
-    titulo: "Praia Itamambuca",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia Itamambuca",
+    cidade: "Ilhabela",
+    titulo: "Praia do Curral",
+    descricao: "Uma das praias mais bonitas, com águas cristalinas e ótima para mergulho.",
+    imgAlt: "Praia do Curral",
+    imagem: "/images/curralilha.jpg",
     favorito: true,
   },
   {
     id: 4,
-    cidade: "São Sebastião",
-    titulo: "Praia da Baleia",
+    cidade: "Ilhabela",
+    titulo: "Baía de Castelhados",
     descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia da Baleia",
+    imgAlt: "Baía de Castelhados",
+    imagem: "/images/casteilha.png",
+    favorito: true,
+  },
+  // Ubatuba
+  {
+    id: 5,
+    cidade: "Ubatuba",
+    titulo: "Praia do Português",
+    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
+    imgAlt: "Praia do Português",
+    imagem: "/images/portuuba.png",
     favorito: true,
   },
   {
-    id: 5,
-    cidade: "Caraguatatuba",
-    titulo: "Praia",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia",
-    favorito: false,
-  },
-  {
     id: 6,
-    cidade: "Caraguatatuba",
-    titulo: "Praia",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia",
-    favorito: false,
+    cidade: "Ubatuba",
+    titulo: "Projeto TAMAR",
+    descricao: "Centro de preservação de tartarugas marinhas com exposições e atividades educativas.",
+    imgAlt: "Projeto TAMAR",
+    imagem: "/images/projetouba.jpg",
+    favorito: true,
   },
+  // São Sebastião
   {
     id: 7,
-    cidade: "Caraguatatuba",
-    titulo: "Praia",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia",
-    favorito: false,
+    cidade: "São Sebastião",
+    titulo: "Praia de Maresias",
+    descricao: "Famosa praia com ondas perfeitas para surf e vida noturna agitada.",
+    imgAlt: "Praia de Maresias",
+    imagem: "/images/mareseba.png",
+    favorito: true,
   },
   {
     id: 8,
-    cidade: "Caraguatatuba",
-    titulo: "Praia",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia",
-    favorito: false,
+    cidade: "São Sebastião",
+    titulo: "Centro Histórico",
+    descricao: "Construções coloniais preservadas e importante patrimônio cultural.",
+    imgAlt: "Centro Histórico",
+    imagem: "/images/histoseba.png",
+    favorito: true,
   },
 ];
 
@@ -77,13 +89,9 @@ export default function MeusFavoritos() {
     console.log("Remover favorito id:", id);
   };
 
-  const handleEditar = (id) => {
-    console.log("Editar favorito id:", id);
-  };
-
   return (
     <>
-      <Header />
+      <Headerblue />
       <section className={styles.container}>
         <h1 className={styles.title}>Meus Favoritos</h1>
         <p className={styles.subtitle}>
@@ -91,31 +99,24 @@ export default function MeusFavoritos() {
         </p>
 
         <div className={styles.cardsGrid}>
-          {favoritos.map(({ id, cidade, titulo, descricao, imgAlt, favorito }) => (
+          {favoritos.map(({ id, cidade, titulo, descricao, imgAlt, imagem }) => (
             <div key={id} className={styles.card}>
               <div className={styles.imgContainer} aria-label={imgAlt}>
                 <img
-                  src="https://via.placeholder.com/320x180/1768f2/ffffff?text=Imagem"
+                  src={imagem}
                   alt={imgAlt}
                   className={styles.cardImg}
                 />
-                {favorito ? (
-                  <button
-                    className={styles.btnRemove}
-                    aria-label={`Remover favorito: ${titulo}`}
-                    onClick={() => handleRemover(id)}
-                  >
-                    ×
-                  </button>
-                ) : (
-                  <button
-                    className={styles.btnEdit}
-                    aria-label={`Editar favorito: ${titulo}`}
-                    onClick={() => handleEditar(id)}
-                  >
-                    ⚡
-                  </button>
-                )}
+                <button
+                  className={styles.btnFavorito}
+                  aria-label={`Remover dos favoritos: ${titulo}`}
+                  onClick={() => handleRemover(id)}
+                >
+                  <div className={styles.iconWrapper}>
+                    <span className={styles.starIcon}>★</span>
+                    <span className={styles.removeIcon}>×</span>
+                  </div>
+                </button>
               </div>
 
               <div className={styles.cardContent}>
