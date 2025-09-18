@@ -60,3 +60,41 @@
   background: #fff;
   z-index: 0;
 }
+@media (max-width: 768px) {
+  .timeline {
+    padding: 1rem;
+    margin: 2rem auto;
+  }
+
+  .evento {
+    padding: 1.5rem;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+  }
+
+  .icone {
+    font-size: 1.8rem;
+  }
+
+  .data {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .evento {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.8rem;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .data {
+    min-width: auto;
+  }
+
+  .icone {
+    font-size: 1.5rem;
+  }
+}
