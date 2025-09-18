@@ -1,5 +1,5 @@
 import { IoSearchOutline, IoPersonSharp, IoHeart } from "react-icons/io5";
-import styles from "./Header.module.css";
+import styles from "./HeaderBlue.module.css";
 import Link from "next/link";
 
 export default function Header() {
