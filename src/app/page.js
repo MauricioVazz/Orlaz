@@ -9,6 +9,7 @@ import LoginForm from "@/components/LoginForm";
 import CadastroForm from "@/components/CadastroForm";
 import RestaurantesLista from "@/components/Restaurantes/Lista"; // lista de restaurantes
 
+
 export const metadata = {
   title: "Orlaz",
   description: "Site de turismo para explorar cidades e atrações",
@@ -37,6 +38,13 @@ export default function Home() {
       </section>
 
       <section>
+        <h2 style={{ textAlign: "center", fontSize: "2rem", fontWeight: "bold", marginBottom: "12px" }}>
+        Restaurantes Parceiros
+      </h2>
+      <p style={{ textAlign: "center", color: "#4b5563", marginBottom: "32px" }}>
+        Conheça os estabelecimentos que oferecem experiências gastronômicas incríveis na nossa região.
+      </p>
+
         <RestaurantesLista />
       </section>
 
