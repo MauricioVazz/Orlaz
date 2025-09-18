@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from './City.module.css';
-
+import Link from 'next/link';
 
 // Importa arrays de atrações de cada cidade
 
@@ -56,7 +56,7 @@ export default function City() {
               </div>
               <h3 className={styles.cardTitulo}>{card.titulo}</h3>
               <p className={styles.cardDescricao}>{card.descricao}</p>
-              <button className={styles.btnVerMaisCity}>Ver Mais</button>
+              <Link href="/Point" className={styles.btnVerMaisCity}>Ver Mais</Link>
             </div>
           </div>
         ))}
