@@ -1,13 +1,13 @@
 "use client";
 import React from 'react';
-import Header from '../../components/Header';
+import HeaderBlue from '../../components/HeaderBlue';
 import Footer from '../../components/Footer';
 import City from '../../components/City';
 
 export default function Cidades() {
   return (
     <>
-      <Header />
+      <HeaderBlue />
       <City />
       <Footer />
     </>
