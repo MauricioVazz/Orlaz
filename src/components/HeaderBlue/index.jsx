@@ -1,5 +1,5 @@
 import { IoSearchOutline, IoPersonSharp, IoHeart } from "react-icons/io5";
-import styles from "./Header.module.css";
+import styles from "./HeaderBlue.module.css";
 import Link from "next/link";
 
 export default function Header() {
@@ -13,7 +13,6 @@ export default function Header() {
                     <Link href="/Cidades" className={styles.menuLink}>Cidades</Link>
                     <a href="#">Atrações</a>
                     <a href="#">Contato</a>
-                    <Link href="/favoritos" className={styles.menuLink}>Favoritos</Link>
                 </nav>
                 <div className={styles.icons}>
   <span className={styles.icon}>
