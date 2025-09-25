@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
-*
+
 * {
     margin: 0;
     padding: 0;
@@ -9,16 +9,58 @@
     list-style: none;
 }
 
+:root {
+    --max-width: 1200px;
+    --mobile-padding: 1rem;
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --border-radius: 8px;
+    --transition-default: 0.2s ease;
+}
+
 img {
     max-width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
+    display: block; /* Remove unwanted space below images */
 }
 
 section {
     scroll-margin-top: 120px;
+    padding: 1rem;
 }
 
 body {
-  background-color: #ececec;
+    background-color: #ececec;
+    overflow-x: hidden;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--mobile-padding);
+}
+
+.text-center {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    section {
+        scroll-margin-top: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
 }

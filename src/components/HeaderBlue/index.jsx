@@ -13,6 +13,7 @@ export default function Header() {
                     <Link href="/Cidades" className={styles.menuLink}>Cidades</Link>
                     <a href="#">Atrações</a>
                     <a href="#">Contato</a>
+                    <Link href="/favoritos" className={styles.menuLink}>Favoritos</Link>
                 </nav>
                 <div className={styles.icons}>
   <span className={styles.icon}>
