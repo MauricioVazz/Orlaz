@@ -110,6 +110,17 @@
 	cursor: pointer;
 	transition: background 0.2s, color 0.2s;
 }
+.btnFavoritoActive {
+	background: #e91e63;
+	color: #fff;
+	border: 2px solid #e91e63;
+	border-radius: 20px;
+	padding: 6px 18px;
+	font-weight: bold;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.2s, color 0.2s;
+}
 .btnFavorito:hover,
 .btnFavorito.ativo {
 	background: #e91e63;

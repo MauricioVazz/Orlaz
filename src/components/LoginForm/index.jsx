@@ -21,9 +21,31 @@ export default function LoginForm() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Email: ${email}\nSenha: ${senha}`);
+
+    try {
+      const res = await fetch("http://localhost:3000/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const data = await res.json();
+      const users = data.profiles || [];
+      const user = users.find(u => u.email === email && u.password === senha);
+      if (user) {
+        alert("Login realizado com sucesso!");
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+        router.push("/"); // Redireciona para a home ou dashboard
+      } else {
+        alert("Email ou senha inválidos.");
+      }
+    } catch (err) {
+      alert("Erro de conexão com o servidor.");
+    }
   };
 
   return (

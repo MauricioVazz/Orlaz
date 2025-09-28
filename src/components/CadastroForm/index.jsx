@@ -23,7 +23,7 @@ export default function CadastroForm() {
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (senha !== confirmarSenha) {
@@ -31,8 +31,28 @@ export default function CadastroForm() {
       return;
     }
 
-    // Lógica de cadastro aqui
-    alert(`Cadastro realizado!\nNome: ${nome}\nEmail: ${email}`);
+    try {
+      const res = await fetch("http://localhost:3000/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: nome,
+          email: email,
+          password: senha
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("Cadastro realizado com sucesso!");
+        router.push("/login");
+      } else {
+        alert(data.error || "Erro ao cadastrar usuário.");
+      }
+    } catch (err) {
+      alert("Erro de conexão com o servidor.");
+    }
   };
 
   return (
