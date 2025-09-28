@@ -19,7 +19,7 @@ export default function City() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/tourist-spot') // corrigido para a rota correta
+    fetch('http://localhost:3000/tourist-spot')
       .then(res => res.json())
       .then(data => setCards(data.touristSpots || []))
       .catch(() => setCards([]));
@@ -62,7 +62,19 @@ export default function City() {
               </div>
               <h3 className={styles.cardTitulo}>{card.name}</h3>
               <p className={styles.cardDescricao}>{card.description}</p>
-              <Link href={`/Point/${card.id}`} className={styles.btnVerMaisCity}>Ver Mais</Link>
+                <Link 
+                  href={{
+                    pathname: '/Point',
+                    query: {
+                      name: card.name,
+                      description: card.description,
+                      city: card.city,
+                      type: card.type,
+                      images: JSON.stringify(card.images || [])
+                    }
+                  }} 
+                  className={styles.btnVerMaisCity}
+                >Ver Mais</Link>
             </div>
           </div>
         ))}
