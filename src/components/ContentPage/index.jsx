@@ -1,4 +1,3 @@
-
 import styles from './ContentPage.module.css';
 import { MdLocationOn, MdShare, MdFavorite } from 'react-icons/md';
 import React, { useState } from 'react';
@@ -10,30 +9,34 @@ export default function ContentPage({ name, description, city, type, images }) {
     const [loadingFav, setLoadingFav] = useState(false);
 
     // Identifica o id do local
-    let placeId = null;
-    if (images && images.length > 0 && images[0].touristSpotId) {
-      placeId = images[0].touristSpotId;
-    } else if (images && images.length > 0 && images[0].restaurantId) {
-      placeId = images[0].restaurantId;
-    } else if (images && images.length > 0 && images[0].placeId) {
-      placeId = images[0].placeId;
-    } else if (typeof window !== "undefined" && window.location.pathname.match(/\d+$/)) {
-      placeId = parseInt(window.location.pathname.match(/\d+$/)[0]);
-    }
+    // placeId precisa ser um state para garantir atualização do botão
+    const [placeId, setPlaceId] = useState(null);
+    React.useEffect(() => {
+      let id = null;
+      if (images && images.length > 0 && images[0].touristSpotId) {
+        id = images[0].touristSpotId;
+      }
+      if (!id && typeof window !== "undefined" && window.location.pathname.match(/\d+$/)) {
+        id = parseInt(window.location.pathname.match(/\d+$/)[0]);
+      }
+      setPlaceId(id);
+    }, [images]);
 
     // Checa se já está favoritado ao montar
     React.useEffect(() => {
-      if (typeof window === "undefined" || !placeId) return;
+      if (typeof window === "undefined" || placeId === null) return;
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user || !user.id) return;
       fetch(`http://localhost:3000/favorite/${user.id}`)
         .then(res => res.json())
         .then(data => {
-          if (Array.isArray(data) && data.some(fav => fav.placeId === placeId)) {
-            setIsFavorited(true);
-          }
+          console.log('Verificando favoritos:', { placeId, favoritos: data });
+          const favs = Array.isArray(data.favorites) ? data.favorites : [];
+          const isFav = favs.some(fav => fav.placeId === placeId);
+          console.log('Resultado da verificação:', isFav);
+          setIsFavorited(isFav);
         });
-    }, [placeId]);
+  }, [placeId, images]);
 
     // Função para favoritar/desfavoritar
     const handleFavorite = async () => {
@@ -45,29 +48,31 @@ export default function ContentPage({ name, description, city, type, images }) {
         return;
       }
       if (!placeId) {
-        alert("Não foi possível identificar o local para favoritar.");
+        alert("Não foi possível identificar o local para favoritar/desfavoritar.");
         return;
       }
       setLoadingFav(true);
       if (!isFavorited) {
         // Favoritar
         try {
+          const body = { userId: user.id, placeId };
+          console.log('Enviando para favoritar:', body);
           const res = await fetch("http://localhost:3000/favorite", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ userId: user.id, placeId })
+            body: JSON.stringify(body)
           });
           const data = await res.json();
           if (res.ok) {
             setIsFavorited(true);
             alert("Favorito salvo com sucesso!");
           } else {
-            alert(data.error || "Erro ao favoritar.");
+            alert(data.error || data.message || "Erro ao favoritar. Verifique se já está favoritado ou tente novamente.");
           }
         } catch (err) {
-          alert("Erro de conexão com o servidor.");
+          alert("Erro de conexão com o servidor. Tente novamente mais tarde.");
         }
       } else {
         // Desfavoritar
@@ -76,15 +81,20 @@ export default function ContentPage({ name, description, city, type, images }) {
           const favRes = await fetch(`http://localhost:3000/favorite/${user.id}`);
           const favsData = await favRes.json();
           const favs = Array.isArray(favsData.favorites) ? favsData.favorites : [];
-          console.log('Favoritos recebidos:', favs);
           const fav = favs.find(f => f.placeId === placeId);
-          console.log('Favorito encontrado para remover:', fav);
           if (fav && fav.id) {
             const res = await fetch(`http://localhost:3000/favorite/${fav.id}/${user.id}`, {
               method: "DELETE"
             });
             if (res.ok) {
-              setIsFavorited(false);
+              // Atualiza favoritos após remover
+              fetch(`http://localhost:3000/favorite/${user.id}`)
+                .then(res => res.json())
+                .then(data => {
+                  const favs = Array.isArray(data.favorites) ? data.favorites : [];
+                  const isFav = favs.some(fav => fav.placeId === placeId);
+                  setIsFavorited(isFav);
+                });
               alert("Favorito removido!");
             } else {
               alert("Erro ao remover favorito.");
@@ -131,8 +141,9 @@ export default function ContentPage({ name, description, city, type, images }) {
                         <button
                           className={isFavorited ? styles.btnFavoritoActive : styles.btnFavorito}
                           onClick={handleFavorite}
+                          disabled={loadingFav}
                         >
-                          <MdFavorite size={20} /> {isFavorited ? "Desfavoritar" : "Favorito"}
+                          <MdFavorite size={20} /> {isFavorited ? "Desfavoritar" : "Favoritar"}
                         </button>
                     </div>
                         {type && <span className={styles.tipo}>{type}</span>}

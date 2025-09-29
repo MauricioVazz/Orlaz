@@ -4,89 +4,49 @@ import React from "react";
 import styles from "./favoritos.module.css";
 import Headerblue from "@/components/HeaderBlue";
 import Footer from "@/components/Footer";
+import Link from "next/link";
+import { MdLocationOn } from "react-icons/md";
 
-const favoritos = [
-  // Caraguatatuba
-  {
-    id: 1,
-    cidade: "Caraguatatuba",
-    titulo: "Praia Martim de Sá",
-    descricao: "Mais famosa da cidade, com quiosques e mar agitado, ideal para surfistas.",
-    imgAlt: "Praia Martim de Sá",
-    imagem: "/images/martim.jpg",
-    favorito: true,
-  },
-  {
-    id: 2,
-    cidade: "Caraguatatuba",
-    titulo: "Morro Santo Antônio",
-    descricao: "Mirante com vista panorâmica da cidade e ponto de voo livre.",
-    imgAlt: "Morro Santo Antônio",
-    imagem: "/images/santo.jpg",
-    favorito: true,
-  },
-  // Ilhabela
-  {
-    id: 3,
-    cidade: "Ilhabela",
-    titulo: "Praia do Curral",
-    descricao: "Uma das praias mais bonitas, com águas cristalinas e ótima para mergulho.",
-    imgAlt: "Praia do Curral",
-    imagem: "/images/curralilha.jpg",
-    favorito: true,
-  },
-  {
-    id: 4,
-    cidade: "Ilhabela",
-    titulo: "Baía de Castelhados",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Baía de Castelhados",
-    imagem: "/images/casteilha.png",
-    favorito: true,
-  },
-  // Ubatuba
-  {
-    id: 5,
-    cidade: "Ubatuba",
-    titulo: "Praia do Português",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imgAlt: "Praia do Português",
-    imagem: "/images/portuuba.png",
-    favorito: true,
-  },
-  {
-    id: 6,
-    cidade: "Ubatuba",
-    titulo: "Projeto TAMAR",
-    descricao: "Centro de preservação de tartarugas marinhas com exposições e atividades educativas.",
-    imgAlt: "Projeto TAMAR",
-    imagem: "/images/projetouba.jpg",
-    favorito: true,
-  },
-  // São Sebastião
-  {
-    id: 7,
-    cidade: "São Sebastião",
-    titulo: "Praia de Maresias",
-    descricao: "Famosa praia com ondas perfeitas para surf e vida noturna agitada.",
-    imgAlt: "Praia de Maresias",
-    imagem: "/images/mareseba.png",
-    favorito: true,
-  },
-  {
-    id: 8,
-    cidade: "São Sebastião",
-    titulo: "Centro Histórico",
-    descricao: "Construções coloniais preservadas e importante patrimônio cultural.",
-    imgAlt: "Centro Histórico",
-    imagem: "/images/histoseba.png",
-    favorito: true,
-  },
-];
 
 export default function MeusFavoritos() {
-  const handleRemover = (id) => {
-    console.log("Remover favorito id:", id);
+  const [favoritos, setFavoritos] = React.useState([]);
+  React.useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.id) return;
+    fetch(`http://localhost:3000/favorite/${user.id}`)
+      .then(res => res.json())
+      .then(async data => {
+        const favs = Array.isArray(data.favorites) ? data.favorites : [];
+        // Busca dados completos do ponto turístico para cada favorito
+        const pontos = await Promise.all(
+          favs.map(async fav => {
+            const res = await fetch(`http://localhost:3000/tourist-spot/${fav.placeId}`);
+            const ponto = await res.json();
+            return { ...ponto.touristSpot, favId: fav.id };
+          })
+        );
+        setFavoritos(pontos);
+      });
+  }, []);
+
+  const handleRemover = async (favId) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.id) return;
+    await fetch(`http://localhost:3000/favorite/${favId}/${user.id}`, { method: "DELETE" });
+    // Atualiza lista após remover
+    fetch(`http://localhost:3000/favorite/${user.id}`)
+      .then(res => res.json())
+      .then(async data => {
+        const favs = Array.isArray(data.favorites) ? data.favorites : [];
+        const pontos = await Promise.all(
+          favs.map(async fav => {
+            const res = await fetch(`http://localhost:3000/tourist-spot/${fav.placeId}`);
+            const ponto = await res.json();
+            return { ...ponto.touristSpot, favId: fav.id };
+          })
+        );
+        setFavoritos(pontos);
+      });
   };
 
   return (
@@ -99,18 +59,21 @@ export default function MeusFavoritos() {
         </p>
 
         <div className={styles.cardsGrid}>
-          {favoritos.map(({ id, cidade, titulo, descricao, imgAlt, imagem }) => (
-            <div key={id} className={styles.card}>
-              <div className={styles.imgContainer} aria-label={imgAlt}>
+          {favoritos.length === 0 && (
+            <div style={{textAlign:'center',width:'100%'}}>Nenhum favorito encontrado.</div>
+          )}
+          {favoritos.map((ponto) => (
+            <div key={ponto.favId} className={styles.card}>
+              <div className={styles.imgContainer} aria-label={ponto.name}>
                 <img
-                  src={imagem}
-                  alt={imgAlt}
+                  src={ponto.images && ponto.images.length > 0 ? ponto.images[0].url : '/images/sem-imagem.png'}
+                  alt={ponto.name}
                   className={styles.cardImg}
                 />
                 <button
                   className={styles.btnFavorito}
-                  aria-label={`Remover dos favoritos: ${titulo}`}
-                  onClick={() => handleRemover(id)}
+                  aria-label={`Remover dos favoritos: ${ponto.name}`}
+                  onClick={() => handleRemover(ponto.favId)}
                 >
                   <div className={styles.iconWrapper}>
                     <span className={styles.starIcon}>★</span>
@@ -120,10 +83,22 @@ export default function MeusFavoritos() {
               </div>
 
               <div className={styles.cardContent}>
-                <p className={styles.cidade}><span role="img" aria-label="localização">📍</span> {cidade}</p>
-                <strong className={styles.cardTitle}>{titulo}</strong>
-                <p className={styles.cardDesc}>{descricao}</p>
-                <button className={styles.btnVerMais}>Ver Mais</button>
+                <p className={styles.cidade}><MdLocationOn size={18} style={{verticalAlign:'middle',marginRight:4}} /> {ponto.city}</p>
+                <strong className={styles.cardTitle}>{ponto.name}</strong>
+                <p className={styles.cardDesc}>{ponto.description}</p>
+                <Link
+                  href={{
+                    pathname: '/Point',
+                    query: {
+                      name: ponto.name,
+                      description: ponto.description,
+                      city: ponto.city,
+                      type: ponto.type,
+                      images: JSON.stringify(ponto.images || [])
+                    }
+                  }}
+                  className={styles.btnVerMais}
+                >Ver Mais</Link>
               </div>
             </div>
           ))}
