@@ -1,21 +1,28 @@
 "use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./Lista.module.css";
 
 export default function Lista() {
-  const restaurantes = [
-    { id: "mar_azul", nome: "Restaurante Mar Azul", tipo: "Frutos do Mar" },
-  ];
+  const [restaurantes, setRestaurantes] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/restaurant")
+      .then(res => res.json())
+      .then(data => setRestaurantes(data.restaurants || []));
+  }, []);
 
   return (
     <div className={styles.grid}>
       {restaurantes.map((r) => (
         <Link key={r.id} href={`/restaurantes/${r.id}`}>
           <div className={styles.card}>
-            {/* carrega /public/images/mar_azul.png */}
-            <img src={`/images/${r.id}.png`} alt={r.nome} />
-            <h3>{r.nome}</h3>
-            <p>{r.tipo}</p>
+            <img
+              src={r.images && r.images.length > 0 ? r.images[0].url : "/images/sem-imagem.png"}
+              alt={r.name}
+            />
+            <h3>{r.name}</h3>
+            <p>{r.type || r.description}</p>
           </div>
         </Link>
       ))}
