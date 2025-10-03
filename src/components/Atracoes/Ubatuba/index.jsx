@@ -1,45 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ubatuba.module.css";
-export const todasAtracoes = [
- 
-  {
-    titulo: "Ruínas da Lagoinha",
-    descricao: "História preservada, cenário único à beira-mar e uma experiência que mistura cultura, natureza e tranquilidade.",
-    imagem: "/images/ruinauba.png",
-  },
-  {
-    titulo: "Praia do Português",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imagem: "/images/portuuba.png",
-  },
-  {
-    titulo: "Ilha das Couves",
-    descricao: "Praias extensas, natureza exuberante e ótima infraestrutura turística.",
-    imagem: "/images/couveuba.png",
-  },
-  {
-    titulo: "Cachoeira do Prumirim",
-    descricao: "Águas cristalinas, contato direto com a natureza e um refúgio perfeito para relaxar e renovar as energias.",
-    imagem: "/images/cachouba.png",
-  },
-  {
-    titulo: "Projeto TAMAR - Ubatuba",
-    descricao: "Centro de preservação das tartarugas marinhas, com exposições e atividades educativas.",
-    imagem: "/images/projetouba.jpg",
-  },
-  {
-    titulo: "Praia de Itamambuca",
-    descricao: "Famosa pelas ondas perfeitas para o surfe e pela natureza preservada.",
-    imagem: "/images/itamamuba.jpg",
-  },  
-];
 
-export default function atracoesUbatuba() {
+export default function AtracoesUbatuba() {
+  const [atracoes, setAtracoes] = useState([]);
   const [visiveis, setVisiveis] = useState(4);
 
+  useEffect(() => {
+    fetch("http://localhost:3000/tourist-spot?city=UBATUBA")
+      .then(res => res.json())
+      .then(data => {
+        const atracoesUbatuba = (data.touristSpots || []).filter(a => a.city === "UBATUBA");
+        setAtracoes(atracoesUbatuba);
+      });
+  }, []);
+
   const handleMore = () => {
-    setVisiveis((prev) => prev + 2); // mostra +2 cards a cada clique
+    setVisiveis((prev) => prev + 2);
   };
 
   return (
@@ -50,26 +27,26 @@ export default function atracoesUbatuba() {
       </p>
 
       <div className={styles.cards}>
-        {todasAtracoes.slice(0, visiveis).map((atracao, i) => (
-          <div key={i} className={styles.card}>
+        {atracoes.slice(0, visiveis).map((atracao, i) => (
+          <div key={atracao.id || i} className={styles.card}>
             <img
-              src={atracao.imagem}
-              alt={atracao.titulo}
+              src={atracao.images && atracao.images.length > 0 ? atracao.images[0].url : "/images/sem-imagem.png"}
+              alt={atracao.name}
               className={styles["card-img"]}
             />
             <div className={styles["card-info"]}>
               <div className={styles["card-header"]}>
-                <h3>{atracao.titulo}</h3>
+                <h3>{atracao.name}</h3>
                 <span className={styles.nota}>★</span>
               </div>
-              <p>{atracao.descricao}</p>
+              <p>{atracao.description}</p>
               <button className={styles["btn-vermais"]}>Ver Mais</button>
             </div>
           </div>
         ))}
       </div>
 
-      {visiveis < todasAtracoes.length && (
+      {visiveis < atracoes.length && (
         <div className={styles.moreWrapper}>
           <button className={styles.moreButton} onClick={handleMore}>
             Mais Atrações

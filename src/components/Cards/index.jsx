@@ -32,7 +32,7 @@ const pontosTuristicos = [
 export default function App() {
   return (
     <div className="container">
-      <h1>Conheça Nossos Pontos Turísticos</h1>
+      <h1>Conheça Nossos Cidades</h1>
       <p className="subtitulo">Cada cidade do litoral norte tem sua própria personalidade e atrações únicas</p>
       <div className="cards">
         {pontosTuristicos.map((ponto, index) => (
