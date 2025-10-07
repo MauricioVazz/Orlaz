@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from './City.module.css';
 import Link from 'next/link';
 
@@ -14,7 +15,9 @@ const cidades = [
 const categorias = ['Todas as categorias', 'PRAIA', 'URBANO', 'NATUREZA'];
 
 export default function City() {
-  const [cidade, setCidade] = useState('Todas as cidades');
+  const searchParams = useSearchParams();
+  const cityFromQuery = searchParams.get('city');
+  const [cidade, setCidade] = useState(cityFromQuery || 'Todas as cidades');
   const [categoria, setCategoria] = useState('Todas as categorias');
   const [cards, setCards] = useState([]);
 
@@ -24,6 +27,13 @@ export default function City() {
       .then(data => setCards(data.touristSpots || []))
       .catch(() => setCards([]));
   }, []);
+
+  // Atualiza o filtro de cidade se vier da query string
+  useEffect(() => {
+    if (cityFromQuery && cidades.some(c => c.value === cityFromQuery)) {
+      setCidade(cityFromQuery);
+    }
+  }, [cityFromQuery]);
 
   const cardsFiltrados = cards.filter(card =>
     (cidade === 'Todas as cidades' || card.city === cidade)

@@ -1,0 +1,265 @@
+.perfilContainer {
+  max-width: 420px;
+  margin: 48px auto 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0002;
+  padding: 40px 28px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.titulo {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.perfilCard {
+  width: 100%;
+  background: #f5f8ff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px #1976d210;
+  padding: 28px 18px 18px 18px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.infoSection {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.04rem;
+  color: #333;
+  margin-bottom: 4px;
+  gap: 8px;
+}
+.actionsRow {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+}
+.logoutBtn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 1px 4px #e5393520;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.logoutBtn:hover {
+  background: #b71c1c;
+}
+.deleteBtn {
+  background: #fff;
+  color: #e53935;
+  border: 1.5px solid #e53935;
+  border-radius: 7px;
+  padding: 10px 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 1px 4px #e5393520;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.deleteBtn:hover {
+  background: #e53935;
+  color: #fff;
+}
+.editBtn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 4px #1976d220;
+  transition: background 0.2s;
+}
+.editBtn:hover {
+  background: #0d47a1;
+}
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 8px;
+  width: 100%;
+  justify-content: center;
+}
+.avatarPreview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #e3e3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #1976d220;
+}
+.avatarPreview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.avatarFallback {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #bdbdbd;
+}
+.avatarActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.avatarBtn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #1976d220;
+  transition: background 0.2s;
+}
+.avatarBtn:hover {
+  background: #1976d2;
+}
+.avatarRemoveBtn {
+  background: #fff;
+  color: #e53935;
+  border: 1px solid #e53935;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.avatarRemoveBtn:hover {
+  background: #e53935;
+  color: #fff;
+}
+.success {
+  color: #0a0;
+  font-weight: 500;
+  margin-top: 8px;
+  text-align: center;
+}
+.error {
+  color: #c00;
+  font-weight: 500;
+  margin-top: 8px;
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  align-items: center;
+}
+.form label {
+  font-weight: 500;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+.form input[type="text"],
+.form input[type="email"] {
+  padding: 10px 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 7px;
+  font-size: 1.08rem;
+  background: #f7f9fa;
+  margin-top: 2px;
+}
+.form input[type="color"] {
+  width: 44px;
+  height: 36px;
+  border: none;
+  background: none;
+  margin-top: 4px;
+  cursor: pointer;
+}
+.form button {
+  background: linear-gradient(90deg,#1976d2,#2196f3);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 0;
+  font-size: 1.13rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  box-shadow: 0 2px 8px #1976d220;
+  transition: background 0.2s;
+}
+.form button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+@media (max-width: 600px) {
+  .perfilContainer {
+    padding: 18px 4vw 24px 4vw;
+  }
+  .form {
+    gap: 14px;
+  }
+  .avatarSection {
+    gap: 10px;
+  }
+  .avatarPreview, .avatarPreview img, .avatarFallback {
+    width: 64px;
+    height: 64px;
+  }
+  .perfilCard {
+    padding: 14px 4vw 10px 4vw;
+  }
+  .actionsRow {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
