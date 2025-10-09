@@ -176,7 +176,6 @@ export default function PerfilPage() {
         <div className={styles.infoSection}>
           <div className={styles.infoRow}><span>ID:</span> <b>{user.id}</b></div>
           <div className={styles.infoRow}><IoMailOutline style={{marginRight:4}}/> <span>Email:</span> <b>{user.email}</b></div>
-          <div className={styles.infoRow}><IoColorPaletteOutline style={{marginRight:4}}/> <span>Cor do avatar:</span> <b><span style={{background:user.avatarColor,display:'inline-block',width:18,height:18,borderRadius:'50%',border:'1px solid #ccc',verticalAlign:'middle'}}></span> {user.avatarColor}</b></div>
           <div className={styles.infoRow}><span>Conta criada em:</span> <b>{new Date(user.createdAt).toLocaleDateString()}</b></div>
         </div>
         <div className={styles.actionsRow}>

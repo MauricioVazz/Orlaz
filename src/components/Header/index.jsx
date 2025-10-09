@@ -37,11 +37,11 @@ export default function Header() {
                     {mounted && (
                         <Link href={user ? "/perfil" : "/login"} className={styles.icon}>
                             {user && user.avatarUrl ? (
-                                <img src={user.avatarUrl} alt="avatar" style={{width:32,height:32,borderRadius:"50%",border:`2px solid ${user.avatarColor||'#ccc'}`}} />
+                                <img src={user.avatarUrl} alt="avatar" style={{width:38,height:38,borderRadius:"50%"}} />
                             ) : user && user.avatarColor ? (
-                                <span style={{width:32,height:32,display:'inline-block',borderRadius:'50%',background:user.avatarColor,border:'2px solid #fff'}}></span>
+                                <span style={{width:38,height:38,display:'inline-block',borderRadius:'50%',background:user.avatarColor}}></span>
                             ) : (
-                                <IoPersonSharp size={24} />
+                                <IoPersonSharp size={38} />
                             )}
                         </Link>
                     )}
