@@ -18,20 +18,28 @@ export default function PerfilPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Busca usuário logado do localStorage
-    const u = JSON.parse(localStorage.getItem("user"));
-    if (!u) {
+    // Busca usuário logado pelo userId do localStorage
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
       router.push("/login");
       return;
     }
-    setUser(u);
-    setForm({
-      name: u.name || "",
-      email: u.email || "",
-      avatarUrl: u.avatarUrl || "",
-      avatarColor: u.avatarColor || "#cccccc"
-    });
-    setAvatarPreview(u.avatarUrl || "");
+    fetch(`http://localhost:3000/profile/${userId}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (!data || !data.profile) {
+          router.push("/login");
+          return;
+        }
+        setUser(data.profile);
+        setForm({
+          name: data.profile.name || "",
+          email: data.profile.email || "",
+          avatarUrl: data.profile.avatarUrl || "",
+          avatarColor: data.profile.avatarColor || "#cccccc"
+        });
+        setAvatarPreview(data.profile.avatarUrl || "");
+      });
   }, [router]);
 
   const handleChange = e => {
