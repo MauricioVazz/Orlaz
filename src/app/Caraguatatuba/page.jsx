@@ -38,58 +38,7 @@ export default function CaraguatatubaPage() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        items={[
-          {
-            name: "Azul marinho",
-            desc: "Um peixe refogado com banana nanica, cujo tanino na banana deixa o caldo com coloração azulada.",
-            image: "/images/azulmarinho.jpg"
-          },
-          {
-            name: "Lambe-lambe",
-            desc: "Arroz preparado com mexilhões, tradição local ligada à maricultura.",
-            image: "/images/lambelambe.jpg"
-          },
-          {
-            name: "Bolinho de taioba",
-            desc: "Salgado feito com a folha da taioba, refletindo a tradição de colheita na mata local.",
-            image: "/images/taioba.jpg"
-          },
-          {
-            name: "Mexilhões",
-            desc: "Consumidos ao vinagrete, no bafo; também usados em versões de bolinho caipira.",
-            image: "/images/mexilhoes.jpg"
-          },
-          {
-            name: "Frutos do mar no geral",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          },
-          {
-            name: "Frutos do mar no geral5",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          },
-          {
-            name: "Frutos do mar no geral4",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          },
-          {
-            name: "Frutos do mar no geral3",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          },
-          {
-            name: "Frutos do mar no geral2",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          },
-          {
-            name: "Frutos do mar no geral1",
-            desc: "Camarão, casquinha de siri e mariscos são muito presentes na culinária regional.",
-            image: "/images/frutosdomar.jpg"
-          }
-        ]}
+        fetchUrl="/gastronomy?city=CARAGUATATUBA"
         buttonLabel="Ver Mais"
       />
       <EventosTimeline eventos={eventos} cor="#1853d1ff" />
