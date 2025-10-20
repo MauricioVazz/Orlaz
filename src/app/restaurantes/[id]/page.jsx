@@ -57,7 +57,7 @@ export default function RestauranteDetalhe() {
           <p className={styles.descricao}>{restaurante.description}</p>
         </div>
       </div>
-      <Comments />
+      <Comments placeId={id} placeType="restaurant" />
       <Footer />
     </div>
   );

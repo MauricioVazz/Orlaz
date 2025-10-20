@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
@@ -10,6 +11,7 @@ import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
 import { FaUtensils, FaFutbol, FaMusic, FaCar } from "react-icons/fa";
 import EventosTimeline from "@/components/EventosTimeline";
+import buildUrl from "../../lib/api";
 
 export default function CaraguatatubaPage() {
   const eventos = [
@@ -38,7 +40,7 @@ export default function CaraguatatubaPage() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        fetchUrl="/gastronomy?city=CARAGUATATUBA"
+        fetchUrl={buildUrl('/gastronomy/category/CARAGUATATUBA')}
         buttonLabel="Ver Mais"
       />
       <EventosTimeline eventos={eventos} cor="#1853d1ff" />

@@ -175,3 +175,84 @@
 	color: #0d47a1;
 	text-decoration: underline;
 }
+
+/* New styles for actions and states */
+.loading {
+	padding: 8px 12px;
+	background: #fff8e1;
+	border: 1px solid #ffecb3;
+	border-radius: 8px;
+	color: #8a6d00;
+	margin-bottom: 8px;
+}
+.error {
+	padding: 8px 12px;
+	background: #ffebee;
+	border: 1px solid #ffcdd2;
+	border-radius: 8px;
+	color: #b00020;
+	margin-bottom: 8px;
+}
+
+.commentActions {
+	display: flex;
+	gap: 8px;
+	margin-top: 6px;
+}
+.commentControls {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-left: 12px;
+}
+.button {
+	padding: 6px 10px;
+	background: #1976d2;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.buttonAlt {
+	padding: 6px 10px;
+	background: transparent;
+	color: #1976d2;
+	border: 1px solid #1976d2;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.smallBtn {
+	padding: 6px 8px;
+	background: #eee;
+	color: #222;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.smallBtnDanger {
+	padding: 6px 8px;
+	background: #fff0f0;
+	color: #b00020;
+	border: 1px solid #ffbaba;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.textarea {
+	width: 100%;
+	min-height: 64px;
+	padding: 8px;
+	border-radius: 8px;
+	border: 1px solid #d0d4da;
+}
+
+.commentLoginHint {
+	padding: 12px;
+	background: #fafafa;
+	border: 1px dashed #d0d4da;
+	border-radius: 8px;
+	margin-bottom: 8px;
+}
+
+.imagesPreview img { max-width: 100px; border-radius: 6px; }
+

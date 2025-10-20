@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import styles from './Gastronomy.module.css';
 
-export default function Gastronomy({ title, subtitle, items = [], buttonLabel, onButtonClick, fetchUrl }) {
-  const [visibleCount, setVisibleCount] = useState(6);
+export default function Gastronomy({ title, subtitle, items = [], buttonLabel, onButtonClick, fetchUrl, initialCount = 6, increment = 4, showLessLabel = 'Ver Menos', onShowLess }) {
+  const [visibleCount, setVisibleCount] = useState(initialCount);
   const [remoteItems, setRemoteItems] = useState(items || []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -64,8 +64,13 @@ export default function Gastronomy({ title, subtitle, items = [], buttonLabel, o
   });
 
   const handleShowMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 4, sourceItems.length));
+    setVisibleCount((prev) => Math.min(prev + increment, sourceItems.length));
     if (onButtonClick) onButtonClick();
+  };
+
+  const handleShowLess = () => {
+    setVisibleCount((prev) => Math.max(initialCount, prev - increment));
+    if (onShowLess) onShowLess();
   };
 
   return (
@@ -101,11 +106,19 @@ export default function Gastronomy({ title, subtitle, items = [], buttonLabel, o
         </div>
       </div>
 
-      {buttonLabel && visibleCount < sourceItems.length && (
-        <button className={styles.gastronomyButton} onClick={handleShowMore}>
-          {buttonLabel}
-        </button>
-      )}
+      <div className={styles.gastronomyButtons}>
+        {visibleCount > initialCount && (
+          <button className={styles.gastronomyButton} onClick={handleShowLess}>
+            {showLessLabel}
+          </button>
+        )}
+
+        {buttonLabel && visibleCount < sourceItems.length && (
+          <button className={styles.gastronomyButton} onClick={handleShowMore}>
+            {buttonLabel}
+          </button>
+        )}
+      </div>
     </section>
   );
 }
