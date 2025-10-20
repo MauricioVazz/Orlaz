@@ -37,7 +37,9 @@ export default function LoginForm() {
       if (user) {
         alert("Login realizado com sucesso!");
         if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(user));
+          // Salva o id do usuário e o flag de login
+          localStorage.setItem("userId", String(user.id));
+          localStorage.setItem("isLoggedIn", "true");
         }
         router.push("/"); // Redireciona para a home ou dashboard
       } else {
