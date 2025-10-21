@@ -1,0 +1,147 @@
+
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  max-width: 980px;
+  margin: 24px auto 0 auto;
+  align-items: flex-start;
+  font-family: 'Inter', Arial, sans-serif;
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 28px 36px 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.commentCard {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 18px;
+  background: #fafbfc;
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarImg, .avatarPlaceholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #e0e0e0;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.userName {
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: #222;
+}
+
+.text {
+  font-size: 1.02rem;
+  color: #444;
+  margin-top: 6px;
+}
+
+.commentInputCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  border: 1.5px solid #d0d4da;
+  padding: 10px 12px;
+}
+
+.input {
+  flex: 1 1 auto;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d0d4da;
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #1976d2;
+  background: #f5faff;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d0d4da;
+}
+
+.button {
+  padding: 8px 14px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.smallBtnDanger {
+  padding: 6px 10px;
+  background: #fff0f0;
+  color: #b00020;
+  border: 1px solid #ffbaba;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.loading, .error, .commentLoginHint {
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.loading {
+  background: #fff8e1;
+  border: 1px solid #ffecb3;
+  color: #8a6d00;
+}
+
+.error {
+  background: #ffebee;
+  border: 1px solid #ffcdd2;
+  color: #b00020;
+}
+
+.commentLoginHint {
+  background: #fafafa;
+  border: 1px dashed #d0d4da;
+  color: #555;
+}

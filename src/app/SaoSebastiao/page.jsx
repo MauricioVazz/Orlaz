@@ -39,33 +39,7 @@ export default function SaoSebastiao() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        items={[
-          {
-            name: "Peixe salgado e seco no varal",
-            desc: "A preservação artesanal do pescado através da salga e secagem ao sol, sem conservantes, ainda praticada pelas famílias locais",
-            image: "/images/peixe-seco.jpg",
-          },
-          {
-            name: "Azul-Marinho",
-            desc: "Prato caiçara tradicional, preparado com peixe e banana verde, cujo caldo adquire uma coloração azulada característica",
-            image: "/images/azulmarinho.jpg",
-          },
-          {
-            name: "Moqueca Caiçara",
-            desc: "Peixe ou camarão cozido com tomate, pimentão, leite de coco e temperos, servido com arroz.",
-            image: "/images/moqueca.jpg",
-          },
-          {
-            name: "Feijoada Caiçara",
-            desc: "Feijoada feita com frutos do mar no lugar das carnes suínas.",
-            image: "/images/feijoada.jpg",
-          },
-          {
-            name: "Camarão na Moranga",
-            desc: "Abóbora recheada com creme de camarão e queijo.",
-            image: "/images/moranga.jpg",
-          },
-        ]}
+        fetchUrl={buildUrl('/gastronomy/category/SAO_SEBASTIAO')}
         buttonLabel="Ver Mais"
       />
       {/* Aqui entram os eventos */}

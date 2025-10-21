@@ -3,7 +3,7 @@ import styles from "@/components/ContentPage/ContentPage.module.css";
 import { MdLocationOn, MdShare } from "react-icons/md";
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import Comments from "@/components/Comments";
+import CommentsRestaurant from "@/components/CommentsRetaurant";
 import Footer from "@/components/Footer";
 import HeaderBlue from "@/components/HeaderBlue";
 
@@ -57,7 +57,7 @@ export default function RestauranteDetalhe() {
           <p className={styles.descricao}>{restaurante.description}</p>
         </div>
       </div>
-      <Comments placeId={id} placeType="restaurant" />
+  <CommentsRestaurant restaurantId={id} />
       <Footer />
     </div>
   );

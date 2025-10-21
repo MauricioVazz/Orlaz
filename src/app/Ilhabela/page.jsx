@@ -40,33 +40,7 @@ export default function Ilhabela() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        items={[
-          {
-            name: "Azul marinho",
-            desc: "Um peixe típico refogado com banana nanica; o tanino na banana deixa o caldo com coloração azulada.",
-            image: "/images/azulmarinho.jpg",
-          },
-          {
-            name: "Peixe assado na folha de bananeira",
-            desc: "Peixe temperado com limão, alho e coentro, embrulhado na folha de bananeira e grelhado para exaltar o sabor e a tradição caiçara.",
-            image: "/images/peixe-bananeira.jpg",
-          },
-          {
-            name: "Moquecas e risotos de frutos do mar",
-            desc: "Moquecas, caldeiradas e risotos de peixe, lula, camarão e outros. Receitas preparadas com ervas regionais, leite, mandioca, azeite e dendê.",
-            image: "/images/moqueca-frutos.jpg",
-          },
-          {
-            name: "Caldeirada",
-            desc: "Preparada com peixe, lula, mariscos, batata, pimentão e cheiro-verde, a caldeirada é um ícone forte na culinária local.",
-            image: "/images/caldeirada.jpg",
-          },
-          {
-            name: "Destaques com camarão",
-            desc: "Camarão à provençal, alho e óleo, combinado ao arroz, risotos e massas são comuns nos menus locais.",
-            image: "/images/camarao.jpg",
-          },
-        ]}
+        fetchUrl={buildUrl('/gastronomy/category/ILHABELA')}
         buttonLabel="Ver Mais"
       />
 

@@ -8,16 +8,20 @@ import React, { useEffect, useState } from "react";
 export default function Header() {
     const [user, setUser] = useState(null);
     const [mounted, setMounted] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     useEffect(() => {
         // Busca apenas o id salvo no localStorage
         const userId = localStorage.getItem("userId");
+        const loggedIn = localStorage.getItem("isLoggedIn");
+        setIsLoggedIn(loggedIn);
         if (userId) {
             // Busca os dados completos do usuário no backend
             fetch(`http://localhost:3000/profile/${userId}`)
                 .then(res => res.ok ? res.json() : null)
                 .then(data => {
-                    setUser(data || null);
+                    // O backend retorna { message, profile }
+                    setUser(data && data.profile ? data.profile : null);
                     setMounted(true);
                 })
                 .catch(() => {
@@ -46,27 +50,30 @@ export default function Header() {
                     </span>
                     {/* Avatar do usuário logado ou ícone padrão */}
                     {mounted && (
-                        <Link
-                            href={
-                                typeof window !== "undefined"
-                                && localStorage.getItem("isLoggedIn") === "true"
-                                && user && (
-                                    (typeof user.id === "number" && user.id > 0) ||
-                                    (typeof user.id === "string" && !isNaN(Number(user.id)) && Number(user.id) > 0)
-                                )
-                                    ? "/perfil"
-                                    : "/login"
-                            }
-                            className={styles.icon}
-                        >
-                            {user && user.avatarUrl ? (
-                                <img src={user.avatarUrl} alt="avatar" style={{width:38,height:38,borderRadius:"50%"}} />
-                            ) : user && user.avatarColor ? (
-                                <span style={{width:38,height:38,display:'inline-block',borderRadius:'50%',background:user.avatarColor}}></span>
-                            ) : (
-                                <IoPersonSharp size={28} />
-                            )}
-                        </Link>
+                        (() => {
+                            // eslint-disable-next-line no-console
+                            console.log("[Header-Link] isLoggedIn:", isLoggedIn);
+                            // eslint-disable-next-line no-console
+                            console.log("[Header-Link] user:", user);
+                            // eslint-disable-next-line no-console
+                            console.log("[Header-Link] href será:", isLoggedIn === "true" ? "/perfil" : "/login");
+                            return (
+                                <Link
+                                    href={
+                                        isLoggedIn === "true" ? "/perfil" : "/login"
+                                    }
+                                    className={styles.icon}
+                                >
+                                    {user && user.avatarUrl ? (
+                                        <img src={user.avatarUrl} alt="avatar" style={{width:38,height:38,borderRadius:"50%"}} />
+                                    ) : user && user.avatarColor ? (
+                                        <span style={{width:38,height:38,display:'inline-block',borderRadius:'50%',background:user.avatarColor}}></span>
+                                    ) : (
+                                        <IoPersonSharp size={28} />
+                                    )}
+                                </Link>
+                            );
+                        })()
                     )}
                 </div>
             </div>

@@ -41,33 +41,7 @@ export default function Ubatuba() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        items={[
-          {
-            name: "Azul marinho",
-            desc: "Um peixe refogado com banana nanica, cujo tanino na banana deixa o caldo com coloração azulada.",
-            image: "/images/azulmarinho.jpg"
-          },
-          {
-            name: "Tainha",
-            desc: "É a carne protagonista em festividades como a Festa de São Pedro Pescador e a Festa do Divino. Tradicionalmente é preparada como 'sobrepuã' assada sobre galhos de goiabeira.",
-            image: "/images/tainha.jpg"
-          },
-          {
-            name: "Moqueca Caiçara",
-            desc: "Uma versão local da moqueca, usando peixe fresco, dendê, leite de coco e ervas regionais.",
-            image: "/images/moqueca.jpg"
-          },
-          {
-            name: "Suco de Cambuci",
-            desc: "Refrescante e levemente ácido, feito do fruto típico da Mata Atlântica.",
-            image: "/images/cambuci.jpg"
-          },
-          {
-            name: "Lambe-lambe",
-            desc: "Arroz preparado com mexilhões, tradição local ligada à maricultura.",
-            image: "/images/lambelambe.jpg"
-          }
-        ]}
+        fetchUrl={buildUrl('/gastronomy/category/UBATUBA')}
         buttonLabel="Ver Mais"
       />
       <AtracoesUbatuba/>
