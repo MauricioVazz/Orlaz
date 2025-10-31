@@ -54,14 +54,6 @@ export default function ContactUs() {
               <IoTimeOutline size={22} /> 
               <span><b>Horário de Funcionamento</b><br/>Seg-Sex: 8h às 18h<br/>Sáb: 9h às 13h</span>
             </div>
-            <div className={styles.infoItem}>
-              <span><b>Redes Sociais</b></span>
-              <div className={styles.socialIcons}>
-                <a href="#" aria-label="Instagram"><IoLogoInstagram size={22} /></a>
-                <a href="#" aria-label="WhatsApp"><IoLogoWhatsapp size={22} /></a>
-                <a href="#" aria-label="Twitter"><IoLogoTwitter size={22} /></a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
