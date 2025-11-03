@@ -101,6 +101,7 @@
   margin-top: 0;
 }
 
+/* Desktop -> tablet */
 @media (max-width: 900px) {
   .footerContent {
     flex-direction: column;
@@ -111,4 +112,97 @@
     min-width: 0;
     width: 100%;
   }
+}
+
+/* Tablet / large mobile adjustments */
+@media (max-width: 600px) {
+  .footer {
+    padding: 32px 0 0 0;
+  }
+
+  .footerContent {
+    padding: 0 20px 20px 20px;
+    gap: 20px;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+  }
+
+  .desc,
+  .address,
+  .links a,
+  .copy {
+    font-size: 0.95rem;
+  }
+
+  .socials {
+    gap: 14px;
+  }
+
+  /* reduce social SVG size */
+  .socials svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .colTitle {
+    font-size: 1.05rem;
+  }
+}
+
+/* Small / narrow phones */
+@media (max-width: 480px) {
+  .footer {
+    padding: 24px 0 0 0;
+  }
+
+  .footerContent {
+    padding: 0 16px 16px 16px;
+    align-items: center; /* center columns on very small devices */
+    text-align: left;
+  }
+
+  .col {
+    width: 100%;
+    align-items: left;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .desc,
+  .address,
+  .links a,
+  .copy {
+    font-size: 0.9rem;
+  }
+
+  .colTitle {
+    font-size: 1rem;
+  }
+
+  .socials {
+    gap: 12px;
+    justify-content: left;
+  }
+
+  .socials svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .copy {
+    padding: 12px 0 8px 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* ensure SVGs scale nicely */
+.socials svg {
+  display: block;
+  width: 28px;
+  height: 28px;
 }

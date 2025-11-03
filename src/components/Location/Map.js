@@ -1,20 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-// Ícone padrão do Leaflet
-const markerIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
+import React, { useEffect, useRef, useState } from "react";
 
 // Dados das cidades
 const cidades = [
@@ -40,28 +26,121 @@ const cidades = [
   },
 ];
 
-export default function Map() {
-  return (
-    <MapContainer
-      center={[-23.6, -45.3]}
-      zoom={10}
-      scrollWheelZoom={false}
-      style={{ height: "450px", width: "100%", borderRadius: "12px" }}
-    >
-      <TileLayer
-        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-        attribution='&copy; <a href="https://www.esri.com/">Esri</a>, Earthstar Geographics'
-      />
+export default function Map({ apiKey: propApiKey }) {
+  const containerRef = useRef(null);
+  const [sizePx, setSizePx] = useState({ w: 800, h: 450 });
+  const [imgError, setImgError] = useState(false);
 
-      {cidades.map(({ nome, position, descricao }) => (
-        <Marker key={nome} position={position} icon={markerIcon}>
-          <Popup>
-            <strong>{nome}</strong>
-            <br />
-            {descricao}
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+  // centralização e zoom — ajuste se quiser diferente
+  const centerLat = -23.6;
+  const centerLng = -45.3;
+  const zoom = 10;
+
+  // detecta o tamanho do container e recalcula no redimensionamento
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const el = containerRef.current;
+    const update = () => {
+      const w = Math.max(300, Math.floor(el.clientWidth));
+      const h = 450;
+      setSizePx({ w, h });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // fallback opcional para chave da API
+  const envKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const winKey =
+    typeof window !== "undefined" ? window.__GOOGLE_MAPS_API_KEY : undefined;
+  const apiKey = propApiKey || envKey || winKey;
+
+  // constrói a URL do Static Maps (parâmetro markers é opcional porque desenhamos marcadores manualmente)
+  const MAX_DIM = 640;
+  const requestedW = sizePx.w;
+  const requestedH = Math.min(sizePx.h, MAX_DIM);
+  const sizeW = Math.min(requestedW, MAX_DIM);
+  const sizeH = Math.min(requestedH, MAX_DIM);
+  const scale = requestedW > MAX_DIM ? 2 : 1;
+  const base = "https://maps.googleapis.com/maps/api/staticmap";
+  const urlParams = [
+    `center=${centerLat},${centerLng}`,
+    `zoom=${zoom}`,
+    `size=${sizeW}x${sizeH}`,
+    `scale=${scale}`,
+    `maptype=roadmap`,
+    // obs: não dependemos do parâmetro markers da API para manter controle visual dos marcadores
+  ].join("&");
+  const keyParam = apiKey ? `&key=${encodeURIComponent(apiKey)}` : "";
+  const staticMapUrl = `${base}?${urlParams}${keyParam}`;
+
+  // URL de fallback para iframe
+  const iframeCenter = `https://www.google.com/maps?q=${centerLat},${centerLng}&z=${zoom}&output=embed`;
+
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        width: "100%",
+        maxWidth: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+      }}
+    >
+      <div
+        style={{
+          height: 450,
+          width: "100%",
+          borderRadius: 12,
+          overflow: "hidden",
+          background: "#eee",
+          position: "relative",
+        }}
+      >
+        {!imgError ? (
+          // div de fundo garante que a imagem estática ocupe 1:1 a área do overlay
+          <div
+            role="img"
+            aria-label="Google Static Map com marcadores"
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url("${staticMapUrl}")`,
+              backgroundSize: "100% 100%",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+            ref={(el) => {
+              if (!el) return;
+              const img = new Image();
+              img.src = staticMapUrl;
+              img.onload = () => {
+                if (imgError) setImgError(false);
+              };
+              img.onerror = () => {
+                console.warn(
+                  "Static Maps image failed, falling back to iframe."
+                );
+                setImgError(true);
+              };
+            }}
+          />
+        ) : (
+          <iframe
+            title="Google Maps (fallback)"
+            src={iframeCenter}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        )}
+      </div>
+    </div>
   );
 }

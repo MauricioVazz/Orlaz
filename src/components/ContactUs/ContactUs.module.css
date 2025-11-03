@@ -1,3 +1,4 @@
+/* Base / layout */
 .contactSection {
   background: #e5e5e5;
   width: 100vw;
@@ -7,7 +8,7 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding: 40px 0;
+  padding: 60px 40px;
   border-radius: 0;
   box-shadow: none;
   z-index: 1;
@@ -24,15 +25,11 @@
   overflow: hidden;
   background: transparent;
 }
-.contactSectionContent {
-  max-width: 900px;
-  margin: 0 auto;
-  border-radius: 16px;
-  overflow: hidden;
-}
+
+/* Desktop: form maior e caixa de contato menor */
 .contactGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 32px;
   margin-top: 24px;
   background: transparent;
@@ -40,6 +37,7 @@
   border-radius: 0;
 }
 
+/* Contact info box */
 .contactInfoBox {
   background: #fff;
   border-radius: 12px;
@@ -52,11 +50,13 @@
   max-width: 350px;
   margin: 0 auto;
 }
+
 .infoTitle {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
+
 .infoItem {
   display: flex;
   align-items: flex-start;
@@ -64,29 +64,23 @@
   font-size: 1rem;
   color: #222;
 }
+
 .infoItem b {
   font-weight: 700;
 }
+
 .infoItem a {
   color: #1a4b6e;
   text-decoration: underline;
 }
+
 .socialIcons {
   display: flex;
   gap: 12px;
   margin-top: 4px;
 }
 
-@media (max-width: 900px) {
-  .contactGrid {
-    grid-template-columns: 1fr;
-  }
-  .contactInfoBox {
-    max-width: 100%;
-    margin-top: 32px;
-  }
-}
-
+/* Typography */
 .title {
   font-size: 2.4rem;
   font-weight: 700;
@@ -102,6 +96,7 @@
   text-align: center;
 }
 
+/* Form */
 .form {
   display: flex;
   flex-direction: column;
@@ -117,7 +112,6 @@
   max-width: 100%;
 }
 
-
 .label {
   font-size: 1.15rem;
   font-weight: 500;
@@ -125,8 +119,8 @@
   color: #222;
 }
 
-
-.input, .textarea {
+.input,
+.textarea {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #b3d4fc;
@@ -134,9 +128,11 @@
   font-size: 1rem;
   background: #fff;
   resize: none;
+  box-sizing: border-box;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   outline: 2px solid #1a4b6e;
   border-color: #1a4b6e;
 }
@@ -156,4 +152,148 @@
 
 .button:hover {
   background: #163a56;
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+  .contactSection {
+    padding: 40px 24px;
+  }
+  .contactGrid {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+  }
+  .contactInfoBox {
+    max-width: 320px;
+    padding: 20px;
+  }
+}
+
+/* Narrow / small tablet -> empilha */
+@media (max-width: 900px) {
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .contactInfoBox {
+    max-width: 100%;
+    margin-top: 24px;
+    padding: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .contactSection {
+    padding: 20px 16px;
+  }
+
+  .contactSectionContent {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .form {
+    gap: 14px;
+    width: 100%;
+  }
+
+  .formGroup {
+    width: 100%;
+  }
+
+  .label {
+    font-size: 1rem;
+  }
+
+  .input,
+  .textarea {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .contactInfoBox {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .infoTitle {
+    font-size: 1.1rem;
+  }
+
+  .infoItem {
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+
+  .infoItem svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+}
+
+/* Very small / narrow phones */
+@media (max-width: 480px) {
+  .contactSection {
+    padding: 16px 12px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .input,
+  .textarea {
+    padding: 9px 10px;
+    font-size: 0.9rem;
+  }
+
+  .button {
+    padding: 11px 14px;
+    font-size: 0.95rem;
+  }
+
+  .infoItem {
+    font-size: 0.9rem;
+    gap: 7px;
+  }
+
+  .infoItem svg {
+    width: 18px;
+    height: 18px;
+  }
 }
