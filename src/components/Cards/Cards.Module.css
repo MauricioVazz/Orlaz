@@ -11,7 +11,7 @@
 h1 {
   font-weight: 900;
   margin-bottom: 8px;
-  color:black;
+  color: black;
 }
 
 /* Subtítulo */
@@ -53,7 +53,7 @@ h1 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 12px;
 }
 
 /* Cabeçalho do card: título + nota */
@@ -64,22 +64,17 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* Nota */
-.nota {
-  font-weight: 700;
-  color: #333;
-}
-
 /* Botão Ver Mais */
 .btn-vermais {
   background-color: #3b59ff;
   color: white;
   font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 16px;
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 6px; /* margem superior extra para garantir separação quando necessário */
 }
 
 .btn-vermais:hover {

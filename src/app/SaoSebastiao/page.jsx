@@ -10,6 +10,7 @@ import AtracoesSaoSebastiao from "@/components/Atracoes/SaoSebastiao";
 import { FaFish, FaGuitar, FaShip, FaWineBottle } from "react-icons/fa6";
 import EventosTimeline from "@/components/EventosTimeline";
 import Gastronomy from "@/components/Gastronomy";
+import buildUrl from "../../lib/api";
 
 export default function SaoSebastiao() {
   const eventos = [

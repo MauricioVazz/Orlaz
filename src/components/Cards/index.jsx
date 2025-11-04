@@ -41,7 +41,6 @@ export default function App() {
             <div className="card-info">
               <div className="card-header">
                 <h3>{ponto.nome}</h3>
-                <span className="nota">{ponto.nota}</span>
               </div>
               <p>{ponto.descricao}</p>
               <Link href={`/${ponto.nome.replace(/\s+/g, '')}`} className="btn-vermais">

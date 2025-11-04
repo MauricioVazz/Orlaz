@@ -10,6 +10,7 @@ import AtracoesBela from "@/components/Atracoes/Bela"; // Import corrigido para 
 import { FaWater, FaSailboat, FaUmbrellaBeach, FaDrum } from "react-icons/fa6";
 import EventosTimeline from "@/components/EventosTimeline";
 import Gastronomy from "@/components/Gastronomy";
+import buildUrl from "../../lib/api";
 
 export default function Ilhabela() {
   const eventos = [
