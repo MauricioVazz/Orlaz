@@ -13,13 +13,37 @@ export default function ContentPage({ name, description, city, type, images }) {
     // Identifica o id do local
     // placeId precisa ser um state para garantir atualização do botão
     const [placeId, setPlaceId] = useState(null);
+
+    // Helper para ler usuário do localStorage (ou fallback para userId/isLoggedIn)
+    const getStoredUser = () => {
+      if (typeof window === 'undefined') return null;
+      try {
+        const raw = localStorage.getItem('user');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.id) return parsed;
+        }
+      } catch (e) {
+        // ignore parse errors
+      }
+      const id = localStorage.getItem('userId');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (id && (isLoggedIn === 'true' || isLoggedIn === true)) {
+        return { id: Number(id) };
+      }
+      return null;
+    };
+
     React.useEffect(() => {
       let id = null;
       if (images && images.length > 0 && images[0].touristSpotId) {
-        id = images[0].touristSpotId;
+        // garantir number
+        id = Number(images[0].touristSpotId);
+        if (Number.isNaN(id)) id = null;
       }
       if (!id && typeof window !== "undefined" && window.location.pathname.match(/\d+$/)) {
-        id = parseInt(window.location.pathname.match(/\d+$/)[0]);
+        id = Number(window.location.pathname.match(/\d+$/)[0]);
+        if (Number.isNaN(id)) id = null;
       }
       setPlaceId(id);
     }, [images]);
@@ -27,24 +51,28 @@ export default function ContentPage({ name, description, city, type, images }) {
     // Checa se já está favoritado ao montar
     React.useEffect(() => {
       if (typeof window === "undefined" || placeId === null) return;
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = getStoredUser();
+      console.log('ContentPage: stored user for fav check', user);
       if (!user || !user.id) return;
-      fetch(`http://localhost:3000/favorite/${user.id}`)
+      fetch(`http://localhost:3000/favorite/${Number(user.id)}`)
         .then(res => res.json())
         .then(data => {
           console.log('Verificando favoritos:', { placeId, favoritos: data });
           const favs = Array.isArray(data.favorites) ? data.favorites : [];
-          const isFav = favs.some(fav => fav.placeId === placeId);
+          console.log('favoritos recebidos:', favs);
+          // comparar como number para evitar mismatch de tipo
+          const isFav = favs.some(fav => Number(fav.placeId) === Number(placeId));
           console.log('Resultado da verificação:', isFav);
           setIsFavorited(isFav);
         });
-  }, [placeId, images]);
+    }, [placeId, images]);
 
     // Função para favoritar/desfavoritar
     const handleFavorite = async () => {
-  console.log('handleFavorite chamado, estado:', isFavorited);
+  console.log('handleFavorite chamado, estado:', isFavorited, 'placeId:', placeId);
       if (typeof window === "undefined") return;
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = getStoredUser();
+      console.log('handleFavorite user:', user);
       if (!user || !user.id) {
         alert("Você precisa estar logado para favoritar.");
         return;
