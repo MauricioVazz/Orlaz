@@ -1,13 +1,22 @@
- .header {
+.header {
   position: relative;
   width: 100%;
   height: 90px;
-  background: #3b59ff;
+  background: rgba(
+    0,
+    21,
+    141,
+    0.295
+  ); /* azul suave com transparência para integração com diversos fundos */
   display: flex;
   align-items: center;
   z-index: 10;
-  /* box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); /* separação sutil do conteúdo */
   overflow: hidden;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(
+    6px
+  ); /* vidro desfocado para legibilidade sobre fundo variável */
 }
 
 .overlay {
@@ -17,6 +26,9 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  pointer-events: none;
+  /* remover gradiente para manter cor uniforme no header */
+  background: transparent;
 }
 
 .container {
@@ -30,15 +42,20 @@
   justify-content: space-between;
   height: 100%;
   padding: 0 32px;
+  /* tornar transparente para permitir que .header mostre a cor uniforme */
+  background: transparent;
+  /* remover o border-radius para evitar "bloco" arredondado com fundo diferente */
+  border-radius: 0;
 }
 
 .logo {
-  font-family: 'Dancing Script', cursive, sans-serif;
+  font-family: "Dancing Script", cursive, sans-serif;
   font-size: 2rem;
   color: #fff;
   font-weight: 600;
   letter-spacing: 1px;
   user-select: none;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* melhora legibilidade sobre fundos claros/ruidosos */
 }
 
 .logo a {
@@ -51,6 +68,7 @@
   cursor: pointer;
 }
 
+/* ...existing code... */
 .menu {
   display: flex;
   gap: 40px;
@@ -62,6 +80,7 @@
   font-size: 1rem;
   font-weight: 400;
   transition: color 0.2s;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .menu a:hover {
@@ -80,15 +99,18 @@
   display: flex;
   align-items: center;
   transition: color 0.2s;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .icon:hover {
   color: #b3e0ff;
 }
 
+/* ...existing code... */
 @media (max-width: 800px) {
   .container {
     padding: 0 12px;
+    background: rgba(0, 0, 0, 0.12);
   }
   .menu {
     gap: 18px;

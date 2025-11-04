@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import AtracoesUbatuba from "@/components/Atracoes/Ubatuba";
 import EventosTimeline from "@/components/EventosTimeline";
 import { FaSwimmer, FaTree, FaDrum, FaFire } from "react-icons/fa";
-
+import buildUrl from "../../lib/api";
 import Gastronomy from "@/components/Gastronomy";
 
 export default function Ubatuba() {

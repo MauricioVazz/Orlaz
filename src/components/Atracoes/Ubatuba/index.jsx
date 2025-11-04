@@ -37,7 +37,6 @@ export default function AtracoesUbatuba() {
             <div className={styles["card-info"]}>
               <div className={styles["card-header"]}>
                 <h3>{atracao.name}</h3>
-                <span className={styles.nota}>★</span>
               </div>
               <p>{atracao.description}</p>
               <button className={styles["btn-vermais"]}>Ver Mais</button>
