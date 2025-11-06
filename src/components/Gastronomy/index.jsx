@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import buildUrl from '@/lib/api';
 import styles from './Gastronomy.module.css';
 
 export default function Gastronomy({ title, subtitle, items = [], buttonLabel, onButtonClick, fetchUrl, initialCount = 6, increment = 4, showLessLabel = 'Ver Menos', onShowLess }) {
@@ -14,13 +15,30 @@ export default function Gastronomy({ title, subtitle, items = [], buttonLabel, o
   // Fetch from backend when component mounts. Accepts optional `fetchUrl` prop.
   React.useEffect(() => {
     let aborted = false;
-    const url = fetchUrl || '/gastronomy';
+    // Build effective URL using shared helper. If fetchUrl is already absolute
+    // (starts with http) use it as-is; otherwise build with buildUrl so we
+    // respect NEXT_PUBLIC_API_BASE and avoid double-prefixing.
+    let url;
+    if (fetchUrl) {
+      if (fetchUrl.startsWith('http://') || fetchUrl.startsWith('https://')) {
+        url = fetchUrl;
+      } else {
+        url = buildUrl(fetchUrl);
+      }
+    } else {
+      url = buildUrl('/gastronomy');
+    }
+    console.log('[Gastronomy] fetching from', url);
     async function load() {
       setLoading(true);
       setError(null);
       try {
         const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        if (!resp.ok) {
+          const text = await resp.text().catch(() => '');
+          console.error('[Gastronomy] fetch failed', resp.status, text);
+          throw new Error(`HTTP ${resp.status}: ${text}`);
+        }
         const data = await resp.json();
 
         // backend may return different shapes: { restaurants: [...] } or { gastronomies: [...] } or the array directly

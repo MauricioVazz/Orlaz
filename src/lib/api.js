@@ -18,12 +18,16 @@ function stringifyParams(params) {
 }
 
 export default function buildUrl(path = "", params) {
+  // Default to localhost backend during development when NEXT_PUBLIC_API_BASE
+  // isn't configured. This ensures buildUrl returns an absolute URL so client
+  // fetches target the backend instead of the Next.js host (which can return
+  // the app's 404 page).
   const base =
     typeof process !== "undefined" &&
     process.env &&
     process.env.NEXT_PUBLIC_API_BASE
       ? process.env.NEXT_PUBLIC_API_BASE.replace(/\/$/, "")
-      : "";
+      : "http://localhost:3000";
 
   // Ensure path starts with '/'
   const normalizedPath = path && path[0] === "/" ? path : `/${path}`;

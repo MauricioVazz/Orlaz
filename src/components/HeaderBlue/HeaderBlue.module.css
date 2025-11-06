@@ -2,21 +2,15 @@
   position: relative;
   width: 100%;
   height: 90px;
-  background: rgba(
-    0,
-    21,
-    141,
-    0.295
-  ); /* azul suave com transparência para integração com diversos fundos */
+  background: #3b59ff;
   display: flex;
   align-items: center;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); /* separação sutil do conteúdo */
   overflow: hidden;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(
+  /* backdrop-filter: blur(
     6px
-  ); /* vidro desfocado para legibilidade sobre fundo variável */
+  ); vidro desfocado para legibilidade sobre fundo variável */
 }
 
 .overlay {

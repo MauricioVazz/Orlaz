@@ -163,8 +163,32 @@ export default function PerfilPage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    // Remover todas as chaves relacionadas à sessão para garantir logout completo
+    try {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("isLoggedIn");
+      // se houver token ou outras chaves de sessão, remova aqui também
+      // localStorage.removeItem('token');
+    } catch (e) {
+      console.warn('Erro ao limpar localStorage no logout', e);
+    }
+    // Forçar atualização e redirecionamento para a página de login
     router.push("/login");
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+  };
+
+  // Modal state for logout confirmation
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const openLogoutModal = () => setShowLogoutConfirm(true);
+  const closeLogoutModal = () => setShowLogoutConfirm(false);
+
+  const confirmLogout = () => {
+    closeLogoutModal();
+    handleLogout();
   };
 
   const handleDeleteAccount = async () => {
@@ -177,7 +201,11 @@ export default function PerfilPage() {
         method: 'DELETE'
       });
       if (res.ok) {
-        localStorage.removeItem("user");
+        try {
+          localStorage.removeItem("user");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("isLoggedIn");
+        } catch (e) {}
         router.push("/cadastro");
       } else {
         const err = await res.json();
@@ -218,11 +246,11 @@ export default function PerfilPage() {
           <div className={styles.infoRow}><span>Conta criada em:</span> <b>{new Date(user.createdAt).toLocaleDateString()}</b></div>
         </div>
         <div className={styles.actionsRow}>
-          <button className={styles.logoutBtn} onClick={handleLogout}><IoLogOutOutline size={20}/> Sair</button>
+          <button className={styles.logoutBtn} onClick={openLogoutModal}><IoLogOutOutline size={20}/> Sair</button>
           <button className={styles.deleteBtn} onClick={handleDeleteAccount} disabled={deleteLoading}><IoTrashOutline size={20}/> {deleteLoading ? "Deletando..." : "Deletar Conta"}</button>
         </div>
       </div>
-      <button className={styles.editBtn} onClick={()=>setShowEdit(v=>!v)}>{showEdit ? "Fechar edição" : "Editar dados"}</button>
+  <button className={styles.editBtn} onClick={()=>setShowEdit(v=>!v)}>{showEdit ? "Fechar edição" : "Editar dados"}</button>
       <button className={styles.editBtn} onClick={()=>setShowPasswordForm(v=>!v)}>{showPasswordForm ? "Fechar troca de senha" : "Trocar senha"}</button>
       {showPasswordForm && (
         <form className={styles.form} onSubmit={handlePasswordSubmit} style={{marginTop:16}}>
@@ -252,6 +280,19 @@ export default function PerfilPage() {
           {success && <div className={styles.success}>{success}</div>}
           {error && <div className={styles.error}>{error}</div>}
         </form>
+      )}
+      {/* Logout confirmation modal */}
+      {showLogoutConfirm && (
+        <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,background:'rgba(0,0,0,0.5)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:9999}}>
+          <div style={{background:'#fff',padding:20,borderRadius:8,minWidth:280}}>
+            <h3>Confirmar logout</h3>
+            <p>Tem certeza que deseja sair?</p>
+            <div style={{display:'flex',justifyContent:'flex-end',gap:8}}>
+              <button onClick={closeLogoutModal} style={{padding:'6px 10px'}}>Cancelar</button>
+              <button onClick={confirmLogout} style={{padding:'6px 10px',background:'#d9534f',color:'#fff',border:'none',borderRadius:4}}>Sair</button>
+            </div>
+          </div>
+        </div>
       )}
       </div>
           </div>
