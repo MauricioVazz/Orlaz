@@ -1,73 +1,96 @@
 "use client";
-import React, { useState } from 'react';
-import buildUrl from '@/lib/api';
-import styles from './Gastronomy.module.css';
+import React, { useState, useEffect } from "react";
+import buildUrl from "@/lib/api";
+import styles from "./Gastronomy.module.css";
 
-export default function Gastronomy({ title, subtitle, items = [], buttonLabel, onButtonClick, fetchUrl, initialCount = 6, increment = 4, showLessLabel = 'Ver Menos', onShowLess }) {
+export default function Gastronomy({
+  title,
+  subtitle,
+  items = [],
+  buttonLabel,
+  onButtonClick,
+  fetchUrl,
+  initialCount = 6,
+  increment = 4,
+  showLessLabel = "Ver Menos",
+  onShowLess,
+}) {
   const [visibleCount, setVisibleCount] = useState(initialCount);
   const [remoteItems, setRemoteItems] = useState(items || []);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
 
   // Determine which source to use (remoteItems after fetch, otherwise fallback items prop)
-  const sourceItems = remoteItems && remoteItems.length > 0 ? remoteItems : items || [];
+  const sourceItems =
+    remoteItems && remoteItems.length > 0 ? remoteItems : items || [];
 
   // Fetch from backend when component mounts. Accepts optional `fetchUrl` prop.
-  React.useEffect(() => {
-    let aborted = false;
-    // Build effective URL using shared helper. If fetchUrl is already absolute
-    // (starts with http) use it as-is; otherwise build with buildUrl so we
-    // respect NEXT_PUBLIC_API_BASE and avoid double-prefixing.
-    let url;
-    if (fetchUrl) {
-      if (fetchUrl.startsWith('http://') || fetchUrl.startsWith('https://')) {
-        url = fetchUrl;
-      } else {
-        url = buildUrl(fetchUrl);
-      }
-    } else {
-      url = buildUrl('/gastronomy');
-    }
-    console.log('[Gastronomy] fetching from', url);
+  useEffect(() => {
+    let cancelled = false;
+
     async function load() {
       setLoading(true);
-      setError(null);
+      setError("");
       try {
+        // Build effective URL using shared helper. If fetchUrl is already absolute
+        // (starts with http) use it as-is; otherwise build with buildUrl so we
+        // respect NEXT_PUBLIC_API_BASE and avoid double-prefixing.
+        let url;
+        if (fetchUrl) {
+          if (
+            fetchUrl.startsWith("http://") ||
+            fetchUrl.startsWith("https://")
+          ) {
+            url = fetchUrl;
+          } else {
+            url = buildUrl(fetchUrl);
+          }
+        } else {
+          url = buildUrl("/gastronomy");
+        }
+        console.log("[Gastronomy] fetching from", url);
         const resp = await fetch(url);
+
         if (!resp.ok) {
-          const text = await resp.text().catch(() => '');
-          console.error('[Gastronomy] fetch failed', resp.status, text);
-          throw new Error(`HTTP ${resp.status}: ${text}`);
+          // tenta parsear JSON de erro, senão usa text
+          let parsed = "";
+          try {
+            const json = await resp.json();
+            parsed = json?.error || JSON.stringify(json);
+          } catch {
+            parsed = await resp.text().catch(() => "");
+          }
+          console.warn("[Gastronomy] fetch failed", resp.status, parsed);
+          if (!cancelled) {
+            setError(parsed || `Erro HTTP ${resp.status}`);
+            setRemoteItems([]); // fallback vazio
+          }
+          return;
         }
+
         const data = await resp.json();
-
-        // backend may return different shapes: { restaurants: [...] } or { gastronomies: [...] } or the array directly
-        let list = data && (data.restaurants || data.gastronomies || data.gastronomy || data);
-
-        // If the server returned an object for a single item, wrap it
-        if (list && !Array.isArray(list) && typeof list === 'object') {
-          // if the object looks like { id, name, ... } treat as single entry
-          if (list.id || list.name) list = [list];
-          else list = [];
+        if (!cancelled) {
+          setRemoteItems(Array.isArray(data) ? data : data.items || []);
         }
-
-        if (!aborted) setRemoteItems(Array.isArray(list) ? list : []);
       } catch (err) {
-        if (!aborted) setError(err.message || 'Erro ao buscar gastronomias');
+        console.error("[Gastronomy] fetch error", err);
+        if (!cancelled)
+          setError("Erro ao carregar gastronomias. Tente novamente.");
       } finally {
-        if (!aborted) setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
 
-    // Only fetch if a fetchUrl was provided or items prop is empty
-    if (fetchUrl || (items == null || items.length === 0)) {
-      load();
-    }
-
+    load();
     return () => {
-      aborted = true;
+      cancelled = true;
     };
-  }, [fetchUrl]);
+    // adicione reloadKey e demais dependências reais do seu fetch
+  }, [fetchUrl, reloadKey]);
+
+  // função de retry simples (pode ser usada no render)
+  const retry = () => setReloadKey((k) => k + 1);
 
   // Alterna os itens entre as colunas (zig-zag)
   const visibleItems = sourceItems.slice(0, visibleCount);
@@ -97,16 +120,29 @@ export default function Gastronomy({ title, subtitle, items = [], buttonLabel, o
       <p className={styles.subtitle}>{subtitle}</p>
 
       {loading && <div className={styles.loading}>Carregando...</div>}
-      {error && <div className={styles.error}>Erro: {error}</div>}
+      {error && (
+        <div className={styles.error}>
+          Erro: {error}
+          <button onClick={retry} className={styles.retryButton}>
+            Tentar novamente
+          </button>
+        </div>
+      )}
 
       <div className={styles.gastronomyGrid}>
         <div className={styles.leftColumn}>
           {leftItems.map((item, idx) => (
             <div key={idx} className={styles.gastronomyItem}>
-              <img src={item.image || item.imageUrl} alt={item.name} className={styles.gastronomyImg} />
+              <img
+                src={item.image || item.imageUrl}
+                alt={item.name}
+                className={styles.gastronomyImg}
+              />
               <div className={styles.gastronomyDescBox}>
                 <h3 className={styles.gastronomyName}>{item.name}</h3>
-                <p className={styles.gastronomyDesc}>{item.desc || item.description}</p>
+                <p className={styles.gastronomyDesc}>
+                  {item.desc || item.description}
+                </p>
               </div>
             </div>
           ))}
@@ -114,10 +150,16 @@ export default function Gastronomy({ title, subtitle, items = [], buttonLabel, o
         <div className={styles.rightColumn}>
           {rightItems.map((item, idx) => (
             <div key={idx} className={styles.gastronomyItem}>
-              <img src={item.image || item.imageUrl} alt={item.name} className={styles.gastronomyImg} />
+              <img
+                src={item.image || item.imageUrl}
+                alt={item.name}
+                className={styles.gastronomyImg}
+              />
               <div className={styles.gastronomyDescBox}>
                 <h3 className={styles.gastronomyName}>{item.name}</h3>
-                <p className={styles.gastronomyDesc}>{item.desc || item.description}</p>
+                <p className={styles.gastronomyDesc}>
+                  {item.desc || item.description}
+                </p>
               </div>
             </div>
           ))}

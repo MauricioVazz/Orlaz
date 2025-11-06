@@ -12,7 +12,7 @@
 .titulo {
   font-size: 2.1rem;
   font-weight: 700;
-  color: #2175f3;
+  color: #2563eb;
   margin-bottom: 18px;
   text-align: center;
 }
@@ -49,9 +49,10 @@
   margin-top: 10px;
 }
 .logoutBtn {
-  background: #e53935;
-  color: #fff;
-  border: none;
+  background: #fff;
+  background: #fff;
+  color: #e53935;
+  border: 1.5px solid #e53935;
   border-radius: 7px;
   padding: 10px 0;
   font-size: 1.08rem;
@@ -63,10 +64,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 .logoutBtn:hover {
   background: #b71c1c;
+  color: #fff;
 }
 .deleteBtn {
   background: #fff;
@@ -90,7 +92,7 @@
   color: #fff;
 }
 .editBtn {
-  background: #1976d2;
+  background: #2563eb;
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -146,7 +148,7 @@
   gap: 8px;
 }
 .avatarBtn {
-  background: #2196f3;
+  background: #2563eb;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -224,7 +226,7 @@
   cursor: pointer;
 }
 .form button {
-  background: linear-gradient(90deg,#1976d2,#2196f3);
+  background: linear-gradient(90deg, #1976d2, #2563eb);
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -241,6 +243,21 @@
   background: #aaa;
   cursor: not-allowed;
 }
+.confirmCancel {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #e5393520;
+  transition: background 0.2s;
+}
+.confirmCancel:hover {
+  background: #b71c1c;
+}
 @media (max-width: 600px) {
   .perfilContainer {
     padding: 18px 4vw 24px 4vw;
@@ -251,7 +268,9 @@
   .avatarSection {
     gap: 10px;
   }
-  .avatarPreview, .avatarPreview img, .avatarFallback {
+  .avatarPreview,
+  .avatarPreview img,
+  .avatarFallback {
     width: 64px;
     height: 64px;
   }
