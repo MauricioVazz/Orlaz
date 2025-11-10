@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from 'next/link';
 import styles from "./caraguatatuba.module.css";
 
 export default function AtracoesCaraguatatuba() {
@@ -38,7 +39,22 @@ export default function AtracoesCaraguatatuba() {
                 <h3>{atracao.name}</h3>
               </div>
               <p>{atracao.description}</p>
-              <button className={styles["btn-vermais"]}>Ver Mais</button>
+              <Link
+                href={{
+                  pathname: '/Point',
+                  query: {
+                    id: atracao.id,
+                    name: atracao.name,
+                    description: atracao.description,
+                    city: atracao.city,
+                    type: atracao.type,
+                    images: JSON.stringify(atracao.images || [])
+                  }
+                }}
+                className={styles["btn-vermais"]}
+              >
+                Ver Mais
+              </Link>
             </div>
           </div>
         ))}
