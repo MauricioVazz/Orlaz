@@ -13,7 +13,8 @@ export default function LoginForm() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        router.back(); // volta para a página anterior
+        // Redirect explicitly to home so ESC always returns to the initial screen
+        router.push('/');
       }
     };
 
