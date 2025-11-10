@@ -2,15 +2,16 @@
   position: relative;
   width: 100%;
   height: 90px;
-  background: #3b59ff;
+  background: rgba(0, 4, 209, 0.527); /* azul suave com transparência para integração com diversos fundos */
   display: flex;
   align-items: center;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); /* separação sutil do conteúdo */
   overflow: hidden;
-  /* backdrop-filter: blur(
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(
     6px
-  ); vidro desfocado para legibilidade sobre fundo variável */
+  ); /* vidro desfocado para legibilidade sobre fundo variável */
 }
 
 .overlay {
@@ -62,7 +63,6 @@
   cursor: pointer;
 }
 
-/* ...existing code... */
 .menu {
   display: flex;
   gap: 40px;
@@ -100,7 +100,6 @@
   color: #b3e0ff;
 }
 
-/* ...existing code... */
 @media (max-width: 800px) {
   .container {
     padding: 0 12px;
