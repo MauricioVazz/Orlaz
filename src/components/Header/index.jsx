@@ -4,6 +4,7 @@
 import { IoSearchOutline, IoPersonSharp, IoHeart } from "react-icons/io5";
 import styles from "./Header.module.css";
 import Link from "next/link";
+import TouristSpotSearch from '@/components/search';
 
 import React, { useEffect, useState } from "react";
 
@@ -11,6 +12,7 @@ export default function Header() {
     const [user, setUser] = useState(null);
     const [mounted, setMounted] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [showSearch, setShowSearch] = useState(false);
 
     useEffect(() => {
         // Busca apenas o id salvo no localStorage
@@ -46,10 +48,15 @@ export default function Header() {
                     <Link href="/Pontos" className={styles.menuLink}>Pontos</Link>
                     <Link href="/favoritos" className={styles.menuLink}>Favoritos</Link>
                 </nav>
-                <div className={styles.icons}>
-                    <span className={styles.icon}>
-                        <IoSearchOutline size={24} />
-                    </span>
+                                <div className={styles.icons}>
+                                        <span className={styles.icon} onClick={() => setShowSearch(s => !s)} style={{cursor: 'pointer'}}>
+                                                <IoSearchOutline size={24} />
+                                        </span>
+                                        {showSearch && (
+                                            <div className={styles.searchWrapper}>
+                                                <TouristSpotSearch placeholder="Buscar pontos..." autoFocus openOnMount onSelect={() => setShowSearch(false)} />
+                                            </div>
+                                        )}
                     {/* Avatar do usuário logado ou ícone padrão */}
                     {mounted && (
                         (() => {

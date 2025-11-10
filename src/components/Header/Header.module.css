@@ -7,7 +7,7 @@
   align-items: center;
   z-index: 10;
   /* box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
-  overflow: hidden;
+  overflow: visible; /* allow dropdowns to extend outside the header */
 }
 
 .overlay {
@@ -72,6 +72,14 @@
   display: flex;
   gap: 18px;
   align-items: center;
+}
+
+.searchWrapper {
+  position: relative; /* create a positioned ancestor for the absolute dropdown */
+  overflow: visible; /* allow the dropdown to extend beyond header bounds */
+  display: flex;
+  align-items: center;
+  max-width: 520px; /* allow the input/dropdown to grow */
 }
 
 .icon {
