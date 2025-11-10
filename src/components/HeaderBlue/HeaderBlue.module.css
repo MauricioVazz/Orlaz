@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: 90px;
-  background: rgba(0, 4, 209, 0.527); /* azul suave com transparência para integração com diversos fundos */
+  background: #3b59ff; /* azul suave com transparência para integração com diversos fundos */
   display: flex;
   align-items: center;
   z-index: 10;
