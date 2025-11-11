@@ -42,7 +42,6 @@ export default function City() {
 
   return (
     <section className={styles.sectionCidades}>
-      {/* ...restante igual... */}
       <div className={styles.filters}>
         <select value={cidade} onChange={e => setCidade(e.target.value)}>
           {cidades.map(c => (

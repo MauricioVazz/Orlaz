@@ -17,8 +17,9 @@
 .cardDescricao {
   font-size: 13px;
   color: #444;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
 }
+
 .btnVerMaisCity {
   background: #3b59ff;
   color: #fff;
@@ -28,11 +29,12 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.3s;
-  margin-top: 10px;
   justify-content: center;
+  margin-top: 12px;
 }
+
 .btnVerMaisCity:hover {
-  background: #3b59ffcc;
+  background: #0026ffcc;
 }
 .sectionCidades {
   max-width: 1200px;
@@ -97,4 +99,102 @@
   justify-content: center;
   border-radius: 8px 8px 0 0;
   font-size: 1rem;
+}
+
+/* tablet */
+@media (max-width: 900px) {
+  .sectionCidades {
+    padding: 32px 14px 48px 14px;
+  }
+
+  .sectionCidades h1 {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.98rem;
+    margin-bottom: 20px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .filters select {
+    padding: 8px 12px;
+    flex: 1 1 48%;
+    min-width: 180px;
+  }
+
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cardImg {
+    height: 160px;
+  }
+
+  .cardTitulo {
+    font-size: 15px;
+  }
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .sectionCidades {
+    padding: 20px 12px 32px 12px;
+  }
+
+  .sectionCidades h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filters select {
+    width: 100%;
+    flex: none;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 6px;
+  }
+
+  .card {
+    border-radius: 10px;
+  }
+
+  .cardImg {
+    height: 140px;
+  }
+
+  .cardTitulo {
+    font-size: 14px;
+  }
+
+  .cardDescricao {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .btnVerMaisCity {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
 }
