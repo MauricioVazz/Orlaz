@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+import Link from 'next/link';
 import styles from "./ilhabela.module.css";
 
 export default function AtracoesBela() {
@@ -7,12 +9,14 @@ export default function AtracoesBela() {
   const [visiveis, setVisiveis] = useState(4);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tourist-spot?city=ILHABELA")
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+    fetch(`${API_BASE}/tourist-spot?city=ILHABELA`)
       .then(res => res.json())
       .then(data => {
         const atracoesIlhabela = (data.touristSpots || []).filter(a => a.city === "ILHABELA");
         setAtracoes(atracoesIlhabela);
-      });
+      })
+      .catch(() => setAtracoes([]));
   }, []);
 
   const handleMore = () => {
@@ -39,7 +43,22 @@ export default function AtracoesBela() {
                 <h3>{atracao.name}</h3>
               </div>
               <p>{atracao.description}</p>
-              <button className={styles["btn-vermais"]}>Ver Mais</button>
+              <Link
+                href={{
+                  pathname: '/Point',
+                  query: {
+                    id: atracao.id,
+                    name: atracao.name,
+                    description: atracao.description,
+                    city: atracao.city,
+                    type: atracao.type,
+                    images: JSON.stringify(atracao.images || [])
+                  }
+                }}
+                className={styles["btn-vermais"]}
+              >
+                Ver Mais
+              </Link>
             </div>
           </div>
         ))}

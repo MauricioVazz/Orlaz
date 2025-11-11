@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
+import Link from 'next/link';
 import styles from "./saosebastiao.module.css";
 
 export default function AtracoesSaosebastiao() {
@@ -6,12 +9,14 @@ export default function AtracoesSaosebastiao() {
   const [visiveis, setVisiveis] = useState(4);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tourist-spot?city=SAO_SEBASTIAO")
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+    fetch(`${API_BASE}/tourist-spot?city=SAO_SEBASTIAO`)
       .then(res => res.json())
       .then(data => {
         const atracoesSeba = (data.touristSpots || []).filter(a => a.city === "SAO_SEBASTIAO");
         setAtracoes(atracoesSeba);
-      });
+      })
+      .catch(() => setAtracoes([]));
   }, []);
 
   const handleMore = () => {
@@ -38,7 +43,22 @@ export default function AtracoesSaosebastiao() {
                 <h3>{atracao.name}</h3>
               </div>
               <p>{atracao.description}</p>
-              <button className={styles["btn-vermais"]}>Ver Mais</button>
+              <Link
+                href={{
+                  pathname: '/Point',
+                  query: {
+                    id: atracao.id,
+                    name: atracao.name,
+                    description: atracao.description,
+                    city: atracao.city,
+                    type: atracao.type,
+                    images: JSON.stringify(atracao.images || [])
+                  }
+                }}
+                className={styles["btn-vermais"]}
+              >
+                Ver Mais
+              </Link>
             </div>
           </div>
         ))}

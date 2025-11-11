@@ -71,7 +71,13 @@ export default function Gastronomy({
 
         const data = await resp.json();
         if (!cancelled) {
-          setRemoteItems(Array.isArray(data) ? data : data.items || []);
+          // backend may return different shapes: array, { items: [...] },
+          // or older docs use `restaurants` or `gastronomies`
+          const itemsFromResp =
+            Array.isArray(data)
+              ? data
+              : data.items || data.restaurants || data.gastronomies || [];
+          setRemoteItems(itemsFromResp);
         }
       } catch (err) {
         console.error("[Gastronomy] fetch error", err);
@@ -127,6 +133,10 @@ export default function Gastronomy({
             Tentar novamente
           </button>
         </div>
+      )}
+
+      {!loading && !error && sourceItems.length === 0 && (
+        <div style={{ padding: 12, color: '#666' }}>Nenhum resultado</div>
       )}
 
       <div className={styles.gastronomyGrid}>
