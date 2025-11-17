@@ -56,12 +56,24 @@ h1 {
   gap: 12px;
 }
 
-/* Cabeçalho do card: título + nota */
+/*Cabeçalho do card: título*/
 .card-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* empilha título e nota para centralizar */
+  justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/*  título h3 centralizado */
+.card-header h3,
+.card-header .title,
+.card-info h3 {
+  margin: 0;
+  text-align: center;
+  width: 100%;
 }
 
 /* Botão Ver Mais */
@@ -73,8 +85,8 @@ h1 {
   border-radius: 16px;
   padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 6px; /* margem superior extra para garantir separação quando necessário */
+  transition: 0.3s;
+  margin-top: 6px;
 }
 
 .btn-vermais:hover {

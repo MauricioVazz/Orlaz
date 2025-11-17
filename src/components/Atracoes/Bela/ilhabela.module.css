@@ -8,7 +8,7 @@
   }
   
   /* Título */
-  .titulo {  /* Changed from h1 to .titulo */
+  .titulo {  
     font-weight: 900;
     margin-bottom: 8px;
     color: black;
@@ -57,12 +57,24 @@
     justify-content: space-between;
   }
   
-  /* Cabeçalho do card: título + ícone */
+  /* Cabeçalho do card: título */
   .card-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  /* Garantir título centralizado */
+  .card-header h3,
+  .card-header .title,
+  .card-info h3 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
   }
   
   /* Botão Ver Mais */
@@ -105,4 +117,3 @@
     background-color: rgb(165, 82, 0);
     transform: translateY(-2px);
   }
-  

@@ -8,7 +8,7 @@
 }
 
 /* Título */
-.titulo {  /* Changed from h1 to .titulo */
+.titulo {
   font-weight: 900;
   margin-bottom: 8px;
   color: black;
@@ -60,9 +60,20 @@
 /* Cabeçalho do card: título + ícone */
 .card-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; 
+  justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.card-header h3,
+.card-header .title,
+.card-info h3 {
+  margin: 0;
+  text-align: center;
+  width: 100%;
 }
 
 /* Botão Ver Mais */
@@ -95,7 +106,7 @@
   font-weight: 700;
   border: none;
   padding: 10px 22px;
-  border-radius: 25px; /* arredondado */
+  border-radius: 25px; 
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(59, 89, 255, 0.18);
   transition: background-color 0.25s, transform 0.08s;
