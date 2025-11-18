@@ -37,6 +37,7 @@
   color: #222;
   font-weight: 700;
   letter-spacing: 0.5px;
+  text-align: center; 
 }
 
 .card p {
@@ -46,7 +47,15 @@
   font-weight: 400;
   line-height: 1.4;
   flex: 1;
-  word-break: break-word;
+  text-align: center; 
+}
+
+/* reforçar centralização do título/nome do card */
+.card h3,
+.nome {
+  text-align: center;
+  width: 100%;
+  display: block;
 }
 
 @media (max-width: 600px) {
@@ -127,7 +136,7 @@
 /* BOTÃO */
 .botao {
   display: inline-block;
-  margin-top: 8px;
+  margin: 8px auto 0; /* centraliza o botão dentro do card */
   padding: 10px 14px;
   border-radius: 8px;
   background: #2563eb;
@@ -136,6 +145,7 @@
   text-align: center;
   transition: background 0.2s ease;
   text-decoration: none;
+  align-self: center;
 }
 
 .botao:hover {

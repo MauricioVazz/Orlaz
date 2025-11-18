@@ -86,7 +86,9 @@ h1 {
   padding: 8px 12px;
   cursor: pointer;
   transition: 0.3s;
-  margin-top: 6px;
+  display: inline-block;
+  margin: 6px auto 0; /* centraliza */
+  align-self: center;
 }
 
 .btn-vermais:hover {

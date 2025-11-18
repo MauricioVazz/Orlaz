@@ -13,6 +13,8 @@
   font-size: 16px;
   font-weight: 600;
   margin: 8px 0 4px 0;
+  text-align: center; /* centraliza o título do card */
+  width: 100%;
 }
 .cardDescricao {
   font-size: 13px;
@@ -29,8 +31,12 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.3s;
-  justify-content: center;
-  margin-top: 12px;
+  display: block;
+  margin: 12px auto 0;
+  align-self: center;
+  align-items: center;
+  text-align: center;
+  line-height: 1.1; 
 }
 
 .btnVerMaisCity:hover {
@@ -99,6 +105,23 @@
   justify-content: center;
   border-radius: 8px 8px 0 0;
   font-size: 1rem;
+}
+
+/* centraliza cabeçalho (cidade + categoria) e título do card */
+.cardHeader {
+  display: flex;
+  gap: 8px;
+  justify-content: center; /* centraliza os spans */
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.cardCidade,
+.cardCategoria {
+  display: inline-block;
+  text-align: center; /* centraliza texto dos badges */
+  width: auto;
 }
 
 /* tablet */
