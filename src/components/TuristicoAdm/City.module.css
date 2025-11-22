@@ -36,6 +36,32 @@
 .btnVerMaisCity:hover {
   background: #0026ffcc;
 }
+
+.cardActions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.btnDeleteCity{
+  background: #ff4d4f;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.btnDeleteCity:hover{
+  background: #e04344;
+}
+
+.btnDeleteCity[disabled]{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .sectionCidades {
   max-width: 1200px;
   margin: 0 auto;
@@ -98,26 +124,11 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.cardsGrid {
-  display: grid;
-  /* horizontal carousel with two rows */
-  grid-auto-flow: column;
-  grid-auto-columns: 320px;
-  grid-template-rows: repeat(2, 1fr);
-  gap: 1rem 1.5rem;
-  align-items: start;
   padding: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  max-width: calc(100% - 80px);
-  margin: 0 auto;
 }
 
 .cardImg {
@@ -131,25 +142,6 @@
 
 .cardImgPlaceholder {
   width: 100%;
-
-.carouselWrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.carouselNav {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
   height: 180px;
   background: #eee;
   color: #888;
@@ -158,6 +150,24 @@
   justify-content: center;
   border-radius: 8px 8px 0 0;
   font-size: 1rem;
+}
+
+.moreRow{
+  display:flex;
+  justify-content:flex-end;
+  width:100%;
+  max-width:1200px;
+  margin: 12px auto 0 auto;
+  padding-right:12px;
+}
+
+.moreLink{
+  background:#3b59ff;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
 }
 
 /* tablet */

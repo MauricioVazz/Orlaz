@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { useSearchParams } from 'next/navigation';
 import styles from '../TuristicoAdm/City.module.css';
-import Link from 'next/link';
 import buildUrl from '@/lib/api';
 
 const cidades = [
@@ -14,9 +13,9 @@ const cidades = [
   { label: 'Ilhabela', value: 'ILHABELA' },
   { label: 'São Sebastião', value: 'SAO_SEBASTIAO' }
 ];
-const categorias = ['Todas as categorias', 'RESTAURANTE', 'BAR', 'GASTRONOMIA'];
+const categorias = ['Todas as categorias', 'GASTRONOMIA', 'RESTAURANTE', 'BAR'];
 
-export default function RestaurantesAdm() {
+export default function GastronomiaAdm(){
   const searchParams = useSearchParams();
   const cityFromQuery = searchParams.get('city');
   const [cidade, setCidade] = useState(cityFromQuery || 'Todas as cidades');
@@ -28,9 +27,19 @@ export default function RestaurantesAdm() {
 
   useEffect(() => {
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
-    fetch(`${API_BASE}/restaurant`)
+    fetch(`${API_BASE}/gastronomy`)
       .then(res => res.json())
-      .then(data => setCards(data.restaurants || data.items || []))
+      .then(data => {
+        // Normalize multiple possible response shapes
+        let items = [];
+        if (Array.isArray(data)) items = data;
+        else if (Array.isArray(data.gastronomies)) items = data.gastronomies;
+        else if (Array.isArray(data.items)) items = data.items;
+        else if (data.gastronomy) items = Array.isArray(data.gastronomy) ? data.gastronomy : [data.gastronomy];
+        else if (data.gastronomies) items = data.gastronomies;
+        else items = [];
+        setCards(items);
+      })
       .catch(() => setCards([]));
   }, []);
 
@@ -51,13 +60,11 @@ export default function RestaurantesAdm() {
     setVisibleCount(6);
   }, [cidade, categoria, q]);
 
-  // static grid (two rows) in admin — show only first 6 items
-
   const handleDelete = async (id) => {
-    if (!confirm('Tem certeza que deseja excluir este restaurante?')) return;
+    if (!confirm('Tem certeza que deseja excluir este item de gastronomia?')) return;
     try {
       setDeleting(id);
-      const url = buildUrl(`/restaurant/${id}`);
+      const url = buildUrl(`/gastronomy/${id}`);
       const res = await fetch(url, { method: 'DELETE' });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -81,7 +88,7 @@ export default function RestaurantesAdm() {
           <IoSearchOutline className={styles.searchIcon} />
           <input
             className={styles.searchInput}
-            placeholder="Pesquisar restaurantes..."
+            placeholder="Pesquisar gastronomia..."
             value={q}
             onChange={e => setQ(e.target.value)}
           />
@@ -95,48 +102,35 @@ export default function RestaurantesAdm() {
           {categorias.map(cat => <option key={cat}>{cat}</option>)}
         </select>
       </div>
+
       <div>
         <div className={styles.cardsGrid} role="list">
           {cardsFiltrados.slice(0, visibleCount).map((card, i) => (
             <div key={card.id || i} className={styles.card} role="listitem">
-            {card.images && card.images.length > 0 ? (
-              <img
-                src={card.images[0].url}
-                alt={card.name}
-                className={styles.cardImg}
-              />
-            ) : (
-              <div className={styles.cardImgPlaceholder}>Sem imagem</div>
-            )}
-            <div className={styles.cardInfo}>
-              <div className={styles.cardHeader}>
-                <span className={styles.cardCidade}>{card.city}</span>
-                <span className={styles.cardCategoria}>{card.type}</span>
-              </div>
-              <h3 className={styles.cardTitulo}>{card.name}</h3>
-              <p className={styles.cardDescricao}>{card.description}</p>
+              {(() => {
+                const imgSrc = card.imageUrl || card.image || (card.images && card.images[0] && (card.images[0].url || card.images[0]));
+                return imgSrc ? (
+                  <img src={imgSrc} alt={card.name} className={styles.cardImg} />
+                ) : (
+                  <div className={styles.cardImgPlaceholder}>Sem imagem</div>
+                );
+              })()}
+              <div className={styles.cardInfo}>
+                <div className={styles.cardHeader}>
+                  <span className={styles.cardCidade}>{card.city}</span>
+                  <span className={styles.cardCategoria}>{card.type}</span>
+                </div>
+                <h3 className={styles.cardTitulo}>{card.name}</h3>
+                <p className={styles.cardDescricao}>{card.description}</p>
                 <div className={styles.cardActions}>
-                  <Link 
-                  href={{
-                    pathname: '/Point',
-                    query: {
-                      name: card.name,
-                      description: card.description,
-                      city: card.city,
-                      type: card.type,
-                      images: JSON.stringify(card.images || [])
-                    }
-                  }} 
-                  className={styles.btnVerMaisCity}
-                >Ver Mais</Link>
                   <button
                     className={styles.btnDeleteCity}
-                    onClick={()=>handleDelete(card.id)}
-                    disabled={deleting===card.id}
+                    onClick={() => handleDelete(card.id)}
+                    disabled={deleting === card.id}
                     aria-label={`Excluir ${card.name}`}
-                  >{deleting===card.id ? 'Excluindo...' : 'Excluir'}</button>
+                  >{deleting === card.id ? 'Excluindo...' : 'Excluir'}</button>
                 </div>
-            </div>
+              </div>
             </div>
           ))}
         </div>

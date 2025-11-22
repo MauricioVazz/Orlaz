@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { IoSearchOutline, IoChevronBack, IoChevronForward, IoTrashOutline } from 'react-icons/io5';
+import React, { useState, useEffect } from 'react';
+import { IoSearchOutline, IoTrashOutline } from 'react-icons/io5';
 import { useSearchParams } from 'next/navigation';
 import styles from './City.module.css';
 import Link from 'next/link';
@@ -23,8 +23,8 @@ export default function TuristicoAdm() {
   const [categoria, setCategoria] = useState('Todas as categorias');
   const [cards, setCards] = useState([]);
   const [deleting, setDeleting] = useState(null);
-  const containerRef = useRef(null);
   const [q, setQ] = useState('');
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
@@ -47,12 +47,12 @@ export default function TuristicoAdm() {
     && (q.trim() === '' || `${card.name} ${card.description}`.toLowerCase().includes(q.toLowerCase()))
   );
 
-  const scroll = (dir = 'right') => {
-    const el = containerRef.current;
-    if (!el) return;
-    const amount = el.clientWidth * 0.8;
-    el.scrollBy({ left: dir === 'right' ? amount : -amount, behavior: 'smooth' });
-  };
+  // reset visible count when filters/search change
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [cidade, categoria, q]);
+
+  // No carousel: simple static grid (two rows) is used now.
 
   const handleDelete = async (id) => {
     if (!confirm('Tem certeza que deseja excluir este ponto turístico?')) return;
@@ -97,10 +97,9 @@ export default function TuristicoAdm() {
           {categorias.map(cat => <option key={cat}>{cat}</option>)}
         </select>
       </div>
-      <div className={styles.carouselWrap}>
-        <button aria-label="Scroll left" className={styles.carouselNav} onClick={()=>scroll('left')}>◀</button>
-        <div ref={containerRef} className={styles.cardsGrid} role="list">
-          {cardsFiltrados.map((card, i) => (
+      <div>
+        <div className={styles.cardsGrid} role="list">
+          {cardsFiltrados.slice(0, visibleCount).map((card, i) => (
             <div key={card.id || i} className={styles.card} role="listitem">
             {card.images && card.images.length > 0 ? (
               <img
@@ -143,7 +142,24 @@ export default function TuristicoAdm() {
             </div>
           ))}
         </div>
-        <button aria-label="Scroll right" className={styles.carouselNav} onClick={()=>scroll('right')}>▶</button>
+
+        <div className={styles.moreRow}>
+          {cardsFiltrados.length > 6 && (
+            <button
+              type="button"
+              className={styles.moreLink}
+              onClick={() => {
+                if (visibleCount < cardsFiltrados.length) {
+                  setVisibleCount(prev => Math.min(prev + 6, cardsFiltrados.length));
+                } else {
+                  setVisibleCount(6);
+                }
+              }}
+            >
+              {visibleCount < cardsFiltrados.length ? 'Ver Mais' : 'Mostrar menos'}
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );
