@@ -44,7 +44,7 @@ export default function HeaderAdm() {
                 <nav className={styles.menu}>
                     <Link href="/AdmRestaurante" className={styles.menuLink}>Restaurante</Link>
                     <Link href="/AdmTuristico" className={styles.menuLink}>Pontos</Link>
-                    <Link href="/favoritos" className={styles.menuLink}>Gastronomia</Link>
+                    <Link href="/AdmGastronomia" className={styles.menuLink}>Gastronomia</Link>
                 </nav>
                 <div className={styles.icons}>
                     <span className={styles.icon} onClick={() => setShowSearch(s => !s)} style={{cursor: 'pointer'}}>

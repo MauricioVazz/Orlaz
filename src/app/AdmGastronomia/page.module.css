@@ -1,0 +1,80 @@
+.container {
+  max-width: 640px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 28px;
+}
+.title {
+  color: #222;
+  margin-bottom: 14px;
+  font-size: 1.4rem;
+}
+.label {
+  display: block;
+  margin-top: 12px;
+  color: #444;
+  font-weight: 600;
+}
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #d6d8dc;
+  box-sizing: border-box;
+  font-size: 0.98rem;
+  background: #fff;
+}
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.fileInput {
+  padding: 6px 0;
+}
+.button {
+  margin-top: 18px;
+  padding: 10px 20px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.button:disabled {
+  background: #9fbfe6;
+}
+.msg {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #333;
+}
+.imagesPreview {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.imagesPreview img {
+  max-width: 120px;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+.imagesHint {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* small responsive tweaks */
+@media (max-width: 720px) {
+  .container { padding: 18px; margin: 20px; }
+  .imagesPreview img { max-width: 90px; }
+}
