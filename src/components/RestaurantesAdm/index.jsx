@@ -116,6 +116,9 @@ export default function RestaurantesAdm() {
               <h3 className={styles.cardTitulo}>{card.name}</h3>
               <p className={styles.cardDescricao}>{card.description}</p>
                 <div className={styles.cardActions}>
+                  <Link href={`/AdmRestauranteEdit?id=${card.id}`}>
+                    <button className={styles.btnEditCity} aria-label={`Editar ${card.name}`}>Editar</button>
+                  </Link>
                   <Link 
                   href={{
                     pathname: '/Point',

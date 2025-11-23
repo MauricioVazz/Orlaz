@@ -62,6 +62,38 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Edit button (amarelado) */
+.btnEditCity{
+  background: #ffdd57; /* soft yellow */
+  color: #1f1f1f;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.08s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 64px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+.btnEditCity:hover{
+  background: #ffd33d;
+}
+
+.btnEditCity:active{
+  transform: translateY(1px);
+}
+
+.btnEditCity:focus{
+  outline: 3px solid rgba(255,221,87,0.25);
+  outline-offset: 2px;
+}
 .sectionCidades {
   max-width: 1200px;
   margin: 0 auto;

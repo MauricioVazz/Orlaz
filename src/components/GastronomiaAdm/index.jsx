@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import styles from '../TuristicoAdm/City.module.css';
 import buildUrl from '@/lib/api';
 
@@ -123,6 +124,9 @@ export default function GastronomiaAdm(){
                 <h3 className={styles.cardTitulo}>{card.name}</h3>
                 <p className={styles.cardDescricao}>{card.description}</p>
                 <div className={styles.cardActions}>
+                  <Link href={`/AdmGastronomiaEdit?id=${card.id}`}>
+                    <button className={styles.btnEditCity} aria-label={`Editar ${card.name}`}>Editar</button>
+                  </Link>
                   <button
                     className={styles.btnDeleteCity}
                     onClick={() => handleDelete(card.id)}
