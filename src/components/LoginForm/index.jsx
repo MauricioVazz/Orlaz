@@ -7,6 +7,7 @@ import styles from "./LoginForm.module.css";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // Detecta ESC para voltar
@@ -24,30 +25,57 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:3000/profile", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
+      setLoading(true);
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: senha })
       });
-      const data = await res.json();
-      const users = data.profiles || [];
-      const user = users.find(u => u.email === email && u.password === senha);
-      if (user) {
-        alert("Login realizado com sucesso!");
-        if (typeof window !== "undefined") {
-          // Salva o id do usuário e o flag de login
-          localStorage.setItem("userId", String(user.id));
-          localStorage.setItem("isLoggedIn", "true");
-        }
-        router.push("/"); // Redireciona para a home ou dashboard
-      } else {
-        alert("Email ou senha inválidos.");
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const msg = data?.message || 'Email ou senha inválidos.';
+        alert(msg);
+        setLoading(false);
+        return;
       }
+
+      // espera { profile, token }
+      const profile = data.profile || data.user || null;
+      const token = data.token || null;
+      if (!profile) {
+        alert('Login realizado, mas perfil não recebido do servidor.');
+        setLoading(false);
+        return;
+      }
+
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userId', String(profile.id));
+        localStorage.setItem('isLoggedIn', 'true');
+        if (token) localStorage.setItem('token', token);
+        // retrocompatibilidade: guardar o objeto user completo
+        localStorage.setItem('user', JSON.stringify(profile));
+        // dispatch global event so other components in the same tab can react
+        try {
+          const ev = new CustomEvent('auth:login', { detail: { profile, token } });
+          window.dispatchEvent(ev);
+        } catch (err) {
+          // older browsers fallback: create and dispatch
+          const ev2 = document.createEvent('CustomEvent');
+          ev2.initCustomEvent('auth:login', false, false, { profile, token });
+          window.dispatchEvent(ev2);
+        }
+      }
+
+      alert('Login realizado com sucesso!');
+      router.push('/');
     } catch (err) {
-      alert("Erro de conexão com o servidor.");
+      console.error('Login error', err);
+      alert('Erro de conexão com o servidor.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,8 +108,8 @@ export default function LoginForm() {
           />
         </div>
 
-        <button type="submit" className={styles.botao}>
-          Entrar
+        <button type="submit" className={styles.botao} disabled={loading}>
+          {loading ? 'Entrando...' : 'Entrar'}
         </button>
 
         <p className={styles.link}>

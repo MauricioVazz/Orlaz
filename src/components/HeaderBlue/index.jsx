@@ -13,16 +13,34 @@ export default function Header() {
     const [showSearch, setShowSearch] = useState(false);
 
     useEffect(() => {
-        // Busca apenas o id salvo no localStorage
-        const userId = localStorage.getItem("userId");
-        const loggedIn = localStorage.getItem("isLoggedIn");
-        setIsLoggedIn(loggedIn);
+        // Preferir o objeto `user` armazenado no localStorage (salvo pelo novo fluxo de login)
+        if (typeof window === 'undefined') return;
+        const storedUser = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        const loggedInFlag = localStorage.getItem('isLoggedIn') || (token ? 'true' : null);
+        setIsLoggedIn(loggedInFlag);
+
+        if (storedUser) {
+            try {
+                const parsed = JSON.parse(storedUser);
+                setUser(parsed);
+                setMounted(true);
+            } catch (err) {
+                console.warn('HeaderBlue: erro ao parsear localStorage.user', err);
+                setUser(null);
+                setMounted(true);
+            }
+            return;
+        }
+
+        // Se não houver objeto `user`, tentamos buscar por userId (compatibilidade retroativa)
+        const userId = localStorage.getItem('userId');
+        setIsLoggedIn(loggedInFlag);
         if (userId) {
-            // Busca os dados completos do usuário no backend
-            fetch(`http://localhost:3000/profile/${userId}`)
-                .then(res => res.ok ? res.json() : null)
-                .then(data => {
-                    // O backend retorna { message, profile }
+            const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+            fetch(`${API_BASE}/profile/${userId}`)
+                .then((res) => (res.ok ? res.json() : null))
+                .then((data) => {
                     setUser(data && data.profile ? data.profile : null);
                     setMounted(true);
                 })
@@ -34,6 +52,57 @@ export default function Header() {
             setUser(null);
             setMounted(true);
         }
+
+        // Atualiza o header quando o localStorage muda (login/logout em outra aba)
+        const onStorage = (ev) => {
+            if (!ev.key) return;
+            if (['user', 'userId', 'isLoggedIn', 'token'].includes(ev.key)) {
+                // re-run the effect logic quickly
+                const sUser = localStorage.getItem('user');
+                const tok = localStorage.getItem('token');
+                const logged = localStorage.getItem('isLoggedIn') || (tok ? 'true' : null);
+                setIsLoggedIn(logged);
+                if (sUser) {
+                    try { setUser(JSON.parse(sUser)); } catch { setUser(null); }
+                    setMounted(true);
+                } else {
+                    const uid = localStorage.getItem('userId');
+                    if (uid) {
+                        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+                        fetch(`${API_BASE}/profile/${uid}`)
+                          .then(res => res.ok ? res.json() : null)
+                          .then(data => setUser(data && data.profile ? data.profile : null))
+                          .catch(() => setUser(null))
+                          .finally(() => setMounted(true));
+                    } else {
+                        setUser(null);
+                        setMounted(true);
+                    }
+                }
+            }
+        };
+        window.addEventListener('storage', onStorage);
+        // também suportar eventos dentro da mesma aba
+        const onAuthLogin = (ev) => {
+            const detail = ev?.detail || {};
+            const profile = detail.profile || JSON.parse(localStorage.getItem('user') || 'null');
+            const tok = detail.token || localStorage.getItem('token');
+            setIsLoggedIn(localStorage.getItem('isLoggedIn') || (tok ? 'true' : null));
+            setUser(profile || null);
+            setMounted(true);
+        };
+        const onAuthLogout = () => {
+            setIsLoggedIn(null);
+            setUser(null);
+            setMounted(true);
+        };
+        window.addEventListener('auth:login', onAuthLogin);
+        window.addEventListener('auth:logout', onAuthLogout);
+        return () => {
+            window.removeEventListener('storage', onStorage);
+            window.removeEventListener('auth:login', onAuthLogin);
+            window.removeEventListener('auth:logout', onAuthLogout);
+        };
     }, []);
 
     return (
@@ -67,7 +136,9 @@ export default function Header() {
                             return (
                                 <Link
                                     href={
-                                        isLoggedIn === "true" ? "/perfil" : "/login"
+                                        isLoggedIn === "true"
+                                            ? (user && user.id ? `/perfil?id=${user.id}` : '/perfil')
+                                            : '/login'
                                     }
                                     className={styles.icon}
                                 >

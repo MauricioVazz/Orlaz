@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./perfil.module.css";
 import HeaderBlue from "../../components/HeaderBlue";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   IoPersonSharp,
   IoLogOutOutline,
@@ -78,10 +78,35 @@ export default function PerfilPage() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const fileInputRef = useRef();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Busca usuário logado pelo userId do localStorage
-    const userId = localStorage.getItem("userId");
+    // Preferir: 1) id na query (?id=), 2) objeto `user` no localStorage, 3) userId no localStorage
+    const paramId = searchParams ? searchParams.get("id") : null;
+    console.log("[Perfil] search param id:", paramId);
+
+    // If we have a full user object in localStorage, use it immediately
+    try {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        console.log("[Perfil] loaded user from localStorage:", parsed && parsed.id);
+        setUser(parsed);
+        setForm({
+          name: parsed.name || "",
+          email: parsed.email || "",
+          avatarUrl: parsed.avatarUrl || "",
+          avatarColor: parsed.avatarColor || "#cccccc",
+        });
+        setAvatarPreview(parsed.avatarUrl || "");
+        return; // already loaded from localStorage
+      }
+    } catch (e) {
+      console.warn("[Perfil] failed parsing localStorage.user", e);
+    }
+
+    // If id present in URL, use it
+    const userId = paramId || localStorage.getItem("userId");
     if (!userId) {
       router.push("/login");
       return;
@@ -102,7 +127,7 @@ export default function PerfilPage() {
         });
         setAvatarPreview(data.profile.avatarUrl || "");
       });
-  }, [router]);
+  }, [router, searchParams]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
