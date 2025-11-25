@@ -86,8 +86,10 @@ export default function EditRestaurante() {
 					formData.append("address", form.address);
 					formData.append("website", form.website);
 					formData.append("city", form.city);
+					// enviar múltiplos arquivos no campo 'images' (backend aceita múltiplos)
 					files.forEach(f => formData.append("images", f));
-					resp = await fetch(`${API_BASE}/restaurant/${encodeURIComponent(id)}/with-images`, {
+					// PATCH para /restaurant/:id com multipart/form-data
+					resp = await fetch(`${API_BASE}/restaurant/${encodeURIComponent(id)}`, {
 						method: 'PATCH',
 						headers: { Authorization: `Bearer ${token}` },
 						body: formData

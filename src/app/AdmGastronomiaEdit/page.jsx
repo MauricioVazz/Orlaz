@@ -70,12 +70,14 @@ export default function EditGastronomia() {
       if (id) {
         // update existing
         if (files.length > 0) {
+          // Enviar apenas o primeiro arquivo porque o backend usa upload.single('images')
           const formData = new FormData();
           formData.append("name", form.name);
           formData.append("description", form.description);
           formData.append("city", form.city);
-          files.forEach((f) => formData.append("images", f));
-          resp = await fetch(`${API_BASE}/gastronomy/${encodeURIComponent(id)}/with-images`, {
+          formData.append("images", files[0]);
+          // PATCH para /gastronomy/:id (não /with-images) com multipart/form-data gerado automaticamente
+          resp = await fetch(`${API_BASE}/gastronomy/${encodeURIComponent(id)}`, {
             method: "PATCH",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
