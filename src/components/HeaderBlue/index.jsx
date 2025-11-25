@@ -109,7 +109,24 @@ export default function Header() {
         <header className={styles.header}>
             <div className={styles.overlay} />
             <div className={styles.container}>
-                <div className={styles.logo}><Link href='/'>Orlaz</Link></div>
+                <div className={styles.logo}>
+                    {/* Logo: redireciona para /AdmPage se for admin, caso contrário para / */}
+                    <Link
+                        href={
+                            (isLoggedIn === "true" && user)
+                                ? (() => {
+                                    try {
+                                        const role = (user.role || user.type || '').toString().toLowerCase();
+                                        const isAdminFlag = user.isAdmin === true || role === 'admin' || (Array.isArray(user.roles) && user.roles.map(r => r.toString().toLowerCase()).includes('admin'));
+                                        return isAdminFlag ? '/AdmPage' : '/';
+                                    } catch (e) {
+                                        return '/';
+                                    }
+                                })()
+                                : '/'
+                        }
+                    >Orlaz</Link>
+                </div>
                 <nav className={styles.menu}>
                     <Link href="/" className={styles.menuLink}>Home</Link>
                     <Link href="/Pontos" className={styles.menuLink}>Pontos</Link>

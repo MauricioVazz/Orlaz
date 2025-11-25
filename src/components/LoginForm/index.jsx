@@ -70,7 +70,18 @@ export default function LoginForm() {
       }
 
       alert('Login realizado com sucesso!');
-      router.push('/');
+      // Redirect: admins go to /AdmPage, regular users to /
+      const role = profile && profile.role ? String(profile.role).toLowerCase() : null;
+      const type = profile && profile.type ? String(profile.type).toLowerCase() : null;
+      const rolesArr = profile && Array.isArray(profile.roles) ? profile.roles.map(r => String(r).toLowerCase()) : [];
+      const isAdmin = Boolean(
+        (role && role === 'admin') ||
+        profile?.isAdmin === true ||
+        (type && type === 'admin') ||
+        rolesArr.includes('admin')
+      );
+      if (isAdmin) router.push('/AdmPage');
+      else router.push('/');
     } catch (err) {
       console.error('Login error', err);
       alert('Erro de conexão com o servidor.');
