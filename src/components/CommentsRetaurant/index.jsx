@@ -21,6 +21,13 @@ function getUserId() {
   return null;
 }
 
+// helper to build Authorization header when token exists
+function getAuthHeaders() {
+  if (typeof window === 'undefined') return {};
+  const token = localStorage.getItem('token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 
 export default function CommentsRestaurant({ restaurantId }) {
   const [comments, setComments] = useState([]);
@@ -46,7 +53,7 @@ export default function CommentsRestaurant({ restaurantId }) {
     if (!restaurantId) return;
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/comment?restaurantId=${restaurantId}`)
+    fetch(`${API_BASE}/comment?restaurantId=${restaurantId}`, { headers: getAuthHeaders() })
       .then((r) => r.json())
       .then((data) => {
         let list = [];
@@ -68,7 +75,7 @@ export default function CommentsRestaurant({ restaurantId }) {
     if (!missing.length) return;
     try {
       const results = await Promise.all(
-        missing.map(id => fetch(`${API_BASE}/profile/${id}`).then(r => r.ok ? r.json() : null))
+        missing.map(id => fetch(`${API_BASE}/profile/${id}`, { headers: getAuthHeaders() }).then(r => r.ok ? r.json() : null))
       );
       const map = {};
       results.forEach((res, idx) => {
@@ -92,7 +99,7 @@ export default function CommentsRestaurant({ restaurantId }) {
     try {
       const res = await fetch(`${API_BASE}/comment`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify(payload),
       });
       const data = await res.json();
@@ -111,7 +118,7 @@ export default function CommentsRestaurant({ restaurantId }) {
     try {
       const res = await fetch(`${API_BASE}/comment/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ userId: Number(userId) }),
       });
       const data = await res.json();

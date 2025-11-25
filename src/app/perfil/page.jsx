@@ -45,7 +45,10 @@ export default function PerfilPage() {
     try {
       const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders(),
+        },
         body: JSON.stringify({
           password: passwords.new,
           currentPassword: passwords.current,
@@ -80,6 +83,13 @@ export default function PerfilPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // helper to build Authorization header when token exists
+  const getAuthHeaders = () => {
+    if (typeof window === 'undefined') return {};
+    const token = localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   useEffect(() => {
     // Preferir: 1) id na query (?id=), 2) objeto `user` no localStorage, 3) userId no localStorage
     const paramId = searchParams ? searchParams.get("id") : null;
@@ -111,7 +121,7 @@ export default function PerfilPage() {
       router.push("/login");
       return;
     }
-    fetch(`http://localhost:3000/profile/${userId}`)
+    fetch(`http://localhost:3000/profile/${userId}`, { headers: getAuthHeaders() })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!data || !data.profile) {
@@ -151,6 +161,7 @@ export default function PerfilPage() {
         `http://localhost:3000/profile/${user.id}/avatar`,
         {
           method: "PATCH",
+          headers: getAuthHeaders(),
           body: formData,
         }
       );
@@ -179,7 +190,10 @@ export default function PerfilPage() {
     try {
       const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders(),
+        },
         body: JSON.stringify(form),
       });
       if (res.ok) {
@@ -247,6 +261,7 @@ export default function PerfilPage() {
     try {
       const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
         method: "DELETE",
+        headers: getAuthHeaders(),
       });
       if (res.ok) {
         try {

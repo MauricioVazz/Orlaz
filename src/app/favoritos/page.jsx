@@ -26,10 +26,17 @@ export default function MeusFavoritos() {
         return null;
     };
 
+    // helper to build Authorization header when token exists
+    const getAuthHeaders = () => {
+        if (typeof window === 'undefined') return {};
+        const token = localStorage.getItem('token');
+        return token ? { Authorization: `Bearer ${token}` } : {};
+    };
+
     React.useEffect(() => {
         const user = getStoredUser();
         if (!user || !user.id) return;
-        fetch(`http://localhost:3000/favorite/${Number(user.id)}`)
+        fetch(`http://localhost:3000/favorite/${Number(user.id)}`, { headers: getAuthHeaders() })
             .then(res => res.json())
             .then(async data => {
                 const favs = Array.isArray(data.favorites) ? data.favorites : [];
@@ -48,9 +55,9 @@ export default function MeusFavoritos() {
     const handleRemover = async (favId) => {
         const user = getStoredUser();
         if (!user || !user.id) return;
-        await fetch(`http://localhost:3000/favorite/${favId}/${Number(user.id)}`, { method: "DELETE" });
+        await fetch(`http://localhost:3000/favorite/${favId}/${Number(user.id)}`, { method: "DELETE", headers: getAuthHeaders() });
         // Atualiza lista após remover
-        fetch(`http://localhost:3000/favorite/${Number(user.id)}`)
+        fetch(`http://localhost:3000/favorite/${Number(user.id)}`, { headers: getAuthHeaders() })
             .then(res => res.json())
             .then(async data => {
                 const favs = Array.isArray(data.favorites) ? data.favorites : [];

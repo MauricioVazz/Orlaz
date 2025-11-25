@@ -34,6 +34,13 @@ export default function ContentPage({ name, description, city, type, images }) {
       return null;
     };
 
+    // helper to build Authorization header when token exists
+    const getAuthHeaders = () => {
+      if (typeof window === 'undefined') return {};
+      const token = localStorage.getItem('token');
+      return token ? { Authorization: `Bearer ${token}` } : {};
+    };
+
     React.useEffect(() => {
       let id = null;
       if (images && images.length > 0 && images[0].touristSpotId) {
@@ -54,7 +61,7 @@ export default function ContentPage({ name, description, city, type, images }) {
       const user = getStoredUser();
       console.log('ContentPage: stored user for fav check', user);
       if (!user || !user.id) return;
-      fetch(`http://localhost:3000/favorite/${Number(user.id)}`)
+      fetch(`http://localhost:3000/favorite/${Number(user.id)}`, { headers: getAuthHeaders() })
         .then(res => res.json())
         .then(data => {
           console.log('Verificando favoritos:', { placeId, favoritos: data });
@@ -90,7 +97,8 @@ export default function ContentPage({ name, description, city, type, images }) {
           const res = await fetch("http://localhost:3000/favorite", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              ...getAuthHeaders(),
             },
             body: JSON.stringify(body)
           });
@@ -108,17 +116,18 @@ export default function ContentPage({ name, description, city, type, images }) {
         // Desfavoritar
         try {
           // Busca o id do favorito para remover
-          const favRes = await fetch(`http://localhost:3000/favorite/${user.id}`);
+          const favRes = await fetch(`http://localhost:3000/favorite/${user.id}`, { headers: getAuthHeaders() });
           const favsData = await favRes.json();
           const favs = Array.isArray(favsData.favorites) ? favsData.favorites : [];
           const fav = favs.find(f => f.placeId === placeId);
           if (fav && fav.id) {
             const res = await fetch(`http://localhost:3000/favorite/${fav.id}/${user.id}`, {
-              method: "DELETE"
+              method: "DELETE",
+              headers: getAuthHeaders(),
             });
             if (res.ok) {
               // Atualiza favoritos após remover
-              fetch(`http://localhost:3000/favorite/${user.id}`)
+              fetch(`http://localhost:3000/favorite/${user.id}`, { headers: getAuthHeaders() })
                 .then(res => res.json())
                 .then(data => {
                   const favs = Array.isArray(data.favorites) ? data.favorites : [];
