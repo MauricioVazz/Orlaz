@@ -88,8 +88,10 @@ export default function EditTuristico() {
           formData.append('description', form.description);
           formData.append('city', form.city);
           formData.append('type', form.type);
+          // enviar múltiplos arquivos no campo 'images'
           files.forEach(f => formData.append('images', f));
-          resp = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}/with-images`, {
+          // PATCH para /tourist-spot/:id com multipart/form-data
+          resp = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}`, {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${token}` },
             body: formData
