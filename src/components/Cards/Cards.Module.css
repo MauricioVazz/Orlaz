@@ -38,13 +38,29 @@ h1 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* transições e otimização para transform */
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.28s ease;
+  will-change: transform;
+  cursor: pointer;
 }
 
-/* Imagem do card */
+/* hover: levantar e ampliar levemente o card */
+.card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagem do card: garantir transição suave e leve escala no hover */
 .card-img {
   width: 100%;
   height: 140px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+.card:hover .card-img {
+  transform: scale(1.06);
 }
 
 /* Informações dentro do card */

@@ -15,10 +15,10 @@ import buildUrl from "../../lib/api";
 
 export default function CaraguatatubaPage() {
   const eventos = [
-    { data: "1/8 a 7/9", nome: "20º Caraguá a Gosto", icone: <FaUtensils /> },
-    { data: "14/8 a 16/8", nome: "7º AVIVA Caraguá", icone: <FaFutbol /> },
-    { data: "23/8", nome: "7º Caraguá Extreme Fest Rock", icone: <FaMusic /> },
-    { data: "6/9 a 7/9", nome: "7º Caraguá Beach Car", icone: <FaCar /> },
+    { data: "08 a 10/8", nome: "Aloha Spirit", icone: <FaUtensils /> },
+    { data: "24/10 a 1/11", nome: "Litoral Encena", icone: <FaFutbol /> },
+    { data: "20 a 23/11", nome: "Festival do Chopp e Torresmo", icone: <FaMusic /> },
+    { data: "6/12", nome: "Caraguá 21k Night Run", icone: <FaCar /> },
   ];
   return (
     <div>

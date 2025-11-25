@@ -14,10 +14,10 @@ import buildUrl from "../../lib/api";
 
 export default function Ilhabela() {
   const eventos = [
-    { data: "10/7 a 20/7", nome: "Festival de Vela", icone: <FaSailboat /> },
-    { data: "5/8", nome: "Show na Praia", icone: <FaDrum /> },
-    { data: "12/9", nome: "Festival da Cachaça", icone: <FaWater /> },
-    { data: "20/12", nome: "Réveillon na Praia", icone: <FaUmbrellaBeach /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaSailboat /> },
+    { data: "28 a 30/3", nome: "Festival da Lula 2025", icone: <FaDrum /> },
+    { data: "19 a 26/7", nome: "Semana Internacional de Vela", icone: <FaWater /> },
+    { data: "14  a 31/8", nome: "Festival do Camarão / Boteco do Camarão", icone: <FaUmbrellaBeach /> },
   ];
   return (
     <div>

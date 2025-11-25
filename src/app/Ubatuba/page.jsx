@@ -14,9 +14,9 @@ import Gastronomy from "@/components/Gastronomy";
 
 export default function Ubatuba() {
   const eventos = [
-    { data: "12/1", nome: "Festival de Verão", icone: <FaSwimmer /> },
-    { data: "10/3", nome: "Festa da Mata Atlântica", icone: <FaTree /> },
-    { data: "21/6", nome: "Festival de Dança", icone: <FaDrum /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaSwimmer /> },
+    { data: "26/6", nome: "Festa de São Pedro Pescador", icone: <FaTree /> },
+    { data: "14/9", nome: "Festival Gastronômico", icone: <FaDrum /> },
     { data: "31/12", nome: "Réveillon Ubatuba", icone: <FaFire /> },
   ];
 

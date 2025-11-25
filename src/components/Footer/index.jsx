@@ -7,12 +7,12 @@ export default function Footer() {
       <div className={styles.footerContent}>
         <div className={styles.col}>
           <h2 className={styles.logo}>
-            Olaz
+            Orlaz
             <br />
             Litoral Norte
           </h2>
           <p className={styles.desc}>
-            Descubra as belezas, culturas e gastronomia do Litoral Note de SP.
+            Descubra as belezas, culturas e gastronomia do Litoral Norte de São Paulo.
           </p>
           <div className={styles.socials}>
             <a href="#" aria-label="Instagram">
@@ -76,7 +76,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.copy}>
-        © 2025 Olaz Litoral Norte – Todos os direitos reservados
+        © 2025 Orlaz Litoral Norte – Todos os direitos reservados
       </div>
     </footer>
   );

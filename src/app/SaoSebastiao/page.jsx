@@ -14,10 +14,10 @@ import buildUrl from "../../lib/api";
 
 export default function SaoSebastiao() {
   const eventos = [
-    { data: "15/4", nome: "Festival do Pescado", icone: <FaFish /> },
-    { data: "22/6", nome: "Festival de Música Caiçara", icone: <FaGuitar /> },
-    { data: "7/9", nome: "Regata São Sebastião", icone: <FaShip /> },
-    { data: "1/11", nome: "Festival de Vinhos", icone: <FaWineBottle /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaFish /> },
+    { data: "01/8", nome: "Orgulhe-se (evento LGBTQIA+)", icone: <FaGuitar /> },
+    { data: "7 a 10/9", nome: "Festival da Cultura Japonesa", icone: <FaShip /> },
+    { data: "30 a 31/9", nome: "Festival de Hip Hop", icone: <FaWineBottle /> },
   ];
   return (
     <div>
