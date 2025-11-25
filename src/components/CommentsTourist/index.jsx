@@ -18,6 +18,13 @@ function getUserId() {
   return null;
 }
 
+// helper to build Authorization header when token exists
+function getAuthHeaders() {
+  if (typeof window === 'undefined') return {};
+  const token = localStorage.getItem('token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 export default function CommentsTourist({ touristId }) {
   const [comments, setComments] = useState([]);
   const [input, setInput] = useState("");
@@ -59,7 +66,7 @@ export default function CommentsTourist({ touristId }) {
     // debug
     // eslint-disable-next-line no-console
     console.log('Fetching comments from', fetchUrl);
-    fetch(fetchUrl)
+    fetch(fetchUrl, { headers: getAuthHeaders() })
       .then((r) => r.json())
       .then((data) => {
         let list = [];
@@ -78,7 +85,7 @@ export default function CommentsTourist({ touristId }) {
     if (!missing.length) return;
     try {
       const results = await Promise.all(
-        missing.map((id) => fetch(`${API_BASE}/profile/${id}`).then((r) => (r.ok ? r.json() : null)))
+        missing.map((id) => fetch(`${API_BASE}/profile/${id}`, { headers: getAuthHeaders() }).then((r) => (r.ok ? r.json() : null)))
       );
       const map = {};
       results.forEach((res, idx) => {
@@ -106,7 +113,7 @@ export default function CommentsTourist({ touristId }) {
     try {
       const res = await fetch(`${API_BASE}/comment`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify(payload),
       });
       // capture response body (may include server error info)
@@ -139,7 +146,7 @@ export default function CommentsTourist({ touristId }) {
     try {
       const res = await fetch(`${API_BASE}/comment/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ userId: Number(userId) }),
       });
       const data = await res.json();
