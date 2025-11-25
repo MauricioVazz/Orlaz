@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./page.module.css";
+import HeaderAdm from "@/components/HeaderAdm";
 
 const cidades = [
   { value: "", label: "Selecione" },
@@ -100,6 +101,9 @@ export default function CadastroGastronomia() {
   };
 
   return (
+    <div>
+      <HeaderAdm />
+    
     <div className={styles.container}>
       <h1 className={styles.title}>Cadastro de Gastronomia</h1>
       <form onSubmit={handleSubmit}>
@@ -114,8 +118,6 @@ export default function CadastroGastronomia() {
           {cidades.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
         </select>
 
-        
-
         <label className={styles.label} htmlFor="images">Ou envie imagens</label>
         <div className={styles.imagesHint}>Você pode enviar uma imagem (recomendado) — caso envie, o campo URL será ignorado.</div>
         <input className={styles.fileInput} id="images" type="file" accept="image/*" onChange={handleFiles} />
@@ -124,6 +126,7 @@ export default function CadastroGastronomia() {
         <button className={styles.button} type="submit" disabled={uploading}>{uploading ? 'Enviando...' : 'Cadastrar'}</button>
         <div className={styles.msg}>{msg}</div>
       </form>
+    </div>
     </div>
   );
 }
