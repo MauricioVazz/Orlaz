@@ -20,22 +20,39 @@
   margin-bottom: 24px;
 }
 
+.btnVerMaisCity,
+.btnDeleteCity,
+.btnEditCity,
+.moreLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+  height: 40px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
 .btnVerMaisCity {
   background: #3b59ff;
   color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 16px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background 0.3s;
-  justify-content: center;
-  margin-top: 12px;
 }
+.btnVerMaisCity:hover { background: #0026ffcc; }
 
-.btnVerMaisCity:hover {
-  background: #0026ffcc;
+.btnDeleteCity {
+  background: #ff4d4f;
+  color: #fff;
 }
+.btnDeleteCity:hover { background: #e04344; }
+
+.btnEditCity {
+  background: #ffdd57;
+  color: #1f1f1f;
+}
+.btnEditCity:hover { background: #ffd33d; }
 
 .cardActions{
   display:flex;

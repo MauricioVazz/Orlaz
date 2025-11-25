@@ -110,9 +110,6 @@ export default function GastronomiaAdm(){
             <option key={c.value} value={c.value}>{c.label}</option>
           ))}
         </select>
-        <select value={categoria} onChange={e => setCategoria(e.target.value)}>
-          {categorias.map(cat => <option key={cat}>{cat}</option>)}
-        </select>
       </div>
 
       <div>

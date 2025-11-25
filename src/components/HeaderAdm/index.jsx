@@ -40,7 +40,7 @@ export default function HeaderAdm() {
         <header className={styles.header}>
             <div className={styles.overlay} />
             <div className={styles.container}>
-                <div className={styles.logo}><Link href='/'>Orlaz</Link></div>
+                <div className={styles.logo}><Link href='/AdmPage'>Orlaz</Link></div>
                 <nav className={styles.menu}>
                     <Link href="/AdmRestaurante" className={styles.menuLink}>Restaurante</Link>
                     <Link href="/AdmTuristico" className={styles.menuLink}>Pontos</Link>

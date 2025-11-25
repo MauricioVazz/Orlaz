@@ -2,6 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./page.module.css";
+import HeaderAdm from "@/components/HeaderAdm";
 
 const cidades = [
 	{ value: "", label: "Selecione" },
@@ -79,6 +80,9 @@ export default function CadastroRestaurante() {
 	};
 
 	return (
+		<div>
+			<HeaderAdm />
+		
 		<div className={styles.container}>
 					<h1 className={styles.title}>Cadastro de Restaurante</h1>
 					<form onSubmit={handleSubmit}>
@@ -120,6 +124,7 @@ export default function CadastroRestaurante() {
 						<button className={styles.button} type="submit" disabled={uploading}>Cadastrar</button>
 						<div className={styles.msg}>{msg}</div>
 					</form>
+		</div>
 		</div>
 	);
 }
