@@ -41,6 +41,13 @@ export default function CadastroPontoTuristico() {
     e.preventDefault();
     setMsg('Enviando...');
     setUploading(true);
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!token) {
+      setMsg('Usuário não autenticado. Faça login.');
+      setUploading(false);
+      return;
+    }
     const formData = new FormData();
     formData.append('name', form.name);
     formData.append('description', form.description);
@@ -48,20 +55,29 @@ export default function CadastroPontoTuristico() {
     formData.append('type', form.type);
     files.forEach(f => formData.append('images', f));
     try {
-      const resp = await fetch('http://localhost:3000/tourist-spot/with-images', {
+      const resp = await fetch(`${API_BASE}/tourist-spot/with-images`, {
         method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
         body: formData
       });
-      const data = await resp.json();
+      const contentType = resp.headers.get('content-type') || '';
+      let data = null;
+      if (contentType.includes('application/json')) {
+        data = await resp.json().catch(() => null);
+      } else {
+        const text = await resp.text().catch(() => '');
+        data = { _text: text };
+      }
       if (resp.ok) {
         setMsg('Ponto turístico cadastrado com sucesso!');
         setForm({ name: '', description: '', city: '', type: '', images: [] });
         setFiles([]);
         setPreview([]);
       } else {
-        setMsg(data.error || 'Erro ao cadastrar ponto turístico.');
+        setMsg((data && data.error) || (data && data._text) || 'Erro ao cadastrar ponto turístico.');
       }
-    } catch {
+    } catch (err) {
+      console.error('submit turistico', err);
       setMsg('Erro ao conectar com o servidor.');
     }
     setUploading(false);

@@ -37,6 +37,15 @@ export default function CadastroRestaurante() {
 		e.preventDefault();
 		setMsg("Enviando...");
 		setUploading(true);
+
+		// check auth token
+		const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+		if (!token) {
+			setMsg('Usuário não autenticado. Faça login.');
+			setUploading(false);
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append("name", form.name);
 		formData.append("description", form.description);
@@ -47,21 +56,26 @@ export default function CadastroRestaurante() {
 		try {
 			const resp = await fetch("http://localhost:3000/restaurant/with-images", {
 				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`
+				},
 				body: formData
 			});
-			const data = await resp.json();
+			const data = await resp.json().catch(() => ({}));
 			if (resp.ok) {
 				setMsg("Restaurante cadastrado com sucesso!");
 				setForm({ name: "", description: "", address: "", website: "", city: "", images: [] });
 				setFiles([]);
 				setPreview([]);
 			} else {
-				setMsg(data.error || "Erro ao cadastrar restaurante.");
+				setMsg(data.error || `Erro ${resp.status}: ao cadastrar restaurante.`);
 			}
-		} catch {
+		} catch (err) {
+			console.error('submit restaurant', err);
 			setMsg("Erro ao conectar com o servidor.");
+		} finally {
+			setUploading(false);
 		}
-		setUploading(false);
 	};
 
 	return (

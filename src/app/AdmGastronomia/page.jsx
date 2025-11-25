@@ -35,6 +35,14 @@ export default function CadastroGastronomia() {
     setMsg("Enviando...");
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:3000";
 
+    // read token from localStorage (must be set at login)
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!token) {
+      setMsg('Usuário não autenticado. Faça login.');
+      setUploading(false);
+      return;
+    }
+
     try {
       if (files.length === 0) {
         setMsg('Por favor, selecione ao menos uma imagem.');
@@ -48,6 +56,10 @@ export default function CadastroGastronomia() {
       files.forEach((f) => formData.append("images", f));
       const resp = await fetch(`${API_BASE}/gastronomy/with-images`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+          // no Content-Type header: browser will set multipart boundary
+        },
         body: formData,
       });
 

@@ -71,6 +71,12 @@ export default function EditTuristico() {
     setMsg('Enviando...');
     setUploading(true);
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!token) {
+      setMsg('Usuário não autenticado. Faça login.');
+      setUploading(false);
+      return;
+    }
 
     try {
       let resp;
@@ -85,12 +91,13 @@ export default function EditTuristico() {
           files.forEach(f => formData.append('images', f));
           resp = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}/with-images`, {
             method: 'PATCH',
+            headers: { Authorization: `Bearer ${token}` },
             body: formData
           });
         } else {
           resp = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ name: form.name, description: form.description, city: form.city, type: form.type })
           });
         }
@@ -108,6 +115,7 @@ export default function EditTuristico() {
         files.forEach(f => formData.append('images', f));
         resp = await fetch(`${API_BASE}/tourist-spot/with-images`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formData
         });
       }
@@ -148,11 +156,22 @@ export default function EditTuristico() {
     if (!id) return;
     if (!confirm('Excluir este item?')) return;
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3000';
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!token) {
+      alert('Usuário não autenticado. Faça login.');
+      return;
+    }
     try {
-      const res = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/tourist-spot/${encodeURIComponent(id)}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       if (res.ok) router.push('/AdmTuristico');
       else {
-        const d = await res.json().catch(() => ({}));
+        const contentType = res.headers.get('content-type') || '';
+        let d = {};
+        if (contentType.includes('application/json')) d = await res.json().catch(() => ({}));
+        else {
+          const t = await res.text().catch(() => '');
+          d = { error: t };
+        }
         alert(d.error || 'Erro ao deletar');
       }
     } catch (err) {

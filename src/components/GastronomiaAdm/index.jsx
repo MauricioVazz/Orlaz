@@ -63,12 +63,23 @@ export default function GastronomiaAdm(){
 
   const handleDelete = async (id) => {
     if (!confirm('Tem certeza que deseja excluir este item de gastronomia?')) return;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    if (!token) {
+      alert('Usuário não autenticado. Faça login.');
+      return;
+    }
     try {
       setDeleting(id);
       const url = buildUrl(`/gastronomy/${id}`);
-      const res = await fetch(url, { method: 'DELETE' });
+      const res = await fetch(url, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
+        const contentType = res.headers.get('content-type') || '';
+        let j = {};
+        if (contentType.includes('application/json')) j = await res.json().catch(() => ({}));
+        else {
+          const t = await res.text().catch(() => '');
+          j = { error: t };
+        }
         alert(j?.error || 'Erro ao deletar.');
         setDeleting(null);
         return;
