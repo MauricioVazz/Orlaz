@@ -49,6 +49,7 @@
   border-color: #2563eb;
 }
 
+/* BOTÃO */
 .botao {
   background: #2563eb;
   color: #fff;
@@ -78,4 +79,66 @@
 
 .link a:hover {
   text-decoration: underline;
+}
+
+/* OLHO ANIMADO */
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #6b7280;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eyeIcon:hover {
+  color: #111827;
+}
+
+/* SVG */
+.eyeSvg {
+  width: 24px;
+  height: 24px;
+  transition: 0.3s ease;
+}
+
+.eyeBall {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.eyeSlash {
+  stroke: #ef4444;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* Animado quando aberto */
+.open .eyeBall {
+  transform: scale(1.1);
+}
+
+/* Animado quando fechado */
+.closed .eyeBall {
+  transform: scale(0.4);
+  opacity: 0.3;
+}
+
+/* Linha vermelha aparece ao fechar */
+.closed .eyeSlash {
+  opacity: 1;
 }

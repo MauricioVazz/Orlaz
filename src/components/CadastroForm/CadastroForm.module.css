@@ -50,7 +50,7 @@
 }
 
 .botao {
-  background: #2563eb; /* verde diferente do login */
+  background: #2563eb;
   color: #fff;
   padding: 12px;
   border: none;
@@ -78,4 +78,78 @@
 
 .link a:hover {
   text-decoration: underline;
+}
+
+/* OLHO ANIMADO */
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+  opacity: 0.8;
+}
+
+.eyeIcon:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.15);
+}
+
+.eyeSvg {
+  width: 26px;
+  height: 26px;
+  stroke: #374151;
+}
+
+/* Linha do olho (contorno) */
+.eyeLine {
+  transition: opacity 0.25s ease;
+}
+
+/* Bolinha (pupila) */
+.eyeBall {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Risco de olho fechado */
+.eyeSlash {
+  stroke: #ef4444;
+  stroke-width: 2.2;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* Quando o olho está aberto */
+.open .eyeBall {
+  transform: scale(1.1);
+}
+
+.open .eyeSlash {
+  opacity: 0; /* sem risco quando aberto */
+}
+
+/* Quando está fechado */
+.closed .eyeBall {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.closed .eyeSlash {
+  opacity: 1;
 }

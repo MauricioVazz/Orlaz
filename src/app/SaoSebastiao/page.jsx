@@ -7,17 +7,21 @@ import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import AtracoesSaoSebastiao from "@/components/Atracoes/SaoSebastiao";
-import { FaFish, FaGuitar, FaShip, FaWineBottle } from "react-icons/fa6";
+import { FaTheaterMasks, FaHeart, FaDrum, FaMicrophone } from "react-icons/fa";
 import EventosTimeline from "@/components/EventosTimeline";
 import Gastronomy from "@/components/Gastronomy";
 import buildUrl from "../../lib/api";
 
 export default function SaoSebastiao() {
   const eventos = [
-    { data: "28/2", nome: "Carnaval", icone: <FaFish /> },
-    { data: "01/8", nome: "Orgulhe-se (evento LGBTQIA+)", icone: <FaGuitar /> },
-    { data: "7 a 10/9", nome: "Festival da Cultura Japonesa", icone: <FaShip /> },
-    { data: "30 a 31/9", nome: "Festival de Hip Hop", icone: <FaWineBottle /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaTheaterMasks /> },
+    { data: "01/8", nome: "Orgulhe-se (evento LGBTQIA+)", icone: <FaHeart /> },
+    {
+      data: "7 a 10/9",
+      nome: "Festival da Cultura Japonesa",
+      icone: <FaDrum />,
+    },
+    { data: "30 a 31/9", nome: "Festival de Hip Hop", icone: <FaMicrophone /> },
   ];
   return (
     <div>
@@ -40,7 +44,7 @@ export default function SaoSebastiao() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        fetchUrl={buildUrl('/gastronomy/category/SAO_SEBASTIAO')}
+        fetchUrl={buildUrl("/gastronomy/category/SAO_SEBASTIAO")}
         buttonLabel="Ver Mais"
       />
       {/* Aqui entram os eventos */}

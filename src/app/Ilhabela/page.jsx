@@ -7,17 +7,17 @@ import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import AtracoesBela from "@/components/Atracoes/Bela"; // Import corrigido para o nome correto
-import { FaWater, FaSailboat, FaUmbrellaBeach, FaDrum } from "react-icons/fa6";
+import { FaShip, FaUmbrellaBeach, FaDrum, FaTheaterMasks, FaUtensils } from "react-icons/fa";
 import EventosTimeline from "@/components/EventosTimeline";
 import Gastronomy from "@/components/Gastronomy";
 import buildUrl from "../../lib/api";
 
 export default function Ilhabela() {
   const eventos = [
-    { data: "28/2", nome: "Carnaval", icone: <FaSailboat /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaTheaterMasks /> },
     { data: "28 a 30/3", nome: "Festival da Lula 2025", icone: <FaDrum /> },
-    { data: "19 a 26/7", nome: "Semana Internacional de Vela", icone: <FaWater /> },
-    { data: "14  a 31/8", nome: "Festival do Camarão / Boteco do Camarão", icone: <FaUmbrellaBeach /> },
+    { data: "19 a 26/7", nome: "Semana Internacional de Vela", icone: <FaShip /> },
+    { data: "14 a 31/8", nome: "Festival do Camarão / Boteco do Camarão", icone: <><FaUtensils /><FaUmbrellaBeach /></> },
   ];
   return (
     <div>

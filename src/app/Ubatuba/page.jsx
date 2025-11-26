@@ -8,16 +8,16 @@ import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import AtracoesUbatuba from "@/components/Atracoes/Ubatuba";
 import EventosTimeline from "@/components/EventosTimeline";
-import { FaSwimmer, FaTree, FaDrum, FaFire } from "react-icons/fa";
+import { FaTheaterMasks, FaFish, FaUtensils, FaGlassCheers } from "react-icons/fa";
 import buildUrl from "../../lib/api";
 import Gastronomy from "@/components/Gastronomy";
 
 export default function Ubatuba() {
   const eventos = [
-    { data: "28/2", nome: "Carnaval", icone: <FaSwimmer /> },
-    { data: "26/6", nome: "Festa de São Pedro Pescador", icone: <FaTree /> },
-    { data: "14/9", nome: "Festival Gastronômico", icone: <FaDrum /> },
-    { data: "31/12", nome: "Réveillon Ubatuba", icone: <FaFire /> },
+    { data: "28/2", nome: "Carnaval", icone: <FaTheaterMasks /> },
+    { data: "26/6", nome: "Festa de São Pedro Pescador", icone: <FaFish /> },
+    { data: "14/9", nome: "Festival Gastronômico", icone: <FaUtensils /> },
+    { data: "31/12", nome: "Réveillon Ubatuba", icone: <FaGlassCheers /> },
   ];
 
   return (
@@ -41,10 +41,10 @@ export default function Ubatuba() {
       <Gastronomy
         title="Gastronomia"
         subtitle="Comidas típicas da região"
-        fetchUrl={buildUrl('/gastronomy/category/UBATUBA')}
+        fetchUrl={buildUrl("/gastronomy/category/UBATUBA")}
         buttonLabel="Ver Mais"
       />
-      <AtracoesUbatuba/>
+      <AtracoesUbatuba />
 
       {/* Aqui entram os eventos */}
       <EventosTimeline eventos={eventos} cor="#107a1eff" />

@@ -9,16 +9,16 @@ import AtracoesCaraguatatuba from "@/components/Atracoes/Caraguatatuba";
 import Gastronomy from "@/components/Gastronomy";
 import styles from "./Caraguatatuba.module.css";
 import Link from "next/link";
-import { FaUtensils, FaFutbol, FaMusic, FaCar } from "react-icons/fa";
+import { FaUmbrellaBeach, FaTheaterMasks, FaBeer, FaBacon, FaRunning } from "react-icons/fa";
 import EventosTimeline from "@/components/EventosTimeline";
 import buildUrl from "../../lib/api";
 
 export default function CaraguatatubaPage() {
   const eventos = [
-    { data: "08 a 10/8", nome: "Aloha Spirit", icone: <FaUtensils /> },
-    { data: "24/10 a 1/11", nome: "Litoral Encena", icone: <FaFutbol /> },
-    { data: "20 a 23/11", nome: "Festival do Chopp e Torresmo", icone: <FaMusic /> },
-    { data: "6/12", nome: "Caraguá 21k Night Run", icone: <FaCar /> },
+    { data: "08 a 10/8", nome: "Aloha Spirit", icone: <FaUmbrellaBeach /> },
+    { data: "24/10 a 1/11", nome: "Litoral Encena", icone: <FaTheaterMasks /> },
+    { data: "20 a 23/11", nome: "Festival do Chopp e Torresmo", icone: <><FaBeer /><FaBacon /></> },
+    { data: "6/12", nome: "Caraguá 21k Night Run", icone: <FaRunning /> },
   ];
   return (
     <div>

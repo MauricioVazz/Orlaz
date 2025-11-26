@@ -9,19 +9,20 @@ export default function CadastroForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+
+  const [showSenha, setShowSenha] = useState(false);
+  const [showConfirma, setShowConfirma] = useState(false);
+
   const router = useRouter();
-  
-    // Detecta ESC para voltar
-    useEffect(() => {
-      const handleKeyDown = (e) => {
-        if (e.key === "Escape") {
-          router.back(); // volta para a página anterior
-        }
-      };
-  
-      window.addEventListener("keydown", handleKeyDown);
-      return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [router]);
+
+  // ESC para voltar
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") router.back();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,16 +35,16 @@ export default function CadastroForm() {
     try {
       const res = await fetch("http://localhost:3000/profile", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: nome,
           email: email,
           password: senha
         })
       });
+
       const data = await res.json();
+
       if (res.ok) {
         alert("Cadastro realizado com sucesso!");
         router.push("/login");
@@ -60,6 +61,7 @@ export default function CadastroForm() {
       <form onSubmit={handleSubmit} className={styles.cadastroForm}>
         <h2 className={styles.titulo}>Cadastro</h2>
 
+        {/* Nome */}
         <div className={styles.inputGroup}>
           <label htmlFor="nome">Nome</label>
           <input
@@ -72,6 +74,7 @@ export default function CadastroForm() {
           />
         </div>
 
+        {/* Email */}
         <div className={styles.inputGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -84,28 +87,92 @@ export default function CadastroForm() {
           />
         </div>
 
+        {/* SENHA COM OLHO ANIMADO */}
         <div className={styles.inputGroup}>
           <label htmlFor="senha">Senha</label>
-          <input
-            type="password"
-            id="senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-            placeholder="Digite sua senha"
-          />
+
+          <div className={styles.passwordWrapper}>
+            <input
+              type={showSenha ? "text" : "password"}
+              id="senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+              placeholder="Digite sua senha"
+            />
+
+            <span
+              className={`${styles.eyeIcon} ${
+                showSenha ? styles.open : styles.closed
+              }`}
+              onClick={() => setShowSenha(!showSenha)}
+            >
+              <svg
+                className={styles.eyeSvg}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  className={styles.eyeLine}
+                  d="M1 12C2.5 7 7 4 12 4s9.5 3 11 8c-1.5 5-6 8-11 8S2.5 17 1 12Z"
+                />
+                <circle className={styles.eyeBall} cx="12" cy="12" r="3" />
+                <line
+                  className={styles.eyeSlash}
+                  x1="4"
+                  y1="4"
+                  x2="20"
+                  y2="20"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
 
+        {/* CONFIRMAR SENHA COM OLHO ANIMADO */}
         <div className={styles.inputGroup}>
           <label htmlFor="confirmarSenha">Confirmar Senha</label>
-          <input
-            type="password"
-            id="confirmarSenha"
-            value={confirmarSenha}
-            onChange={(e) => setConfirmarSenha(e.target.value)}
-            required
-            placeholder="Confirme sua senha"
-          />
+
+          <div className={styles.passwordWrapper}>
+            <input
+              type={showConfirma ? "text" : "password"}
+              id="confirmarSenha"
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
+              required
+              placeholder="Confirme sua senha"
+            />
+
+            <span
+              className={`${styles.eyeIcon} ${
+                showConfirma ? styles.open : styles.closed
+              }`}
+              onClick={() => setShowConfirma(!showConfirma)}
+            >
+              <svg
+                className={styles.eyeSvg}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  className={styles.eyeLine}
+                  d="M1 12C2.5 7 7 4 12 4s9.5 3 11 8c-1.5 5-6 8-11 8S2.5 17 1 12Z"
+                />
+                <circle className={styles.eyeBall} cx="12" cy="12" r="3" />
+                <line
+                  className={styles.eyeSlash}
+                  x1="4"
+                  y1="4"
+                  x2="20"
+                  y2="20"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
 
         <button type="submit" className={styles.botao}>

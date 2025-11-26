@@ -60,41 +60,118 @@
   background: #fff;
   z-index: 0;
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .timeline {
+    gap: 32px;
+    justify-content: center;
     padding: 1rem;
-    margin: 2rem auto;
   }
 
   .evento {
-    padding: 1.5rem;
-    gap: 0.8rem;
-    font-size: 1.1rem;
-  }
-
-  .icone {
-    font-size: 1.8rem;
-  }
-
-  .data {
-    min-width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .evento {
-    flex-direction: column;
-    text-align: center;
-    padding: 0.8rem;
-    gap: 0.5rem;
+    min-width: 140px;
+    padding: 1rem;
     font-size: 1rem;
   }
 
-  .data {
-    min-width: auto;
+  .iconWrapper {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
   }
 
-  .icone {
-    font-size: 1.5rem;
+  .linha {
+    /* manter linha horizontal mas menor */
+    left: calc(100% + 8px);
+    width: 40px;
+    height: 2px;
+    top: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0.8rem;
+    margin: 1.5rem auto;
+  }
+
+  .evento {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 12px 16px;
+    gap: 12px;
+    min-width: auto;
+    position: relative; /* para o conector vertical */
+  }
+
+  .iconWrapper {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .data {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+  }
+
+  .nome {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* converter a linha horizontal em conector vertical entre itens */
+  .linha {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 18px;
+    background: #fff;
+    z-index: 0;
+  }
+
+  /* esconder conector do último item */
+  .evento:last-child .linha {
+    display: none;
+  }
+}
+
+/* Pequenos celulares: ajustes finos */
+@media (max-width: 480px) {
+  .evento {
+    padding: 10px 12px;
+    gap: 8px;
+    font-size: 0.98rem;
+  }
+
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .data {
+    font-size: 0.9rem;
+  }
+
+  .nome {
+    font-size: 0.85rem;
+  }
+
+  .linha {
+    height: 14px;
   }
 }

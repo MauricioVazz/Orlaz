@@ -7,6 +7,7 @@ import styles from "./LoginForm.module.css";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -14,7 +15,6 @@ export default function LoginForm() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        // Redirect explicitly to home so ESC always returns to the initial screen
         router.push('/');
       }
     };
@@ -36,17 +36,16 @@ export default function LoginForm() {
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const msg = data?.message || 'Email ou senha inválidos.';
-        alert(msg);
+        alert(data?.message || 'Email ou senha inválidos.');
         setLoading(false);
         return;
       }
 
-      // espera { profile, token }
       const profile = data.profile || data.user || null;
       const token = data.token || null;
+
       if (!profile) {
-        alert('Login realizado, mas perfil não recebido do servidor.');
+        alert('Login realizado, mas perfil não recebido.');
         setLoading(false);
         return;
       }
@@ -55,36 +54,30 @@ export default function LoginForm() {
         localStorage.setItem('userId', String(profile.id));
         localStorage.setItem('isLoggedIn', 'true');
         if (token) localStorage.setItem('token', token);
-        // retrocompatibilidade: guardar o objeto user completo
         localStorage.setItem('user', JSON.stringify(profile));
-        // dispatch global event so other components in the same tab can react
-        try {
-          const ev = new CustomEvent('auth:login', { detail: { profile, token } });
-          window.dispatchEvent(ev);
-        } catch (err) {
-          // older browsers fallback: create and dispatch
-          const ev2 = document.createEvent('CustomEvent');
-          ev2.initCustomEvent('auth:login', false, false, { profile, token });
-          window.dispatchEvent(ev2);
-        }
+
+        const ev = new CustomEvent('auth:login', { detail: { profile, token } });
+        window.dispatchEvent(ev);
       }
 
       alert('Login realizado com sucesso!');
-      // Redirect: admins go to /AdmPage, regular users to /
-      const role = profile && profile.role ? String(profile.role).toLowerCase() : null;
-      const type = profile && profile.type ? String(profile.type).toLowerCase() : null;
-      const rolesArr = profile && Array.isArray(profile.roles) ? profile.roles.map(r => String(r).toLowerCase()) : [];
+      const role = profile?.role?.toLowerCase();
+      const type = profile?.type?.toLowerCase();
+      const rolesArr = Array.isArray(profile.roles)
+        ? profile.roles.map((r) => r.toLowerCase())
+        : [];
+
       const isAdmin = Boolean(
-        (role && role === 'admin') ||
+        role === "admin" ||
+        type === "admin" ||
         profile?.isAdmin === true ||
-        (type && type === 'admin') ||
-        rolesArr.includes('admin')
+        rolesArr.includes("admin")
       );
-      if (isAdmin) router.push('/AdmPage');
-      else router.push('/');
+
+      router.push(isAdmin ? "/AdmPage" : "/");
     } catch (err) {
-      console.error('Login error', err);
-      alert('Erro de conexão com o servidor.');
+      console.error("Login error", err);
+      alert("Erro de conexão com o servidor.");
     } finally {
       setLoading(false);
     }
@@ -107,20 +100,52 @@ export default function LoginForm() {
           />
         </div>
 
+        {/* CAMPO DE SENHA COM OLHO ANIMADO */}
         <div className={styles.inputGroup}>
           <label htmlFor="senha">Senha</label>
-          <input
-            type="password"
-            id="senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-            placeholder="Digite sua senha"
-          />
+
+          <div className={styles.passwordWrapper}>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+              placeholder="Digite sua senha"
+            />
+
+            <span
+              className={`${styles.eyeIcon} ${
+                showPassword ? styles.open : styles.closed
+              }`}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <svg
+                className={styles.eyeSvg}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  className={styles.eyeLine}
+                  d="M1 12C2.5 7 7 4 12 4s9.5 3 11 8c-1.5 5-6 8-11 8S2.5 17 1 12Z"
+                />
+                <circle className={styles.eyeBall} cx="12" cy="12" r="3" />
+                <line
+                  className={styles.eyeSlash}
+                  x1="4"
+                  y1="4"
+                  x2="20"
+                  y2="20"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
 
         <button type="submit" className={styles.botao} disabled={loading}>
-          {loading ? 'Entrando...' : 'Entrar'}
+          {loading ? "Entrando..." : "Entrar"}
         </button>
 
         <p className={styles.link}>
