@@ -54,6 +54,13 @@ export default function CommentsTourist({ touristId }) {
       setEffectiveId(eff);
     }
     setUserId(uid);
+    // popular perfil do usuário logado imediatamente (se houver)
+    try {
+      const stored = JSON.parse(localStorage.getItem('user') || 'null');
+      if (stored && stored.id) {
+        setProfiles(prev => ({ ...prev, [stored.id]: stored }));
+      }
+    } catch {}
   }, []);
 
   useEffect(() => {
@@ -85,12 +92,19 @@ export default function CommentsTourist({ touristId }) {
     if (!missing.length) return;
     try {
       const results = await Promise.all(
-        missing.map((id) => fetch(`${API_BASE}/profile/${id}`, { headers: getAuthHeaders() }).then((r) => (r.ok ? r.json() : null)))
+        missing.map(id => fetch(`${API_BASE}/profile/${id}`, { headers: getAuthHeaders() }).then(async r => {
+          if (!r.ok) return null;
+          const j = await r.json().catch(() => null);
+          return j;
+        }))
       );
       const map = {};
       results.forEach((res, idx) => {
         const id = missing[idx];
-        if (res && res.profile) map[id] = res.profile;
+        if (!res) return;
+        if (res.profile) map[id] = res.profile;
+        else if (res.data) map[id] = res.data;
+        else map[id] = res;
       });
       setProfiles((prev) => ({ ...prev, ...map }));
     } catch {}
@@ -131,7 +145,12 @@ export default function CommentsTourist({ touristId }) {
         console.error('Server error response for POST /comment:', data);
         throw new Error(data.error || data.message || 'Erro ao comentar (500)');
       }
-      setComments((prev) => [data.comment || data, ...prev]);
+      const created = data.comment || data;
+      setComments((prev) => [created, ...prev]);
+      // garantir que o perfil do autor esteja presente
+      if (created && created.userId && !profiles[created.userId]) {
+        fetchProfiles([created.userId]);
+      }
       setInput("");
     } catch (err) {
       setError(err.message || "Erro ao comentar");
