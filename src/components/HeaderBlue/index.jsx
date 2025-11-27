@@ -128,7 +128,21 @@ export default function Header() {
                     >Orlaz</Link>
                 </div>
                 <nav className={styles.menu}>
-                    <Link href="/" className={styles.menuLink}>Home</Link>
+                    <Link
+                        href={
+                            (isLoggedIn === "true" && user)
+                                ? (() => {
+                                    try {
+                                        const role = (user.role || user.type || '').toString().toLowerCase();
+                                        const isAdminFlag = user.isAdmin === true || role === 'admin' || (Array.isArray(user.roles) && user.roles.map(r => r.toString().toLowerCase()).includes('admin'));
+                                        return isAdminFlag ? '/AdmPage' : '/';
+                                    } catch (e) {
+                                        return '/';
+                                    }
+                                })()
+                                : '/'
+                        }
+                    >Home</Link>
                     <Link href="/Pontos" className={styles.menuLink}>Pontos</Link>
                     <Link href="/favoritos" className={styles.menuLink}>Favoritos</Link>
                 </nav>

@@ -225,14 +225,16 @@ export default function PerfilPage() {
       localStorage.removeItem("user");
       localStorage.removeItem("userId");
       localStorage.removeItem("isLoggedIn");
-      // se houver token ou outras chaves de sessão, remova aqui também
-      // localStorage.removeItem('token');
+      // remover token também
+      localStorage.removeItem('token');
     } catch (e) {
       console.warn("Erro ao limpar localStorage no logout", e);
     }
     // Forçar atualização e redirecionamento para a página de login
     router.push("/login");
     if (typeof window !== "undefined") {
+      // notificar listeners na mesma aba
+      try { window.dispatchEvent(new CustomEvent('auth:logout')); } catch (e) {}
       window.location.reload();
     }
   };
@@ -268,6 +270,8 @@ export default function PerfilPage() {
           localStorage.removeItem("user");
           localStorage.removeItem("userId");
           localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem('token');
+          try { window.dispatchEvent(new CustomEvent('auth:logout')); } catch (e) {}
         } catch (e) {}
         router.push("/cadastro");
       } else {
