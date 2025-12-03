@@ -48,6 +48,17 @@ export default function ContentPage({ name, description, city, type, images }) {
         id = Number(images[0].touristSpotId);
         if (Number.isNaN(id)) id = null;
       }
+      // se não encontramos em images, tentar a query string (?id= ou ?touristId=)
+      if (!id && typeof window !== 'undefined') {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const qid = params.get('id') || params.get('touristId') || null;
+          if (qid) {
+            const qNum = Number(qid);
+            if (!Number.isNaN(qNum)) id = qNum;
+          }
+        } catch (e) {}
+      }
       if (!id && typeof window !== "undefined" && window.location.pathname.match(/\d+$/)) {
         id = Number(window.location.pathname.match(/\d+$/)[0]);
         if (Number.isNaN(id)) id = null;

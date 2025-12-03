@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import ENV from '@/lib/env';
 
 export default function TouristSpotSearch({
@@ -118,6 +119,8 @@ export default function TouristSpotSearch({
     }
   }, [API, limit, minChars]);
 
+  const router = useRouter();
+
   useEffect(() => {
     if ((autoFocus || openOnMount) && inputRef.current) {
       inputRef.current.focus();
@@ -166,10 +169,66 @@ export default function TouristSpotSearch({
   }, []);
 
   const handleSelect = (item) => {
-    setQuery(item.name);
+    setQuery(item.name || '');
     setOpen(false);
     setActiveIndex(-1);
-    if (onSelect) onSelect(item);
+    if (onSelect) {
+      onSelect(item);
+      return;
+    }
+
+    // If the item looks like a user/profile, navigate to the profile page
+    // Be strict: only treat as user when explicit user identifiers exist
+    const looksLikeUser = Boolean(
+      (item.email && typeof item.email === 'string') ||
+      (item.username && typeof item.username === 'string') ||
+      item.userId ||
+      item.profileId
+    );
+    const resolvedId = item.id || item.touristSpotId || item._id || item.placeId || (item.touristSpot && item.touristSpot.id);
+    if (looksLikeUser && resolvedId) {
+      try {
+        const profileUrl = `/perfil?id=${encodeURIComponent(String(resolvedId))}`;
+        console.debug('[Search] navigating to profile', profileUrl, item);
+        router.push(profileUrl);
+      } catch (err) {
+        console.error('[Search] profile navigation failed', err);
+      }
+      return;
+    }
+
+    // fallback: navigate to the tourist point page
+    try {
+      const params = new URLSearchParams();
+      if (item.name) params.set('name', item.name);
+      if (item.description) params.set('description', item.description);
+      if (item.city) params.set('city', item.city);
+      if (item.type) params.set('type', item.type);
+
+      // build images payload robustly (handles strings or objects)
+      let imagesPayload = [];
+      if (item.images && Array.isArray(item.images) && item.images.length) {
+        imagesPayload = item.images.map(img => {
+          if (!img) return null;
+          if (typeof img === 'string') return { url: img, touristSpotId: item.id };
+          if (typeof img === 'object') return { url: img.url || img.path || img.imageUrl || '', touristSpotId: img.touristSpotId || item.id };
+          return null;
+        }).filter(Boolean);
+      } else if (item.image || item.imageUrl) {
+        imagesPayload = [{ url: item.image || item.imageUrl, touristSpotId: item.id }];
+      }
+
+      if (imagesPayload.length) params.set('images', JSON.stringify(imagesPayload));
+      if (resolvedId) params.set('id', String(resolvedId));
+      const url = `/Point?${params.toString()}`;
+      console.debug('[Search] navigating to point', url, { resolvedId, imagesPayload, item });
+      router.push(url);
+    } catch (e) {
+      console.error('[Search] navigation error', e);
+      if (item.id) {
+        try { router.push(`/Point?id=${encodeURIComponent(String(item.id))}`); } catch (err) { console.error(err); }
+      }
+    }
   };
 
   const loadMore = () => {
@@ -244,10 +303,15 @@ export default function TouristSpotSearch({
           ) : (
             <>
               <ul style={{ listStyle: 'none', margin: 0, padding: 8 }}>
-                {results.map((r, idx) => (
+                {results.map((r, idx) => {
+                  const itemKey = r.id || r.touristSpotId || r._id || idx;
+                  const itemIdForAria = `${instanceIdRef.current}-item-${itemKey}`;
+                  // prefer images array -> single image fields
+                  const imgUrl = (r.images && Array.isArray(r.images) && (r.images[0] && (r.images[0].url || r.images[0]))) || r.image || r.imageUrl || '';
+                  return (
                   <li
-                    key={r.id}
-                    id={`${instanceIdRef.current}-item-${r.id}`}
+                    key={itemKey}
+                    id={itemIdForAria}
                     role="option"
                     aria-selected={activeIndex === idx}
                     onClick={() => handleSelect(r)}
@@ -261,13 +325,13 @@ export default function TouristSpotSearch({
                       cursor: 'pointer',
                       background: activeIndex === idx ? '#f0f7ff' : 'transparent',
                     }}
-                  >
+                    >
                     {renderItem ? (
                       renderItem(r)
                     ) : (
                       <>
-                        { (r.image || r.imageUrl) ? (
-                          <img src={r.image || r.imageUrl} alt={r.name} style={{width:56,height:56,objectFit:'cover',borderRadius:6,flex:'0 0 56px'}} />
+                        { imgUrl ? (
+                          <img src={imgUrl} alt={r.name} style={{width:56,height:56,objectFit:'cover',borderRadius:6,flex:'0 0 56px'}} />
                         ) : (
                           <div style={{width:56,height:56,background:'#eef2f6',borderRadius:6,flex:'0 0 56px'}} />
                         )}
@@ -278,7 +342,7 @@ export default function TouristSpotSearch({
                       </>
                     )}
                   </li>
-                ))}
+                )})}
               </ul>
 
               {total > results.length && (

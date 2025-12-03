@@ -74,15 +74,29 @@ export default function CommentsTourist({ touristId }) {
     // eslint-disable-next-line no-console
     console.log('Fetching comments from', fetchUrl);
     fetch(fetchUrl, { headers: getAuthHeaders() })
-      .then((r) => r.json())
-      .then((data) => {
-        let list = [];
-        if (Array.isArray(data.comments)) list = data.comments;
-        else if (Array.isArray(data.data)) list = data.data;
-        setComments(list);
-        const ids = Array.from(new Set(list.map((c) => c.userId).filter(Boolean)));
-        if (ids.length) fetchProfiles(ids);
-      })
+        .then((r) => r.json())
+        .then((data) => {
+          // Normalizar vários formatos de resposta para uma lista de comentários
+          let list = [];
+          if (!data) list = [];
+          else if (Array.isArray(data)) list = data;
+          else if (Array.isArray(data.comments)) list = data.comments;
+          else if (Array.isArray(data.data)) list = data.data;
+          else if (data.comment) list = [data.comment];
+          else if (typeof data === 'object') {
+            const vals = Object.values(data);
+            const arrays = vals.filter((v) => Array.isArray(v));
+            if (arrays.length) list = arrays.flat();
+            else {
+              const objs = vals.filter((v) => v && typeof v === 'object' && !Array.isArray(v));
+              if (objs.length) list = objs.map((v) => v.comment || v);
+            }
+          }
+          list = (list || []).filter((c) => c && (c.id || c.userId || c.content));
+          setComments(list);
+          const ids = Array.from(new Set(list.map((c) => c.userId).filter(Boolean)));
+          if (ids.length) fetchProfiles(ids);
+        })
       .catch(() => setError("Erro ao buscar comentários"))
       .finally(() => setLoading(false));
   }, [touristId, effectiveId]);

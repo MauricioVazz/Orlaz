@@ -62,15 +62,36 @@ export default function CommentsRestaurant({ restaurantId }) {
     setError(null);
     fetch(`${API_BASE}/comment?restaurantId=${restaurantId}`, { headers: getAuthHeaders() })
       .then((r) => r.json())
-      .then((data) => {
-        let list = [];
-        if (Array.isArray(data.comments)) list = data.comments;
-        else if (Array.isArray(data.data)) list = data.data;
-        setComments(list);
-        // Buscar perfis dos usuários
-        const ids = Array.from(new Set(list.map(c => c.userId).filter(Boolean)));
-        if (ids.length) fetchProfiles(ids);
-      })
+        .then((data) => {
+          // Normalizar vários formatos de resposta do backend para uma lista de comentários
+          let list = [];
+          if (!data) list = [];
+          else if (Array.isArray(data)) list = data;
+          else if (Array.isArray(data.comments)) list = data.comments;
+          else if (Array.isArray(data.data)) list = data.data;
+          else if (data.comment) list = [data.comment];
+          else if (typeof data === 'object') {
+            // data pode ser um objeto onde as chaves são userId -> [comments]
+            // coletar todos os arrays dentro do objeto
+            const vals = Object.values(data);
+            const arrays = vals.filter((v) => Array.isArray(v));
+            if (arrays.length) list = arrays.flat();
+            else {
+              // ou pode ser um objeto plano com comentários como valores
+              const objs = vals.filter((v) => v && typeof v === 'object' && !Array.isArray(v));
+              if (objs.length) {
+                // tentar extrair comment ou deixar o próprio objeto
+                list = objs.map((v) => v.comment || v);
+              }
+            }
+          }
+          // garantir que a lista contenha apenas objetos de comentário válidos
+          list = (list || []).filter((c) => c && (c.id || c.userId || c.content));
+          setComments(list);
+          // Buscar perfis dos usuários
+          const ids = Array.from(new Set(list.map((c) => c.userId).filter(Boolean)));
+          if (ids.length) fetchProfiles(ids);
+        })
       .catch(() => setError("Erro ao buscar comentários"))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
